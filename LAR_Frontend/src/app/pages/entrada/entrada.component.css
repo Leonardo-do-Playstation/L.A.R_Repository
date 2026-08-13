@@ -1,0 +1,132 @@
+.entrada {
+  min-height: 100vh;
+  background-image: url('/assets/entrada.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.entrada::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.6'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+/* Efeito de granulação para foto da entrada */
+
+
+.entrada__overlay {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 2;
+}
+
+.entrada__content {
+  width: min(100%, 360px);
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-10vh);
+  position: relative;
+  z-index: 3;
+}
+
+.entrada__logo {
+  margin-bottom: 24px;
+  color: #fff;
+  font-size: clamp(4rem, 18vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 0 4px #2b8a24,
+    0 0 6px #2b8a24;
+}
+
+.entrada__actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.entrada__actions .btn {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-adotar {
+  background-color: #24851f;
+  border: 2px solid #24851f;
+  color: #ffffff;
+}
+
+.btn-adotar:hover {
+  background-color: #1d6e19;
+  border-color: #1d6e19;
+  color: #ffffff;
+}
+
+.btn-ong {
+  background-color: #ffffff;
+  border: 2px solid #24851f;
+  color: #24851f;
+}
+
+.btn-ong:hover {
+  background-color: #f2f2f2;
+  border-color: #1d6e19;
+  color: #1d6e19;
+}
+
+.entrada__divider {
+  width: 60%;
+  height: 2px;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Responsividade do conteudo para desktop */
+
+@media (min-width: 768px) {
+  .entrada__content {
+    width: min(100%, 500px);
+    padding: 0 24px;
+    transform: translateY(-8vh);
+  }
+
+  .entrada__logo {
+    font-size: clamp(5.5rem, 8vw, 7rem);
+    margin-bottom: 28px;
+  }
+
+  .entrada__actions {
+    gap: 18px;
+  }
+
+  .entrada__actions .btn {
+    min-height: 60px;
+    font-size: 1.15rem;
+  }
+
+  .entrada__divider {
+    margin-top: 24px;
+  }
+}
