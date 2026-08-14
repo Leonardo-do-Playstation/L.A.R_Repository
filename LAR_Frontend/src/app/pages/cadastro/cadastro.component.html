@@ -1,0 +1,99 @@
+<section class="cadastro">
+
+  <div class="cadastro__container">
+
+    <div class="cadastro__logo">
+      L.A.R.
+    </div>
+
+    <h1>Cadastro</h1>
+
+    <form
+      [formGroup]="cadastroForm"
+      (ngSubmit)="cadastrar()">
+
+      @if (tipo === 'adotante') {
+
+        <div class="cadastro__field">
+          <label for="nome">Nome</label>
+
+          <input
+            id="nome"
+            type="text"
+            formControlName="nome">
+        </div>
+
+        <div class="cadastro__field">
+          <label for="sobrenome">Sobrenome</label>
+
+          <input
+            id="sobrenome"
+            type="text"
+            formControlName="sobrenome">
+        </div>
+
+      } @else {
+
+        <div class="cadastro__field">
+          <label for="nomeInstituicao">Nome da Instituição</label>
+
+          <input
+            id="nomeInstituicao"
+            type="text"
+            formControlName="nomeInstituicao">
+        </div>
+
+        <div class="cadastro__field">
+          <label for="cnpj">CNPJ</label>
+
+          <input
+            id="cnpj"
+            type="text"
+            formControlName="cnpj">
+        </div>
+
+      }
+
+      <div class="cadastro__field">
+        <label for="email">E-mail</label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email">
+      </div>
+
+      <div class="cadastro__field">
+        <label for="senha">Senha</label>
+
+        <input
+          id="senha"
+          type="password"
+          formControlName="senha">
+      </div>
+
+      <div class="cadastro__field">
+        <label for="confirmarSenha">Confirmar senha</label>
+
+        <input
+          id="confirmarSenha"
+          type="password"
+          formControlName="confirmarSenha">
+      </div>
+
+      <button
+        type="submit"
+        class="cadastro__button">
+        Criar conta
+      </button>
+
+    </form>
+
+    <p class="cadastro__login">
+      Já cadastrado?
+      <a routerLink="/login">Faça Login</a>
+    </p>
+
+  </div>
+
+</section>
