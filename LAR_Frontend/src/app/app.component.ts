@@ -28,6 +28,8 @@ export class AppComponent {
   }
 
   private updateNavbar(url: string): void {
-    this.showNavbar = !['/', '/cadastro', '/cadastro-ong'].includes(url);
+    this.showNavbar = !['/', '/cadastro', '/cadastro-ong', '/login'].includes(
+      url,
+    );
   }
 }

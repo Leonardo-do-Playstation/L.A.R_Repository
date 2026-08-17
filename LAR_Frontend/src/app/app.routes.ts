@@ -4,28 +4,33 @@ import { EntradaComponent } from './pages/entrada/entrada.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SobreComponent } from './pages/sobre/sobre.component';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: EntradaComponent
+    component: EntradaComponent,
   },
   {
     path: 'cadastro',
     component: CadastroComponent,
-    data: { tipo: 'adotante' }
+    data: { tipo: 'adotante' },
   },
   {
     path: 'cadastro-ong',
     component: CadastroComponent,
-    data: { tipo: 'ong' }
+    data: { tipo: 'ong' },
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'sobre',
-    component: SobreComponent
-  }
+    component: SobreComponent,
+  },
 ];
