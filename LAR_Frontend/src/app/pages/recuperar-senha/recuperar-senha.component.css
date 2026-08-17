@@ -1,0 +1,174 @@
+.recuperar {
+  min-height: 100vh;
+  width: 100%;
+
+  background-color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recuperar__container {
+  width: min(100%, 360px);
+
+  padding: 40px 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recuperar__icone {
+  margin-bottom: 36px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.recuperar__icone img {
+  width: 110px;
+  height: 110px;
+
+  object-fit: contain;
+}
+
+.recuperar h1 {
+  width: 100%;
+
+  margin: 0 0 32px;
+
+  text-align: center;
+
+  color: #4d9748;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.recuperar form {
+  width: 100%;
+}
+
+.recuperar__field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.recuperar__field label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #555555;
+
+  font-size: 0.95rem;
+}
+
+.recuperar__field input {
+  width: 100%;
+  height: 42px;
+
+  padding: 8px 10px;
+
+  border: 1px solid #bdbdbd;
+  border-radius: 7px;
+
+  background-color: #ffffff;
+
+  color: #333333;
+
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+.recuperar__field input:focus {
+  border-color: #24851f;
+
+  box-shadow: 0 0 0 2px rgba(36, 133, 31, 0.15);
+}
+
+.recuperar__button {
+  width: 100%;
+  height: 42px;
+
+  border: 2px solid #24851f;
+  border-radius: 7px;
+
+  background-color: #24851f;
+  color: #ffffff;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.recuperar__button:hover {
+  background-color: #1d6e19;
+  border-color: #1d6e19;
+}
+
+.recuperar__ou {
+  width: 100%;
+
+  margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.recuperar__ou span {
+  flex: 1;
+
+  height: 1px;
+
+  background-color: #cfcfcf;
+}
+
+.recuperar__ou strong {
+  color: #4d9748;
+
+  font-size: 0.95rem;
+}
+
+.recuperar__cadastro {
+  margin-top: 12px;
+
+  color: #8bc587;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  text-decoration: underline;
+}
+
+.recuperar__cadastro:hover {
+  color: #4d9748;
+}
+
+.recuperar__voltar {
+  width: 80%;
+
+  margin-top: 38px;
+
+  padding: 10px 16px;
+
+  border: 1px solid #555555;
+  border-radius: 7px;
+
+  background-color: #a9a9a9;
+  color: #555555;
+
+  text-align: center;
+
+  font-size: 0.9rem;
+
+  text-decoration: none;
+}
+
+.recuperar__voltar:hover {
+  background-color: #999999;
+}

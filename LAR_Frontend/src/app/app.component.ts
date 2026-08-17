@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterOutlet
+} from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +15,25 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'LAR_Frontend';
+
+  showNavbar = true;
+
+  constructor(private router: Router) {
+    this.updateNavbar(this.router.url);
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.updateNavbar((event as NavigationEnd).urlAfterRedirects);
+      });
+  }
+
+  private updateNavbar(url: string): void {
+    this.showNavbar = ![
+      '/recuperar-senha',
+      '/login',
+      '/cadastro',
+      '/cadastro-ong'
+    ].includes(url);
+  }
 }

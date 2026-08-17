@@ -1,0 +1,43 @@
+<section class="recuperar">
+
+    <div class="recuperar__container">
+
+        <div class="recuperar__icone">
+            <img src="/assets/cadeado.svg" alt="Recuperação de senha">
+        </div>
+
+        <h1>Problemas com a senha?</h1>
+
+        <form [formGroup]="recuperarForm" (ngSubmit)="recuperarSenha()">
+
+            <div class="recuperar__field">
+
+                <label for="email">E-mail</label>
+
+                <input id="email" type="email" formControlName="email" autocomplete="email">
+
+            </div>
+
+            <button type="submit" class="recuperar__button">
+                Enviar link de login
+            </button>
+
+        </form>
+
+        <div class="recuperar__ou">
+            <span></span>
+            <strong>OU</strong>
+            <span></span>
+        </div>
+
+        <a class="recuperar__cadastro" routerLink="/cadastro">
+            Criar nova conta
+        </a>
+
+        <a class="recuperar__voltar" routerLink="/login">
+            Voltar ao login
+        </a>
+
+    </div>
+
+</section>
