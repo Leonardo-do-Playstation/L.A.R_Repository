@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lar.enums.StatusOng;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -18,6 +22,9 @@ public class Ong extends Usuario {
 
     @OneToMany(mappedBy = "ong")
     public List<Animal> animais = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private StatusOng status;
 
 
     public Ong() {
@@ -39,5 +46,13 @@ public class Ong extends Usuario {
 
     public List<Animal> getAnimais() {
         return animais;
+    }
+
+    public StatusOng getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusOng status) {
+        this.status = status;
     }
 }
