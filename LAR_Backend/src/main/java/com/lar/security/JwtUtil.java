@@ -1,22 +1,23 @@
 package com.lar.security;
 
-import java.util.Date;
-
-import javax.crypto.SecretKey;
-
-import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Component
 public class JwtUtil {
-    
-   // Mais pra frente, essa chave devera vir do env, e não fixa
 
-    /* Código comentado para referência futura, caso precise usar uma chave secreta do application.properties
     @Value("${jwt.secret}")
     private String jwtSecretString;
+
+    @Value("${jwt.expiration}")
+    private long expirationMs;
 
     private SecretKey secretKey;
 
@@ -24,11 +25,6 @@ public class JwtUtil {
     public void init() {
         this.secretKey = Keys.hmacShaKeyFor(jwtSecretString.getBytes());
     }
-    */
-    
-     private final SecretKey secretKey = Jwts.SIG.HS256.key().build();
-
-    private final long expirationMs = 86400000; // 24 horas
 
     public String gerarToken(String email) {
         return Jwts.builder()
