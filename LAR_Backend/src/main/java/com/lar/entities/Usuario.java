@@ -25,19 +25,19 @@ public class Usuario {
     public String email;
     public String senha;
     public LocalDateTime data_cadastro;
-    public String endereço;
+    public String endereco;
     
     public Usuario() {
     } 
 
-    public Usuario(Long id, String nome, String telefone, String email, String senha, LocalDateTime data_cadastro, String endereço) {
+    public Usuario(Long id, String nome, String telefone, String email, String senha, LocalDateTime data_cadastro, String endereco) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
         this.data_cadastro = data_cadastro;
-        this.endereço = endereço;
+        this.endereco = endereco;
     } 
 
     public Long getId() {
@@ -84,12 +84,15 @@ public class Usuario {
         return data_cadastro;
     }
 
-    public String getEndereço() {
-        return endereço;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEndereço(String endereço) {
-        this.endereço = endereço;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
-    
+
+    public void setData_cadastro(LocalDateTime data_cadastro) {
+        this.data_cadastro = data_cadastro;
+    }    
 }

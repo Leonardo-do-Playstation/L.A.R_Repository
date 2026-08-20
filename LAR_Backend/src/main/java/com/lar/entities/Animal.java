@@ -1,6 +1,10 @@
 package com.lar.entities;
 
+import com.lar.enums.StatusAnimal;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,13 +25,100 @@ public class Animal {
     public String raca;
     public String sexo;
     public String porte;
+    
+    
     @ManyToOne
     @JoinColumn(name = "id_ong", nullable = false)
     public Ong ong;
 
+    @Enumerated(EnumType.STRING)
+    private StatusAnimal status;
 
     public Animal() {
     }
 
+
+    
+    public Animal(Long id, String nome, String especie, Integer idade, String raca, String sexo, String porte, Ong ong,
+            StatusAnimal status) {
+        this.id = id;
+        this.nome = nome;
+        this.especie = especie;
+        this.idade = idade;
+        this.raca = raca;
+        this.sexo = sexo;
+        this.porte = porte;
+        this.ong = ong;
+        this.status = status;
+    }
+
+
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
+
+    public String getRaca() {
+        return raca;
+    }
+
+    public void setRaca(String raca) {
+        this.raca = raca;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getPorte() {
+        return porte;
+    }
+
+    public void setPorte(String porte) {
+        this.porte = porte;
+    }
+
+    public Ong getOng() {
+        return ong;
+    }
+
+    public void setOng(Ong ong) {
+        this.ong = ong;
+    }
+
+    public StatusAnimal getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusAnimal status) {
+        this.status = status;
+    }
+
    
+    
+
 }
