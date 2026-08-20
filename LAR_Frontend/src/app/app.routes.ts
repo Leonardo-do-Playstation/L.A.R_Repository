@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { SobreComponent } from './pages/sobre/sobre.component';
 import { PainelAnimaisComponent } from './pages/painel-animais/painel-animais.component';
+import { CadastroAnimalComponent } from './pages/cadastro-animal/cadastro-animal.component';
 
 export const routes: Routes = [
   {
@@ -16,5 +17,12 @@ export const routes: Routes = [
   {
     path: 'painel-animais',
     component: PainelAnimaisComponent,
+  },
+  {
+    path: 'cadastro-animal',
+    loadComponent: () =>
+      import('./pages/cadastro-animal/cadastro-animal.component').then(
+        (m) => m.CadastroAnimalComponent,
+      ),
   },
 ];

@@ -11,6 +11,12 @@
 }
 
 .painel-animais__cadastrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-decoration: none;
+
   width: 100%;
   height: 42px;
 
@@ -266,7 +272,6 @@
 }
 
 @media (min-width: 768px) {
-
   .painel-animais {
     padding-top: 24px;
   }
@@ -278,5 +283,4 @@
   .painel-animais__lista {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
 }
