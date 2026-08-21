@@ -24,9 +24,13 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Endpoints públicos: cadastro e login não exigem token
+                // Públicos
                 .requestMatchers("/adotantes/cadastro", "/ongs/cadastro", "/auth/login").permitAll()
-                // Todo o resto exige autenticação
+
+                // Só Administrador
+                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+
+                // Todo o resto exige login (ainda sem regra fina por perfil nas outras rotas)
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

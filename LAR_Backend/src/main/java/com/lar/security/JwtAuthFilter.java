@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,16 +30,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                      @NotNull FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
+        System.out.println("=== JwtAuthFilter rodando para: " + request.getRequestURI() + " ===");
+        System.out.println("Header Authorization presente? " + (authHeader != null));
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("Sem token Bearer, seguindo sem autenticar.");
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = authHeader.substring(7); 
+        String token = authHeader.substring(7);
 
-        if (jwtUtil.tokenValido(token)) {
+        boolean valido = jwtUtil.tokenValido(token);
+        System.out.println("Token válido? " + valido);
+
+        if (valido) {
             String email = jwtUtil.extrairEmail(token);
+
+
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
             UsernamePasswordAuthenticationToken authToken =
