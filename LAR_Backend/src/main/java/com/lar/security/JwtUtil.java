@@ -1,9 +1,11 @@
 package com.lar.security;
 
+import com.lar.repositories.TokenBlacklistRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,9 @@ public class JwtUtil {
 
     @Value("${jwt.expiration}")
     private long expirationMs;
+
+    @Autowired
+    private TokenBlacklistRepository tokenBlacklistRepository;
 
     private SecretKey secretKey;
 
@@ -41,6 +46,9 @@ public class JwtUtil {
 
     public boolean tokenValido(String token) {
         try {
+            if (tokenBlacklistRepository.existsByToken(token)) {
+                return false;
+            }
             Claims claims = extrairClaims(token);
             return !claims.getExpiration().before(new Date());
         } catch (Exception e) {
