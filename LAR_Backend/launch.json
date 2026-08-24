@@ -1,0 +1,8 @@
+{
+    "env": {
+        "MYSQL_DATABASE": "lar_db",
+        "MYSQL_USER": "admin",
+        "MYSQL_PASSWORD": "caramelo",
+        "MYSQL_PORT": "3307"
+    }
+}
