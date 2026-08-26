@@ -25,7 +25,8 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 // Públicos
-                .requestMatchers("/adotantes/cadastro", "/ongs/cadastro", "/auth/login").permitAll()
+                .requestMatchers("/adotantes/cadastro", "/ongs/cadastro", "/auth/login",
+                  "/auth/recuperar-senha", "/auth/redefinir-senha").permitAll()
 
                 // Só Administrador
                 .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
