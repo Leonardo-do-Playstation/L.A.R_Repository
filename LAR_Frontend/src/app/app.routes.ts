@@ -1,15 +1,48 @@
 import { Routes } from '@angular/router';
 
+import { EntradaComponent } from './pages/entrada/entrada.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SobreComponent } from './pages/sobre/sobre.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { LoginComponent } from './pages/login/login.component';
+
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: EntradaComponent,
   },
+
+  {
+    path: 'cadastro',
+    component: CadastroComponent,
+    data: {
+      tipo: 'adotante',
+    },
+  },
+
+  {
+    path: 'cadastro-ong',
+    component: CadastroComponent,
+    data: {
+      tipo: 'ong',
+    },
+  },
+
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [authGuard],
+  },
+
   {
     path: 'sobre',
-    component: SobreComponent
-  }
+    component: SobreComponent,
+  },
 ];
