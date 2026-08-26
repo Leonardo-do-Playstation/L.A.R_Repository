@@ -216,3 +216,19 @@
     font-size: 1rem;
   }
 }
+
+.login__error {
+  display: block;
+  margin-top: 4px;
+  color: #ff6b6b;
+  font-size: 0.75rem;
+}
+
+.login__error--api {
+  text-align: center;
+}
+
+.login__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -16,12 +16,12 @@ describe('CadastroComponent', () => {
           useValue: {
             snapshot: {
               data: {
-                tipo: 'adotante'
-              }
-            }
-          }
-        }
-      ]
+                tipo: 'adotante',
+              },
+            },
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CadastroComponent);

@@ -8,90 +8,193 @@
 
     <h1>Cadastro</h1>
 
-    <form
-      [formGroup]="cadastroForm"
-      (ngSubmit)="cadastrar()">
+    <form [formGroup]="cadastroForm" (ngSubmit)="cadastrar()">
 
       @if (tipo === 'adotante') {
 
-        <div class="cadastro__field">
-          <label for="nome">Nome</label>
+      <div class="cadastro__field">
 
-          <input
-            id="nome"
-            type="text"
-            formControlName="nome">
-        </div>
+        <label for="nome">
+          Nome
+        </label>
 
-        <div class="cadastro__field">
-          <label for="sobrenome">Sobrenome</label>
+        <input id="nome" type="text" formControlName="nome" autocomplete="given-name">
 
-          <input
-            id="sobrenome"
-            type="text"
-            formControlName="sobrenome">
-        </div>
+        @if (
+        cadastroForm.controls.nome.touched &&
+        cadastroForm.controls.nome.errors?.['required']
+        ) {
+        <span class="cadastro__error">
+          Informe seu nome.
+        </span>
+        }
+
+      </div>
+
+      <div class="cadastro__field">
+
+        <label for="cpf">
+          CPF
+        </label>
+
+        <input id="cpf" type="text" formControlName="cpf" inputmode="numeric" maxlength="11" autocomplete="off">
+
+        @if (
+        cadastroForm.controls.cpf.touched &&
+        !cadastroForm.controls.cpf.value
+        ) {
+        <span class="cadastro__error">
+          Informe seu CPF.
+        </span>
+        }
+
+      </div>
 
       } @else {
 
-        <div class="cadastro__field">
-          <label for="nomeInstituicao">Nome da Instituição</label>
+      <div class="cadastro__field">
 
-          <input
-            id="nomeInstituicao"
-            type="text"
-            formControlName="nomeInstituicao">
-        </div>
+        <label for="nomeInstituicao">
+          Nome da Instituição
+        </label>
 
-        <div class="cadastro__field">
-          <label for="cnpj">CNPJ</label>
+        <input id="nomeInstituicao" type="text" formControlName="nomeInstituicao">
 
-          <input
-            id="cnpj"
-            type="text"
-            formControlName="cnpj">
-        </div>
+        @if (
+        cadastroForm.controls.nomeInstituicao.touched &&
+        !cadastroForm.controls.nomeInstituicao.value
+        ) {
+        <span class="cadastro__error">
+          Informe o nome da instituição.
+        </span>
+        }
+
+      </div>
+
+      <div class="cadastro__field">
+
+        <label for="cnpj">
+          CNPJ
+        </label>
+
+        <input id="cnpj" type="text" formControlName="cnpj" inputmode="numeric" maxlength="14" autocomplete="off">
+
+        @if (
+        cadastroForm.controls.cnpj.touched &&
+        !cadastroForm.controls.cnpj.value
+        ) {
+        <span class="cadastro__error">
+          Informe o CNPJ.
+        </span>
+        }
+
+      </div>
 
       }
 
       <div class="cadastro__field">
-        <label for="email">E-mail</label>
 
-        <input
-          id="email"
-          type="email"
-          formControlName="email">
+        <label for="email">
+          E-mail
+        </label>
+
+        <input id="email" type="email" formControlName="email" autocomplete="email">
+
+        @if (
+        cadastroForm.controls.email.touched &&
+        cadastroForm.controls.email.errors?.['required']
+        ) {
+        <span class="cadastro__error">
+          Informe seu e-mail.
+        </span>
+        }
+
+        @if (
+        cadastroForm.controls.email.touched &&
+        cadastroForm.controls.email.errors?.['email']
+        ) {
+        <span class="cadastro__error">
+          Informe um e-mail válido.
+        </span>
+        }
+
       </div>
 
       <div class="cadastro__field">
-        <label for="senha">Senha</label>
 
-        <input
-          id="senha"
-          type="password"
-          formControlName="senha">
+        <label for="senha">
+          Senha
+        </label>
+
+        <input id="senha" type="password" formControlName="senha" autocomplete="new-password">
+
+        @if (
+        cadastroForm.controls.senha.touched &&
+        cadastroForm.controls.senha.errors?.['required']
+        ) {
+        <span class="cadastro__error">
+          Informe uma senha.
+        </span>
+        }
+
+        @if (
+        cadastroForm.controls.senha.touched &&
+        cadastroForm.controls.senha.errors?.['minlength']
+        ) {
+        <span class="cadastro__error">
+          A senha deve ter pelo menos 6 caracteres.
+        </span>
+        }
+
       </div>
 
       <div class="cadastro__field">
-        <label for="confirmarSenha">Confirmar senha</label>
 
-        <input
-          id="confirmarSenha"
-          type="password"
-          formControlName="confirmarSenha">
+        <label for="confirmarSenha">
+          Confirmar senha
+        </label>
+
+        <input id="confirmarSenha" type="password" formControlName="confirmarSenha" autocomplete="new-password">
+
+        @if (
+        cadastroForm.controls.confirmarSenha.touched &&
+        !cadastroForm.controls.confirmarSenha.value
+        ) {
+        <span class="cadastro__error">
+          Confirme sua senha.
+        </span>
+        }
+
       </div>
 
-      <button
-        type="submit"
-        class="cadastro__button">
+      @if (erroCadastro) {
+
+      <span class="cadastro__error cadastro__error--api">
+        {{ erroCadastro }}
+      </span>
+
+      }
+
+      <button type="submit" class="cadastro__button" [disabled]="carregando">
+
+        @if (carregando) {
+        Criando conta...
+        } @else {
         Criar conta
+        }
+
       </button>
 
     </form>
 
     <p class="cadastro__login">
+
       Já cadastrado?
-      <a routerLink="/login">Faça Login</a>
+
+      <a routerLink="/login">
+        Faça Login
+      </a>
+
     </p>
 
   </div>
