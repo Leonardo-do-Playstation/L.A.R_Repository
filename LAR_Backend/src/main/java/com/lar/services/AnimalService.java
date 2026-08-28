@@ -1,5 +1,6 @@
 package com.lar.services;
 
+import com.lar.dtos.AlterarStatusAnimalDTO;
 import com.lar.dtos.AnimalResponseDTO;
 import com.lar.dtos.CadastroAnimalDTO;
 import com.lar.entities.Animal;
@@ -11,6 +12,9 @@ import com.lar.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnimalService {
@@ -48,6 +52,14 @@ public class AnimalService {
         return toResponseDTO(salvo);
     }
 
+    public List<AnimalResponseDTO> listarMeusAnimais(String emailOngAutenticada) {
+        Ong ong = buscarOngAutenticada(emailOngAutenticada);
+        return animalRepository.findByOngId(ong.getId())
+                .stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     public AnimalResponseDTO editar(Long idAnimal, CadastroAnimalDTO dto, MultipartFile foto, String emailOngAutenticada) {
 
         Animal animal = buscarAnimalDaOng(idAnimal, emailOngAutenticada);
@@ -62,6 +74,7 @@ public class AnimalService {
         animal.descricao = dto.descricao;
 
         if (foto != null && !foto.isEmpty()) {
+            storageService.delete(animal.foto); 
             animal.foto = storageService.upload(foto);
         }
 
@@ -69,8 +82,29 @@ public class AnimalService {
         return toResponseDTO(salvo);
     }
 
+    public AnimalResponseDTO alterarStatus(Long idAnimal, AlterarStatusAnimalDTO dto, String emailOngAutenticada) {
+
+        Animal animal = buscarAnimalDaOng(idAnimal, emailOngAutenticada);
+
+        StatusAnimal novoStatus;
+        try {
+            novoStatus = StatusAnimal.valueOf(dto.status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
+        }
+
+        animal.status = novoStatus;
+        Animal salvo = animalRepository.save(animal);
+        return toResponseDTO(salvo);
+    }
+
     public void excluir(Long idAnimal, String emailOngAutenticada) {
         Animal animal = buscarAnimalDaOng(idAnimal, emailOngAutenticada);
+
+        if (animal.foto != null && !animal.foto.isBlank()) {
+            storageService.delete(animal.foto);
+        }
+
         animalRepository.delete(animal);
     }
 

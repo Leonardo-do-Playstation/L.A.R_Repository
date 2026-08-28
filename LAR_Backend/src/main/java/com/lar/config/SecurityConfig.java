@@ -39,9 +39,7 @@ public class SecurityConfig {
                                 "/auth/redefinir-senha")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.POST, "/animais/**").hasRole("ONG")
-                        .requestMatchers(HttpMethod.PUT, "/animais/**").hasRole("ONG")
-                        .requestMatchers(HttpMethod.DELETE, "/animais/**").hasRole("ONG")
+                        .requestMatchers("/ong/animais/**").hasRole("ONG")
                         .anyRequest().authenticated())
                 .addFilterBefore(
                         jwtAuthFilter,
@@ -52,20 +50,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(
-                List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(
-                List.of(
-                        "GET",
-                        "POST",
-                        "PUT",
-                        "DELETE",
-                        "OPTIONS"));
-        configuration.setAllowedHeaders(
-                List.of(
-                        "Authorization",
-                        "Content-Type",
-                        "Accept"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -73,8 +60,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 }
