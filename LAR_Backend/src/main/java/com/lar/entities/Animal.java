@@ -2,6 +2,7 @@ package com.lar.entities;
 
 import com.lar.enums.StatusAnimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,20 +20,26 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+
     public String nome;
     public String especie;
     public Integer idade;
     public String raca;
     public String sexo;
     public String porte;
-    
-    
+    public String cor;
+
+    @Column(length = 1000)
+    public String descricao;
+
+    public String foto;
+
+    @Enumerated(EnumType.STRING)
+    public StatusAnimal status;
+
     @ManyToOne
     @JoinColumn(name = "id_ong", nullable = false)
     public Ong ong;
-
-    @Enumerated(EnumType.STRING)
-    private StatusAnimal status;
 
     public Animal() {
     }

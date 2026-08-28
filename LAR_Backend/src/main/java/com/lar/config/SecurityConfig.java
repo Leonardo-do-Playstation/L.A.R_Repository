@@ -1,7 +1,6 @@
 package com.lar.config;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import com.lar.security.JwtAuthFilter;
 
 @Configuration
@@ -32,32 +30,30 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
                         .requestMatchers(
                                 "/adotantes/cadastro",
                                 "/ongs/cadastro",
-                                "/auth/login")
+                                "/auth/login",
+                                "/auth/recuperar-senha",
+                                "/auth/redefinir-senha")
                         .permitAll()
-
                         .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-
+                        .requestMatchers(HttpMethod.POST, "/animais/**").hasRole("ONG")
+                        .requestMatchers(HttpMethod.PUT, "/animais/**").hasRole("ONG")
+                        .requestMatchers(HttpMethod.DELETE, "/animais/**").hasRole("ONG")
                         .anyRequest().authenticated())
                 .addFilterBefore(
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
         configuration.setAllowedOrigins(
                 List.of("http://localhost:4200"));
-
         configuration.setAllowedMethods(
                 List.of(
                         "GET",
@@ -65,26 +61,20 @@ public class SecurityConfig {
                         "PUT",
                         "DELETE",
                         "OPTIONS"));
-
         configuration.setAllowedHeaders(
                 List.of(
                         "Authorization",
                         "Content-Type",
                         "Accept"));
-
         configuration.setAllowCredentials(true);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
 
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config) throws Exception {
-
         return config.getAuthenticationManager();
     }
 }
