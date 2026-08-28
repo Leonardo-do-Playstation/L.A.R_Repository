@@ -21,7 +21,6 @@ public class CadastroAnimalDTO {
     public String porte;
     public String cor;
     public String descricao;
-    public String foto;
 
     public CadastroAnimalDTO() {
     }
