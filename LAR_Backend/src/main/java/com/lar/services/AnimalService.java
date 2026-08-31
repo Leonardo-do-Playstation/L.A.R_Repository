@@ -1,8 +1,10 @@
 package com.lar.services;
 
 import com.lar.dtos.AlterarStatusAnimalDTO;
+import com.lar.dtos.AnimalDetalhesDTO;
 import com.lar.dtos.AnimalResponseDTO;
 import com.lar.dtos.CadastroAnimalDTO;
+import com.lar.dtos.OngPublicaDTO;
 import com.lar.entities.Animal;
 import com.lar.entities.Ong;
 import com.lar.enums.StatusAnimal;
@@ -27,6 +29,13 @@ public class AnimalService {
 
     @Autowired
     private StorageService storageService;
+
+    public List<AnimalDetalhesDTO> listarTodosPublico() {
+        return animalRepository.findAll()
+                .stream()
+                .map(this::toDetalhesDTO)
+                .collect(Collectors.toList());
+    }
 
     public AnimalResponseDTO cadastrar(CadastroAnimalDTO dto, MultipartFile foto, String emailOngAutenticada) {
 
@@ -60,7 +69,8 @@ public class AnimalService {
                 .collect(Collectors.toList());
     }
 
-    public AnimalResponseDTO editar(Long idAnimal, CadastroAnimalDTO dto, MultipartFile foto, String emailOngAutenticada) {
+    public AnimalResponseDTO editar(Long idAnimal, CadastroAnimalDTO dto, MultipartFile foto,
+            String emailOngAutenticada) {
 
         Animal animal = buscarAnimalDaOng(idAnimal, emailOngAutenticada);
 
@@ -74,7 +84,7 @@ public class AnimalService {
         animal.descricao = dto.descricao;
 
         if (foto != null && !foto.isEmpty()) {
-            storageService.delete(animal.foto); 
+            storageService.delete(animal.foto);
             animal.foto = storageService.upload(foto);
         }
 
@@ -141,6 +151,36 @@ public class AnimalService {
         dto.status = animal.status.name();
         dto.idOng = animal.ong.getId();
         dto.nomeOng = animal.ong.getNome();
+        return dto;
+    }
+
+    public AnimalDetalhesDTO buscarDetalhes(Long idAnimal) {
+        Animal animal = animalRepository.findById(idAnimal)
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
+        return toDetalhesDTO(animal);
+    }
+
+    private AnimalDetalhesDTO toDetalhesDTO(Animal animal) {
+        AnimalDetalhesDTO dto = new AnimalDetalhesDTO();
+        dto.id = animal.id;
+        dto.nome = animal.nome;
+        dto.especie = animal.especie;
+        dto.idade = animal.idade;
+        dto.raca = animal.raca;
+        dto.sexo = animal.sexo;
+        dto.porte = animal.porte;
+        dto.cor = animal.cor;
+        dto.descricao = animal.descricao;
+        dto.foto = animal.foto;
+        dto.status = animal.status.name();
+
+        OngPublicaDTO ongDto = new OngPublicaDTO();
+        ongDto.id = animal.ong.getId();
+        ongDto.nome = animal.ong.getNome();
+        ongDto.telefone = animal.ong.getTelefone();
+        ongDto.endereco = animal.ong.getEndereco();
+        dto.ong = ongDto;
+
         return dto;
     }
 }
