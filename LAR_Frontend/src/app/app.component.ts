@@ -10,12 +10,11 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-
   showNavbar = true;
 
   constructor(private router: Router) {
@@ -30,6 +29,7 @@ export class AppComponent {
 
   private updateNavbar(url: string): void {
     this.showNavbar = ![
+      '/',
       '/recuperar-senha',
       '/login',
       '/cadastro',

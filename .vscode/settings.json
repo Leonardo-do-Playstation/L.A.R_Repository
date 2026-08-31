@@ -1,0 +1,5 @@
+{
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.compile.nullAnalysis.mode": "disabled",
+  "js/ts.tsdk.path": "./node_modules/typescript/lib"
+}
