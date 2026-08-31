@@ -38,8 +38,20 @@ public class SecurityConfig {
                                 "/auth/recuperar-senha",
                                 "/auth/redefinir-senha")
                         .permitAll()
+
+                        // Vitrine pública: qualquer um vê, sem login
+                        .requestMatchers(HttpMethod.GET, "/animais/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ongs/**").permitAll()
+
+                        // Gestão exclusiva da ONG sobre si mesma e seus animais
+                        .requestMatchers("/ong/**").hasRole("ONG")
+
+                        // Ação de favoritar exige login como Adotante
+                        .requestMatchers("/favoritos/**").hasRole("ADOTANTE")
+
+                        // Admin
                         .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/ong/animais/**").hasRole("ONG")
+
                         .anyRequest().authenticated())
                 .addFilterBefore(
                         jwtAuthFilter,
