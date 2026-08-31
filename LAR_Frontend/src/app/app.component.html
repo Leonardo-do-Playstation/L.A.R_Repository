@@ -1,14 +1,21 @@
 @if (showNavbar) {
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container">
-      <a class="navbar-brand" routerLink="/">L.A.R</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      L.A.R
+    </a>
 
-      <div class="navbar-nav">
-        <a class="nav-link" routerLink="/">Início</a>
-        <a class="nav-link" routerLink="/sobre">Sobre</a>
-      </div>
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/">
+        Início
+      </a>
+
+      <a class="nav-link" routerLink="/sobre">
+        Sobre
+      </a>
     </div>
-  </nav>
+  </div>
+</nav>
 }
 
 <main [class.container]="showNavbar" [class.mt-4]="showNavbar">
