@@ -6,6 +6,11 @@ export interface LoginResponse {
   token: string;
 }
 
+export interface RecuperarSenhaResponse {
+  mensagem: string;
+  token_teste?: string;
+}
+
 interface LoginRequest {
   email: string;
   senha: string;
@@ -16,7 +21,6 @@ interface LoginRequest {
 })
 export class AuthService {
   private readonly apiUrl = 'http://localhost:8080/auth';
-
   private readonly tokenKey = 'token';
 
   constructor(private http: HttpClient) {}
@@ -28,6 +32,34 @@ export class AuthService {
     };
 
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, dados);
+  }
+
+  recuperarSenha(email: string): Observable<RecuperarSenhaResponse> {
+    return this.http.post<RecuperarSenhaResponse>(
+      `${this.apiUrl}/recuperar-senha`,
+      { email },
+    );
+  }
+
+  redefinirSenha(token: string, novaSenha: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/redefinir-senha`, {
+      token,
+      novaSenha,
+    });
+  }
+
+  logout(): Observable<any> {
+    const token = this.obterToken();
+
+    return this.http.post(
+      `${this.apiUrl}/logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
   }
 
   obterUsuarioAutenticado(): Observable<string> {

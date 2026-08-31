@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import {
   NavigationEnd,
   Router,
-  RouterOutlet,
   RouterLink,
+  RouterOutlet,
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -28,8 +28,11 @@ export class AppComponent {
   }
 
   private updateNavbar(url: string): void {
-    this.showNavbar = !['/', '/cadastro', '/cadastro-ong', '/login'].includes(
-      url,
-    );
+    this.showNavbar = ![
+      '/login',
+      '/cadastro',
+      '/cadastro-ong',
+      '/recuperar-senha',
+    ].includes(url);
   }
 }
