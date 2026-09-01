@@ -32,8 +32,8 @@ public class Adotante extends Usuario {
     public Adotante() {
     }
 
-     public Adotante(Long id, String nome, String telefone, String email, String senha, String cpf, String endereço, LocalDateTime data_cadastro) {
-        super(id, nome, telefone, email, senha, data_cadastro, endereço);
+     public Adotante(Long id, String nome, String telefone, String email, String senha, String cpf, String endereco, LocalDateTime data_cadastro) {
+        super(id, nome, telefone, email, senha, data_cadastro, endereco);
         this.cpf = cpf;
     }
 
@@ -47,5 +47,5 @@ public class Adotante extends Usuario {
 
     public List<Animal> getFavoritos() {
         return favoritos;
-    }    
+    }   
 }
