@@ -239,3 +239,25 @@
     width: 100%;
   }
 }
+
+.cadastro-animal__erro-api {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+
+  border: 1px solid #e0a4a4;
+  border-radius: 4px;
+
+  background-color: #fff3f3;
+  color: #b42323;
+
+  font-size: 0.85rem;
+}
+
+.cadastro-animal__foto--erro {
+  border-color: #d62828;
+}
+
+.cadastro-animal__cadastrar:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
