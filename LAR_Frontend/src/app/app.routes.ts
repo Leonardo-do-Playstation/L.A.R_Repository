@@ -51,4 +51,21 @@ export const routes: Routes = [
     path: 'sobre',
     component: SobreComponent,
   },
+
+  {
+    path: 'painel-animais',
+    loadComponent: () =>
+      import('./pages/painel-animais/painel-animais.component').then(
+        (m) => m.PainelAnimaisComponent,
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'cadastro-animal',
+    loadComponent: () =>
+      import('./pages/cadastro-animal/cadastro-animal.component').then(
+        (m) => m.CadastroAnimalComponent,
+      ),
+    canActivate: [authGuard],
+  },
 ];

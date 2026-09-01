@@ -1,0 +1,263 @@
+.cadastro-animal {
+  width: 100%;
+  min-height: calc(100vh - 58px);
+  padding: 24px 0 40px;
+}
+
+.cadastro-animal__container {
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cadastro-animal__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.cadastro-animal__voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.cadastro-animal__voltar:hover {
+  background-color: #eeeeee;
+}
+
+.cadastro-animal__voltar img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.cadastro-animal__cabecalho h1 {
+  margin: 0;
+  color: #555555;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.cadastro-animal__form {
+  padding: 28px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+.cadastro-animal__foto-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.cadastro-animal__foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 190px;
+  overflow: hidden;
+  border: 2px solid #777777;
+  border-radius: 50%;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
+.cadastro-animal__foto:hover {
+  background-color: #f2f2f2;
+}
+
+.cadastro-animal__foto-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cadastro-animal__foto-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cadastro-animal__foto-icone img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.cadastro-animal__foto-area input {
+  display: none;
+}
+
+.cadastro-animal__foto-obrigatoria {
+  margin-top: 8px;
+  color: #777777;
+  font-size: 0.75rem;
+}
+
+.cadastro-animal__campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+}
+
+.cadastro-animal__campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.cadastro-animal__campo label {
+  margin-bottom: 6px;
+  color: #555555;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cadastro-animal__campo input,
+.cadastro-animal__campo select,
+.cadastro-animal__campo textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #333333;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.cadastro-animal__campo input,
+.cadastro-animal__campo select {
+  height: 42px;
+}
+
+.cadastro-animal__campo textarea {
+  resize: vertical;
+}
+
+.cadastro-animal__campo input:focus,
+.cadastro-animal__campo select:focus,
+.cadastro-animal__campo textarea:focus {
+  outline: none;
+  border-color: #2b9e25;
+}
+
+.cadastro-animal__campo--descricao {
+  grid-column: 1 / -1;
+}
+
+.cadastro-animal__erro {
+  margin-top: 4px;
+  color: #d62828;
+  font-size: 0.75rem;
+}
+
+.cadastro-animal__acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.cadastro-animal__cancelar,
+.cadastro-animal__cadastrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cadastro-animal__cancelar {
+  border: 1px solid #999999;
+  background-color: #ffffff;
+  color: #666666;
+}
+
+.cadastro-animal__cancelar:hover {
+  background-color: #eeeeee;
+}
+
+.cadastro-animal__cadastrar {
+  border: 1px solid #24851f;
+  background-color: #2b9e25;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.cadastro-animal__cadastrar:hover {
+  background-color: #24851f;
+}
+
+@media (max-width: 600px) {
+  .cadastro-animal {
+    padding: 16px 0 30px;
+  }
+
+  .cadastro-animal__container {
+    padding: 0 16px;
+  }
+
+  .cadastro-animal__form {
+    padding: 20px 16px;
+  }
+
+  .cadastro-animal__foto {
+    width: 160px;
+    height: 160px;
+  }
+
+  .cadastro-animal__campos {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cadastro-animal__campo--descricao {
+    grid-column: auto;
+  }
+
+  .cadastro-animal__acoes {
+    flex-direction: column-reverse;
+  }
+
+  .cadastro-animal__cancelar,
+  .cadastro-animal__cadastrar {
+    width: 100%;
+  }
+}
+
+.cadastro-animal__erro-api {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+
+  border: 1px solid #e0a4a4;
+  border-radius: 4px;
+
+  background-color: #fff3f3;
+  color: #b42323;
+
+  font-size: 0.85rem;
+}
+
+.cadastro-animal__foto--erro {
+  border-color: #d62828;
+}
+
+.cadastro-animal__cadastrar:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

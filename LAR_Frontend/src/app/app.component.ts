@@ -29,6 +29,7 @@ export class AppComponent {
 
   private updateNavbar(url: string): void {
     this.showNavbar = ![
+      '/',
       '/login',
       '/cadastro',
       '/cadastro-ong',
