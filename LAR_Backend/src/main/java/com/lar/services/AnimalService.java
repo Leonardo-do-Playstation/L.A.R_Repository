@@ -10,8 +10,12 @@ import com.lar.entities.Ong;
 import com.lar.enums.StatusAnimal;
 import com.lar.repositories.AnimalRepository;
 import com.lar.repositories.OngRepository;
+import com.lar.specifications.AnimalSpecification;
 import com.lar.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -136,6 +140,38 @@ public class AnimalService {
         return animal;
     }
 
+    public Page<AnimalDetalhesDTO> buscarComFiltros(String especie, String porte, String sexo, String status,
+                                                 String raca, String cor,
+                                                 Integer idadeMinima, Integer idadeMaxima,
+                                                 Pageable pageable) {
+
+    StatusAnimal statusFiltro;
+    if (status != null && !status.isBlank()) {
+        try {
+            statusFiltro = StatusAnimal.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
+        }
+    } else {
+         // Sem sentido mostrar para adotantes , 
+        // então o catálogo público mostra só quem está disponível pra adoção...
+        statusFiltro = StatusAnimal.DISPONIVEL;
+    }
+
+    Specification<Animal> filtro = Specification
+            .where(AnimalSpecification.comEspecie(especie))
+            .and(AnimalSpecification.comPorte(porte))
+            .and(AnimalSpecification.comSexo(sexo))
+            .and(AnimalSpecification.comStatus(statusFiltro))
+            .and(AnimalSpecification.comRaca(raca))
+            .and(AnimalSpecification.comCor(cor))
+            .and(AnimalSpecification.comIdadeMinima(idadeMinima))
+            .and(AnimalSpecification.comIdadeMaxima(idadeMaxima));
+
+    return animalRepository.findAll(filtro, pageable)
+            .map(this::toDetalhesDTO);
+}
+
     private AnimalResponseDTO toResponseDTO(Animal animal) {
         AnimalResponseDTO dto = new AnimalResponseDTO();
         dto.id = animal.id;
@@ -183,4 +219,5 @@ public class AnimalService {
 
         return dto;
     }
+      
 }
