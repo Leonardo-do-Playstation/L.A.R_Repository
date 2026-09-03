@@ -37,7 +37,7 @@ public class AnimalService {
     public List<AnimalDetalhesDTO> listarTodosPublico() {
         return animalRepository.findAll()
                 .stream()
-                .map(this::toDetalhesDTO)
+                .map(this::paraDetalhesDTO)
                 .collect(Collectors.toList());
     }
 
@@ -169,7 +169,7 @@ public class AnimalService {
             .and(AnimalSpecification.comIdadeMaxima(idadeMaxima));
 
     return animalRepository.findAll(filtro, pageable)
-            .map(this::toDetalhesDTO);
+            .map(this::paraDetalhesDTO);
 }
 
     private AnimalResponseDTO toResponseDTO(Animal animal) {
@@ -193,10 +193,10 @@ public class AnimalService {
     public AnimalDetalhesDTO buscarDetalhes(Long idAnimal) {
         Animal animal = animalRepository.findById(idAnimal)
                 .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
-        return toDetalhesDTO(animal);
+        return paraDetalhesDTO(animal);
     }
 
-    private AnimalDetalhesDTO toDetalhesDTO(Animal animal) {
+    public AnimalDetalhesDTO paraDetalhesDTO(Animal animal) {
         AnimalDetalhesDTO dto = new AnimalDetalhesDTO();
         dto.id = animal.id;
         dto.nome = animal.nome;
