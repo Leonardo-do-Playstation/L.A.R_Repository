@@ -1,0 +1,229 @@
+<section class="cadastro-animal">
+    <div class="cadastro-animal__container">
+        <div class="cadastro-animal__cabecalho">
+
+            <a routerLink="/painel-animais" class="cadastro-animal__voltar" aria-label="Voltar">
+                <img src="/assets/seta-esquerda.svg" alt="Voltar">
+            </a>
+
+            <h1>Editar Animal</h1>
+
+        </div>
+
+        @if (erroEdicao) {
+        <div class="cadastro-animal__erro-api">
+            {{ erroEdicao }}
+        </div>
+        }
+
+        <form class="cadastro-animal__form" [formGroup]="editarForm" (ngSubmit)="editarAnimal()">
+
+            <div class="cadastro-animal__foto-area">
+
+                <label for="foto" class="cadastro-animal__foto">
+
+                    @if (fotoPreview) {
+
+                    <img [src]="fotoPreview" alt="Foto do animal" class="cadastro-animal__foto-preview">
+
+                    } @else {
+
+                    <span class="cadastro-animal__foto-icone">
+
+                        <img src="/assets/camera.svg" alt="Adicionar foto">
+
+                    </span>
+
+                    }
+
+                </label>
+
+                <input id="foto" type="file" accept="image/*" (change)="selecionarFoto($event)">
+
+                @if (erroFoto) {
+
+                <span class="cadastro-animal__erro">
+                    {{ erroFoto }}
+                </span>
+
+                } @else if (fotoSelecionada) {
+
+                <span class="cadastro-animal__foto-obrigatoria">
+                    {{ fotoSelecionada.name }}
+                </span>
+
+                } @else {
+
+                <span class="cadastro-animal__foto-obrigatoria">
+                    Selecione uma nova foto apenas se desejar alterá-la
+                </span>
+
+                }
+
+            </div>
+
+            <div class="cadastro-animal__campos">
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="nome">Nome</label>
+
+                    <input id="nome" type="text" formControlName="nome" placeholder="Nome do animal">
+
+                    @if (
+                    editarForm.controls.nome.touched &&
+                    editarForm.controls.nome.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe o nome do animal.
+                    </span>
+                    }
+
+                </div>
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="especie">Espécie</label>
+
+                    <select id="especie" formControlName="especie">
+                        <option value="">Selecione</option>
+                        <option value="Cachorro">Cachorro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+
+                    @if (
+                    editarForm.controls.especie.touched &&
+                    editarForm.controls.especie.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe a espécie.
+                    </span>
+                    }
+
+                </div>
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="raca">Raça</label>
+
+                    <input id="raca" type="text" formControlName="raca" placeholder="Raça">
+
+                    @if (
+                    editarForm.controls.raca.touched &&
+                    editarForm.controls.raca.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe a raça.
+                    </span>
+                    }
+
+                </div>
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="idade">Idade</label>
+
+                    <input id="idade" type="number" min="1" formControlName="idade" placeholder="Idade">
+
+                    @if (
+                    editarForm.controls.idade.touched &&
+                    editarForm.controls.idade.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe uma idade válida.
+                    </span>
+                    }
+
+                </div>
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="porte">Porte</label>
+
+                    <select id="porte" formControlName="porte">
+                        <option value="">Selecione</option>
+                        <option value="Pequeno">Pequeno</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Grande">Grande</option>
+                    </select>
+
+                    @if (
+                    editarForm.controls.porte.touched &&
+                    editarForm.controls.porte.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe o porte.
+                    </span>
+                    }
+
+                </div>
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="cor">Cor</label>
+
+                    <input id="cor" type="text" formControlName="cor" placeholder="Cor">
+
+                </div>
+
+                <div class="cadastro-animal__campo">
+
+                    <label for="sexo">Sexo</label>
+
+                    <select id="sexo" formControlName="sexo">
+                        <option value="">Selecione</option>
+                        <option value="MACHO">Macho</option>
+                        <option value="FEMEA">Fêmea</option>
+                    </select>
+
+                    @if (
+                    editarForm.controls.sexo.touched &&
+                    editarForm.controls.sexo.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe o sexo.
+                    </span>
+                    }
+
+                </div>
+
+                <div class="cadastro-animal__campo cadastro-animal__campo--descricao">
+
+                    <label for="descricao">Descrição</label>
+
+                    <textarea id="descricao" rows="4" formControlName="descricao"
+                        placeholder="Descreva o animal"></textarea>
+
+                    @if (
+                    editarForm.controls.descricao.touched &&
+                    editarForm.controls.descricao.invalid
+                    ) {
+                    <span class="cadastro-animal__erro">
+                        Informe uma descrição.
+                    </span>
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="cadastro-animal__acoes">
+
+                <a routerLink="/painel-animais" class="cadastro-animal__cancelar">
+                    Cancelar
+                </a>
+
+                <button type="submit" class="cadastro-animal__cadastrar" [disabled]="salvando">
+
+                    @if (salvando) {
+                    Salvando...
+                    } @else {
+                    Salvar alterações
+                    }
+
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

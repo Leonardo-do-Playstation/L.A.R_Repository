@@ -106,12 +106,12 @@
 
                         </span>
 
-                        <button type="button" class="animal-card__editar" disabled title="Disponível no FE-08">
+                        <a [routerLink]="['/editar-animal', animal.id]" class="animal-card__editar">
                             Editar
-                        </button>
+                        </a>
 
                         <button type="button" class="animal-card__excluir" [attr.aria-label]="'Excluir ' + animal.nome"
-                            disabled title="Disponível no FE-08">
+                            (click)="abrirConfirmacaoExclusao(animal)">
                             <img src="/assets/lixeira.svg" alt="Excluir">
                         </button>
                     </div>
@@ -121,4 +121,34 @@
         </div>
         }
     </div>
+    @if (animalParaExcluir) {
+
+    <div class="painel-animais__confirmacao">
+
+        <div class="painel-animais__confirmacao-conteudo">
+
+            <h2>Excluir animal</h2>
+
+            <p>
+                Tem certeza que deseja excluir
+                <strong>{{ animalParaExcluir.nome }}</strong>?
+            </p>
+
+            <div class="painel-animais__confirmacao-acoes">
+
+                <button type="button" (click)="cancelarExclusao()" [disabled]="excluindo">
+                    Cancelar
+                </button>
+
+                <button type="button" (click)="confirmarExclusao()" [disabled]="excluindo">
+                    @if (excluindo) {
+                    Excluindo...
+                    } @else {
+                    Excluir
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+    }
 </section>
