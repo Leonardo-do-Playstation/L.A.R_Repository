@@ -4,6 +4,8 @@ import com.lar.dtos.FavoritoResponseDTO;
 import com.lar.entities.Adotante;
 import com.lar.entities.Animal;
 import com.lar.entities.Favorito;
+import com.lar.exceptions.RecursoNaoEncontradoException;
+import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.AdotanteRepository;
 import com.lar.repositories.AnimalRepository;
 import com.lar.repositories.FavoritoRepository;
@@ -26,14 +28,14 @@ public class FavoritoService {
     private AnimalRepository animalRepository;
 
     @Autowired
-    private AnimalService animalService; 
+    private AnimalService animalService;
 
     public void favoritar(Long idAnimal, String emailAdotante) {
         Adotante adotante = buscarAdotante(emailAdotante);
         Animal animal = buscarAnimal(idAnimal);
 
         if (favoritoRepository.existsByAdotanteIdAndAnimalId(adotante.getId(), idAnimal)) {
-            throw new RuntimeException("Este animal já está nos seus favoritos.");
+            throw new RegraDeNegocioException("Este animal já está nos seus favoritos.");
         }
 
         favoritoRepository.save(new Favorito(adotante, animal));
@@ -43,7 +45,7 @@ public class FavoritoService {
         Adotante adotante = buscarAdotante(emailAdotante);
 
         Favorito favorito = favoritoRepository.findByAdotanteIdAndAnimalId(adotante.getId(), idAnimal)
-                .orElseThrow(() -> new RuntimeException("Este animal não está nos seus favoritos."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Este animal não está nos seus favoritos."));
 
         favoritoRepository.delete(favorito);
     }
@@ -64,11 +66,11 @@ public class FavoritoService {
 
     private Adotante buscarAdotante(String email) {
         return adotanteRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Adotante autenticado não encontrado."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Adotante autenticado não encontrado."));
     }
 
     private Animal buscarAnimal(Long idAnimal) {
         return animalRepository.findById(idAnimal)
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Animal não encontrado."));
     }
 }

@@ -2,6 +2,8 @@ package com.lar.services;
 
 import com.lar.entities.Ong;
 import com.lar.enums.StatusOng;
+import com.lar.exceptions.RecursoNaoEncontradoException;
+import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.OngRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +34,10 @@ public class AdminOngService {
 
     private Ong buscarOngPendente(Long idOng) {
         Ong ong = ongRepository.findById(idOng)
-                .orElseThrow(() -> new RuntimeException("ONG não encontrada."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("ONG não encontrada."));
 
         if (ong.getStatus() != StatusOng.PENDENTE) {
-            throw new RuntimeException("Esta ONG já foi analisada anteriormente (status atual: " + ong.getStatus() + ").");
+            throw new RegraDeNegocioException("Esta ONG já foi analisada anteriormente (status atual: " + ong.getStatus() + ").");
         }
 
         return ong;

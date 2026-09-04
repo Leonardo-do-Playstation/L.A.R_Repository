@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lar.entities.Administrador;
+import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.AdministradorRepository;
 import com.lar.repositories.UsuarioRepository;
 
@@ -25,7 +26,7 @@ public class AdministradorService {
     public Administrador criar(String nome, String email, String senha, String codigoAdmin) {
 
         if (usuarioRepository.existsByEmail(email)) {
-            throw new RuntimeException("Este e-mail já está cadastrado.");
+            throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
         }
 
         Administrador admin = new Administrador();
