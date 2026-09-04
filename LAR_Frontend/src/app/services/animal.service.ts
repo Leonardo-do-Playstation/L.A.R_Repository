@@ -30,10 +30,9 @@ export interface CadastroAnimal {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AnimalService {
-
   private readonly http = inject(HttpClient);
 
   private readonly apiUrl = 'http://localhost:8080/ong/animais';
@@ -42,23 +41,38 @@ export class AnimalService {
     return this.http.get<Animal[]>(this.apiUrl);
   }
 
-  cadastrarAnimal(
-    dados: CadastroAnimal,
-    foto: File
-  ): Observable<Animal> {
-
+  cadastrarAnimal(dados: CadastroAnimal, foto: File): Observable<Animal> {
     const formData = new FormData();
 
     formData.append(
       'dados',
-      new Blob(
-        [JSON.stringify(dados)],
-        { type: 'application/json' }
-      )
+      new Blob([JSON.stringify(dados)], { type: 'application/json' }),
     );
 
     formData.append('foto', foto);
 
     return this.http.post<Animal>(this.apiUrl, formData);
+  }
+
+  editarAnimal(
+    id: number,
+    dados: CadastroAnimal,
+    foto: File | null,
+  ): Observable<Animal> {
+    const formData = new FormData();
+
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(dados)], { type: 'application/json' }),
+    );
+
+    if (foto) {
+      formData.append('foto', foto);
+    }
+
+    return this.http.put<Animal>(`${this.apiUrl}/${id}`, formData);
+  }
+  excluirAnimal(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

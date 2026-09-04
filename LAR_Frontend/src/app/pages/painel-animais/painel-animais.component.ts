@@ -20,6 +20,8 @@ export class PainelAnimaisComponent implements OnInit {
   erro = '';
 
   ordem: 'recentes' | 'antigos' = 'recentes';
+  animalParaExcluir: Animal | null = null;
+  excluindo = false;
 
   ngOnInit(): void {
     this.carregarAnimais();
@@ -58,6 +60,49 @@ export class PainelAnimaisComponent implements OnInit {
     }
 
     this.animais = [...this.animais].reverse();
+  }
+
+  abrirConfirmacaoExclusao(animal: Animal): void {
+    this.animalParaExcluir = animal;
+    this.erro = '';
+  }
+
+  cancelarExclusao(): void {
+    this.animalParaExcluir = null;
+  }
+
+  confirmarExclusao(): void {
+    if (!this.animalParaExcluir) {
+      return;
+    }
+
+    const animal = this.animalParaExcluir;
+
+    this.excluindo = true;
+    this.erro = '';
+
+    this.animalService.excluirAnimal(animal.id).subscribe({
+      next: () => {
+        this.animais = this.animais.filter((item) => item.id !== animal.id);
+
+        this.animalParaExcluir = null;
+        this.excluindo = false;
+      },
+
+      error: (erro: HttpErrorResponse) => {
+        this.excluindo = false;
+
+        if (erro.status === 401) {
+          this.erro = 'Sua sessão expirou. Faça login novamente.';
+        } else if (erro.status === 403) {
+          this.erro = 'Você não possui permissão para excluir este animal.';
+        } else if (erro.status === 404) {
+          this.erro = 'Animal não encontrado.';
+        } else {
+          this.erro = 'Não foi possível excluir o animal.';
+        }
+      },
+    });
   }
 
   classeStatus(status: string): string {
