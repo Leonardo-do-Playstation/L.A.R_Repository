@@ -14,7 +14,6 @@ import jakarta.persistence.Table;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "tbl_usuarios")
 public class Usuario {
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +25,13 @@ public class Usuario {
     public String senha;
     public LocalDateTime data_cadastro;
     public String endereco;
-    
-    public Usuario() {
-    } 
+    public Boolean bloqueado = false;
 
-    public Usuario(Long id, String nome, String telefone, String email, String senha, LocalDateTime data_cadastro, String endereco) {
+    public Usuario() {
+    }
+
+    public Usuario(Long id, String nome, String telefone, String email, String senha, LocalDateTime data_cadastro,
+            String endereco) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -38,7 +39,7 @@ public class Usuario {
         this.senha = senha;
         this.data_cadastro = data_cadastro;
         this.endereco = endereco;
-    } 
+    }
 
     public Long getId() {
         return id;
@@ -94,5 +95,13 @@ public class Usuario {
 
     public void setData_cadastro(LocalDateTime data_cadastro) {
         this.data_cadastro = data_cadastro;
-    }    
+    }
+
+    public Boolean getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(Boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
 }

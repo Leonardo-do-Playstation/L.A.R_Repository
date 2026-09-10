@@ -31,6 +31,7 @@ public class OngPerfilService {
         ong.setNome(dto.nome);
         ong.setTelefone(dto.telefone);
         ong.setEndereco(dto.endereco);
+        ong.setObservacoes(dto.observacoes);
 
         Ong salva = ongRepository.save(ong);
         return toPerfilDTO(salva);
@@ -66,6 +67,7 @@ public class OngPerfilService {
         dto.email = ong.getEmail();
         dto.telefone = ong.getTelefone();
         dto.endereco = ong.getEndereco();
+        dto.observacoes = ong.getObservacoes();
         dto.cnpj = ong.getCnpj();
         dto.status = ong.getStatus().name();
         return dto;
@@ -75,8 +77,10 @@ public class OngPerfilService {
         OngPublicaDTO dto = new OngPublicaDTO();
         dto.id = ong.getId();
         dto.nome = ong.getNome();
+        dto.cnpj = ong.getCnpj();
         dto.telefone = ong.getTelefone();
         dto.endereco = ong.getEndereco();
+        dto.observacoes = ong.getObservacoes();
         return dto;
     }
 }

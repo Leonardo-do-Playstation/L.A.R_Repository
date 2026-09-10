@@ -215,8 +215,10 @@ public class AnimalService {
         OngPublicaDTO ongDto = new OngPublicaDTO();
         ongDto.id = animal.ong.getId();
         ongDto.nome = animal.ong.getNome();
+        ongDto.cnpj = animal.ong.getCnpj();
         ongDto.telefone = animal.ong.getTelefone();
         ongDto.endereco = animal.ong.getEndereco();
+        ongDto.observacoes = animal.ong.getObservacoes();
         dto.ong = ongDto;
 
         return dto;

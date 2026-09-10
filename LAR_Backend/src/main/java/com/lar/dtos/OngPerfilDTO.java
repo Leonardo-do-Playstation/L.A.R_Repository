@@ -6,6 +6,7 @@ public class OngPerfilDTO {
     public String email;
     public String telefone;
     public String endereco;
+    public String observacoes;
     public String cnpj;
     public String status;
 
