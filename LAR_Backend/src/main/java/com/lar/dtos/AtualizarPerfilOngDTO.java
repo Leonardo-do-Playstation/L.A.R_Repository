@@ -9,6 +9,7 @@ public class AtualizarPerfilOngDTO {
 
     public String telefone;
     public String endereco;
+    public String observacoes;
 
     public AtualizarPerfilOngDTO() {
     }

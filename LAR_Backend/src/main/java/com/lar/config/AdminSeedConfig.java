@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.lar.dtos.CriarAdministradorDTO;
+import com.lar.entities.Administrador;
 import com.lar.repositories.AdministradorRepository;
 import com.lar.services.AdministradorService;
 
@@ -15,13 +17,17 @@ public class AdminSeedConfig {
                                                 AdministradorService administradorService) {
         return args -> {
             if (administradorRepository.count() == 0) {
-                administradorService.criar(
-                        "Administrador do Sistema",
-                        "laradmin@gmail.com",
-                        "admin123",
-                        "ADM-0001"
-                );
-                System.out.println("Administrador padrão criado: laradmin@gmail.com");
+                CriarAdministradorDTO dto = new CriarAdministradorDTO();
+                dto.nome = "Administrador do Sistema";
+                dto.email = "laradmin@gmail.com";
+                dto.senha = "admin123";
+                dto.codigoAdmin = "ADM-0001";
+
+                Administrador admin = administradorService.criar(dto);
+                admin.setSuperAdmin(true);
+                administradorRepository.save(admin);
+
+                System.out.println("Administrador principal criado: laradmin@gmail.com");
             }
         };
     }

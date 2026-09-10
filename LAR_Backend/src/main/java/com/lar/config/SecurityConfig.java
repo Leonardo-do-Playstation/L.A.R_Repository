@@ -36,7 +36,8 @@ public class SecurityConfig {
                                 "/ongs/cadastro",
                                 "/auth/login",
                                 "/auth/recuperar-senha",
-                                "/auth/redefinir-senha")
+                                "/auth/redefinir-senha",
+                                "/conta/excluir/confirmar")
                         .permitAll()
 
                         // Vitrine pública: qualquer um vê, sem login

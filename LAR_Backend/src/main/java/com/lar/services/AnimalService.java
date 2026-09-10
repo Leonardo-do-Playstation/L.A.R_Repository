@@ -8,6 +8,9 @@ import com.lar.dtos.OngPublicaDTO;
 import com.lar.entities.Animal;
 import com.lar.entities.Ong;
 import com.lar.enums.StatusAnimal;
+import com.lar.exceptions.AcessoNegadoException;
+import com.lar.exceptions.RecursoNaoEncontradoException;
+import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.AnimalRepository;
 import com.lar.repositories.OngRepository;
 import com.lar.specifications.AnimalSpecification;
@@ -104,7 +107,7 @@ public class AnimalService {
         try {
             novoStatus = StatusAnimal.valueOf(dto.status.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
+            throw new RegraDeNegocioException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
         }
 
         animal.status = novoStatus;
@@ -124,17 +127,17 @@ public class AnimalService {
 
     private Ong buscarOngAutenticada(String email) {
         return ongRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("ONG autenticada não encontrada."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("ONG autenticada não encontrada."));
     }
 
     private Animal buscarAnimalDaOng(Long idAnimal, String emailOngAutenticada) {
         Animal animal = animalRepository.findById(idAnimal)
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Animal não encontrado."));
 
         Ong ongAutenticada = buscarOngAutenticada(emailOngAutenticada);
 
         if (!animal.ong.getId().equals(ongAutenticada.getId())) {
-            throw new RuntimeException("Você não tem permissão para alterar animais de outra ONG.");
+            throw new AcessoNegadoException("Você não tem permissão para alterar animais de outra ONG.");
         }
 
         return animal;
@@ -145,32 +148,31 @@ public class AnimalService {
                                                  Integer idadeMinima, Integer idadeMaxima,
                                                  Pageable pageable) {
 
-    StatusAnimal statusFiltro;
-    if (status != null && !status.isBlank()) {
-        try {
-            statusFiltro = StatusAnimal.valueOf(status.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
+        StatusAnimal statusFiltro;
+        if (status != null && !status.isBlank()) {
+            try {
+                statusFiltro = StatusAnimal.valueOf(status.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new RegraDeNegocioException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
+            }
+        } else {
+            // Sem filtro explícito, o catálogo público mostra só quem está disponível pra adoção
+            statusFiltro = StatusAnimal.DISPONIVEL;
         }
-    } else {
-         // Sem sentido mostrar para adotantes , 
-        // então o catálogo público mostra só quem está disponível pra adoção...
-        statusFiltro = StatusAnimal.DISPONIVEL;
+
+        Specification<Animal> filtro = Specification
+                .where(AnimalSpecification.comEspecie(especie))
+                .and(AnimalSpecification.comPorte(porte))
+                .and(AnimalSpecification.comSexo(sexo))
+                .and(AnimalSpecification.comStatus(statusFiltro))
+                .and(AnimalSpecification.comRaca(raca))
+                .and(AnimalSpecification.comCor(cor))
+                .and(AnimalSpecification.comIdadeMinima(idadeMinima))
+                .and(AnimalSpecification.comIdadeMaxima(idadeMaxima));
+
+        return animalRepository.findAll(filtro, pageable)
+                .map(this::paraDetalhesDTO);
     }
-
-    Specification<Animal> filtro = Specification
-            .where(AnimalSpecification.comEspecie(especie))
-            .and(AnimalSpecification.comPorte(porte))
-            .and(AnimalSpecification.comSexo(sexo))
-            .and(AnimalSpecification.comStatus(statusFiltro))
-            .and(AnimalSpecification.comRaca(raca))
-            .and(AnimalSpecification.comCor(cor))
-            .and(AnimalSpecification.comIdadeMinima(idadeMinima))
-            .and(AnimalSpecification.comIdadeMaxima(idadeMaxima));
-
-    return animalRepository.findAll(filtro, pageable)
-            .map(this::paraDetalhesDTO);
-}
 
     private AnimalResponseDTO toResponseDTO(Animal animal) {
         AnimalResponseDTO dto = new AnimalResponseDTO();
@@ -192,7 +194,7 @@ public class AnimalService {
 
     public AnimalDetalhesDTO buscarDetalhes(Long idAnimal) {
         Animal animal = animalRepository.findById(idAnimal)
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Animal não encontrado."));
         return paraDetalhesDTO(animal);
     }
 
@@ -213,11 +215,12 @@ public class AnimalService {
         OngPublicaDTO ongDto = new OngPublicaDTO();
         ongDto.id = animal.ong.getId();
         ongDto.nome = animal.ong.getNome();
+        ongDto.cnpj = animal.ong.getCnpj();
         ongDto.telefone = animal.ong.getTelefone();
         ongDto.endereco = animal.ong.getEndereco();
+        ongDto.observacoes = animal.ong.getObservacoes();
         dto.ong = ongDto;
 
         return dto;
     }
-      
 }
