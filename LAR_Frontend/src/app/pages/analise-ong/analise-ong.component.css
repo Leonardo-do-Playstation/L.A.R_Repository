@@ -1,0 +1,91 @@
+.analise-ong {
+  width: 100%;
+  min-height: 100vh;
+  padding: 12px 0 30px;
+  background: #f5f5f5;
+  box-sizing: border-box;
+}
+
+.analise-ong__container {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.analise-ong__titulo {
+  margin: 8px 0 20px;
+  color: #555;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.analise-ong__mensagem,
+.analise-ong__erro {
+  padding: 16px;
+  border-radius: 6px;
+  background: #fff;
+  color: #555;
+  text-align: center;
+}
+
+.analise-ong__erro {
+  color: #a92222;
+  background: #fdecec;
+}
+
+.analise-ong__detalhe {
+  position: relative;
+  padding: 20px 20px 24px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+.analise-ong__voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  margin-bottom: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.analise-ong__voltar:hover {
+  background-color: #eeeeee;
+}
+
+.analise-ong__voltar img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.analise-ong__nome {
+  margin: 0 0 18px;
+  color: #222;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.analise-ong__campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.analise-ong__rotulo {
+  color: #999;
+  font-size: 0.75rem;
+}
+
+.analise-ong__valor {
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
