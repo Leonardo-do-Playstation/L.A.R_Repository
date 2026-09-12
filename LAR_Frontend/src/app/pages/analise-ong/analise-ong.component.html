@@ -1,0 +1,56 @@
+<section class="analise-ong">
+
+    <div class="analise-ong__container">
+
+        <h1 class="analise-ong__titulo">
+            Solicitações de Cadastro
+        </h1>
+
+        @if (erro) {
+
+        <div class="analise-ong__erro">
+            {{ erro }}
+        </div>
+
+        }
+
+        @if (carregando) {
+
+        <div class="analise-ong__mensagem">
+            Carregando...
+        </div>
+
+        } @else if (ong) {
+
+        <div class="analise-ong__detalhe">
+
+            <button type="button" class="analise-ong__voltar" aria-label="Voltar" (click)="voltar()">
+                <img src="/assets/seta-esquerda.svg" alt="Voltar">
+            </button>
+
+            <h2 class="analise-ong__nome">
+                {{ ong.nome }}
+            </h2>
+
+            <div class="analise-ong__campo">
+                <span class="analise-ong__rotulo">E-mail</span>
+                <span class="analise-ong__valor">{{ ong.email }}</span>
+            </div>
+
+            <div class="analise-ong__campo">
+                <span class="analise-ong__rotulo">CNPJ</span>
+                <span class="analise-ong__valor">{{ ong.cnpj }}</span>
+            </div>
+
+            <div class="analise-ong__campo">
+                <span class="analise-ong__rotulo">Localização</span>
+                <span class="analise-ong__valor">{{ ong.endereco || 'Não divulgada.' }}</span>
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</section>
