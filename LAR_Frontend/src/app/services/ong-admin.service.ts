@@ -23,4 +23,14 @@ export class OngAdminService {
   listarPendentes(): Observable<OngPendente[]> {
     return this.http.get<OngPendente[]>(`${this.apiUrl}/pendentes`);
   }
+
+  aprovar(id: number): Observable<OngPendente> {
+    return this.http.put<OngPendente>(`${this.apiUrl}/${id}/aprovar`, {});
+  }
+
+  recusar(id: number, motivo: string): Observable<OngPendente> {
+    return this.http.put<OngPendente>(`${this.apiUrl}/${id}/recusar`, {
+      motivo,
+    });
+  }
 }
