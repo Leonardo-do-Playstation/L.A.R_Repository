@@ -4,6 +4,7 @@
   padding: 12px 0 30px;
   background: #f5f5f5;
   box-sizing: border-box;
+  position: relative;
 }
 
 .analise-ong__container {
@@ -20,8 +21,10 @@
 }
 
 .analise-ong__mensagem,
-.analise-ong__erro {
+.analise-ong__erro,
+.analise-ong__sucesso {
   padding: 16px;
+  margin-bottom: 16px;
   border-radius: 6px;
   background: #fff;
   color: #555;
@@ -31,6 +34,12 @@
 .analise-ong__erro {
   color: #a92222;
   background: #fdecec;
+}
+
+.analise-ong__sucesso {
+  color: #1e7a1a;
+  background: #e8f7e6;
+  font-weight: 600;
 }
 
 .analise-ong__detalhe {
@@ -88,4 +97,114 @@
   color: #333;
   font-size: 0.95rem;
   font-weight: 600;
+}
+
+.analise-ong__botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 46px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.analise-ong__botao:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.analise-ong__botao--recusar {
+  background: #d43b3b;
+}
+
+.analise-ong__botao--recusar:hover:not(:disabled) {
+  background: #b92e2e;
+}
+
+.analise-ong__botao--validar {
+  background: #2b9e25;
+}
+
+.analise-ong__botao--validar:hover:not(:disabled) {
+  background: #24851f;
+}
+
+.analise-ong__overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 220px;
+  background: rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.analise-ong__modal {
+  width: min(100%, 480px);
+  margin: 0 20px;
+  padding: 18px 20px 22px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.analise-ong__modal-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.analise-ong__modal-cabecalho .analise-ong__voltar {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.analise-ong__modal-cabecalho h2 {
+  margin: 0;
+  color: #2b9e25;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.analise-ong__erro-modal {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #fdecec;
+  color: #a92222;
+  font-size: 0.85rem;
+}
+
+.analise-ong__campo-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.analise-ong__campo-modal input {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.analise-ong__pergunta {
+  margin: 0 0 16px;
+  color: #333;
+  font-size: 0.95rem;
+  text-align: center;
 }

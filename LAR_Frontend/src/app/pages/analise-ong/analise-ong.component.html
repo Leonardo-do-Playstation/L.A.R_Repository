@@ -6,6 +6,14 @@
             Solicitações de Cadastro
         </h1>
 
+        @if (mensagemSucesso) {
+
+        <div class="analise-ong__sucesso">
+            {{ mensagemSucesso }}
+        </div>
+
+        }
+
         @if (erro) {
 
         <div class="analise-ong__erro">
@@ -20,7 +28,7 @@
             Carregando...
         </div>
 
-        } @else if (ong) {
+        } @else if (ong && !mensagemSucesso) {
 
         <div class="analise-ong__detalhe">
 
@@ -47,10 +55,97 @@
                 <span class="analise-ong__valor">{{ ong.endereco || 'Não divulgada.' }}</span>
             </div>
 
+            <button type="button" class="analise-ong__botao analise-ong__botao--recusar" (click)="abrirRecusa()">
+                Recusar Solicitação
+            </button>
+
+            <button type="button" class="analise-ong__botao analise-ong__botao--validar" (click)="abrirValidacao()">
+                Validar Cadastro
+            </button>
+
         </div>
 
         }
 
     </div>
+
+    @if (mostrarRecusa) {
+
+    <div class="analise-ong__overlay">
+
+        <div class="analise-ong__modal">
+
+            <div class="analise-ong__modal-cabecalho">
+                <button type="button" class="analise-ong__voltar" aria-label="Fechar" (click)="cancelarRecusa()">
+                    <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                </button>
+
+                <h2>Atenção</h2>
+            </div>
+
+            @if (erroRecusa) {
+            <div class="analise-ong__erro-modal">
+                {{ erroRecusa }}
+            </div>
+            }
+
+            <label class="analise-ong__campo-modal">
+                Motivo da recusa:
+                <input type="text" [(ngModel)]="motivoRecusa" [disabled]="enviandoRecusa" />
+            </label>
+
+            <button type="button" class="analise-ong__botao analise-ong__botao--validar" [disabled]="enviandoRecusa"
+                (click)="confirmarRecusa()">
+                @if (enviandoRecusa) {
+                Enviando...
+                } @else {
+                Enviar mensagem
+                }
+            </button>
+
+        </div>
+
+    </div>
+
+    }
+
+    @if (mostrarValidacao) {
+
+    <div class="analise-ong__overlay">
+
+        <div class="analise-ong__modal">
+
+            <div class="analise-ong__modal-cabecalho">
+                <button type="button" class="analise-ong__voltar" aria-label="Fechar" (click)="cancelarValidacao()">
+                    <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                </button>
+
+                <h2>Atenção</h2>
+            </div>
+
+            @if (erroValidacao) {
+            <div class="analise-ong__erro-modal">
+                {{ erroValidacao }}
+            </div>
+            }
+
+            <p class="analise-ong__pergunta">
+                Você tem certeza que deseja validar a ONG?
+            </p>
+
+            <button type="button" class="analise-ong__botao analise-ong__botao--validar" [disabled]="validando"
+                (click)="confirmarValidacao()">
+                @if (validando) {
+                Validando...
+                } @else {
+                Validar ONG
+                }
+            </button>
+
+        </div>
+
+    </div>
+
+    }
 
 </section>
