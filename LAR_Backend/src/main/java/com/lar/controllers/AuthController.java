@@ -1,7 +1,10 @@
 package com.lar.controllers;
 
-import java.util.Map;
-
+import com.lar.dtos.LoginDTO;
+import com.lar.dtos.LoginResponseDTO;
+import com.lar.dtos.PerfilLogadoDTO;
+import com.lar.security.JwtUtil;
+import com.lar.services.PerfilUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lar.dtos.LoginDTO;
-import com.lar.security.JwtUtil;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,11 +29,15 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private PerfilUsuarioService perfilUsuarioService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(dto.email, dto.senha));
+                    new UsernamePasswordAuthenticationToken(dto.email, dto.senha)
+            );
         } catch (DisabledException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("erro", "Esta conta está suspensa. Entre em contato com o suporte."));
@@ -41,6 +47,8 @@ public class AuthController {
         }
 
         String token = jwtUtil.gerarToken(dto.email);
-        return ResponseEntity.ok(Map.of("token", token));
+        PerfilLogadoDTO perfil = perfilUsuarioService.obterPerfil(dto.email);
+
+        return ResponseEntity.ok(new LoginResponseDTO(token, perfil));
     }
 }
