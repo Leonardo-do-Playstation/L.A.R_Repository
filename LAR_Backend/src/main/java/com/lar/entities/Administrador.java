@@ -13,6 +13,8 @@ public class Administrador extends Usuario {
     @Column(unique = true)
     public String codigoAdmin;
 
+    public Boolean superAdmin = false;
+
     public Administrador() {
     }
 
@@ -27,5 +29,13 @@ public class Administrador extends Usuario {
 
     public void setCodigoAdmin(String codigoAdmin) {
         this.codigoAdmin = codigoAdmin;
+    }
+
+    public Boolean getSuperAdmin() {
+        return superAdmin;
+    }
+
+    public void setSuperAdmin(Boolean superAdmin) {
+        this.superAdmin = superAdmin;
     }
 }

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.lar.config.PasswordEncoderConfig;
 import com.lar.dtos.CadastroAdotanteDTO;
 import com.lar.entities.Adotante;
+import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.AdotanteRepository;
 import com.lar.repositories.UsuarioRepository;
 
@@ -27,13 +27,11 @@ public class AdotanteService {
     public Adotante cadastrar(CadastroAdotanteDTO dto) {
 
         if (usuarioRepository.existsByEmail(dto.email)) {
-            throw new RuntimeException("Este e-mail já está cadastrado.");
+            throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
         }
         if (adotanteRepository.existsByCpf(dto.cpf)) {
-            throw new RuntimeException("Este CPF já está cadastrado.");
+            throw new RegraDeNegocioException("Este CPF já está cadastrado.");
         }
-
-        // Alterar exceções genéricas mais pra frente para personalizadas para retornar status code 409 e não 500
 
         String senhaCriptografada = passwordEncoder.encode(dto.senha);
 

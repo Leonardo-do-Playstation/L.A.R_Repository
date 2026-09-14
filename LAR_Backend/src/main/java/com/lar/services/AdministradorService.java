@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lar.dtos.CriarAdministradorDTO;
 import com.lar.entities.Administrador;
+import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.AdministradorRepository;
 import com.lar.repositories.UsuarioRepository;
 
@@ -22,17 +24,20 @@ public class AdministradorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Administrador criar(String nome, String email, String senha, String codigoAdmin) {
+    public Administrador criar(CriarAdministradorDTO dto) {
 
-        if (usuarioRepository.existsByEmail(email)) {
-            throw new RuntimeException("Este e-mail já está cadastrado.");
+        if (usuarioRepository.existsByEmail(dto.email)) {
+            throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
+        }
+        if (administradorRepository.existsByCodigoAdmin(dto.codigoAdmin)) {
+            throw new RegraDeNegocioException("Este código de administrador já está em uso.");
         }
 
         Administrador admin = new Administrador();
-        admin.setNome(nome);
-        admin.setEmail(email);
-        admin.setSenha(passwordEncoder.encode(senha));
-        admin.setCodigoAdmin(codigoAdmin);
+        admin.setNome(dto.nome);
+        admin.setEmail(dto.email);
+        admin.setSenha(passwordEncoder.encode(dto.senha));
+        admin.setCodigoAdmin(dto.codigoAdmin);
         admin.setData_cadastro(LocalDateTime.now());
 
         return administradorRepository.save(admin);

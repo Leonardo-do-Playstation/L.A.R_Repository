@@ -1,0 +1,53 @@
+<section class="solicitacoes">
+
+    <div class="solicitacoes__container">
+
+        <h1 class="solicitacoes__titulo">
+            Solicitações de Cadastro
+        </h1>
+
+        @if (erro) {
+
+        <div class="solicitacoes__erro">
+            {{ erro }}
+        </div>
+
+        }
+
+        @if (carregando) {
+
+        <div class="solicitacoes__mensagem">
+            Carregando solicitações...
+        </div>
+
+        } @else if (solicitacoes.length === 0) {
+
+        <div class="solicitacoes__mensagem">
+            <strong>Nenhuma solicitação pendente.</strong>
+            <span>
+                Novos cadastros de ONGs aparecerão aqui.
+            </span>
+        </div>
+
+        } @else {
+
+        <div class="solicitacoes__lista">
+
+            @for (solicitacao of solicitacoes; track solicitacao.id) {
+
+            <article class="solicitacao-card" (click)="abrirSolicitacao(solicitacao)">
+
+                <strong class="solicitacao-card__nome">
+                    {{ solicitacao.nome }}
+                </strong>
+
+                <span class="solicitacao-card__tempo">
+                    {{ tempoRelativo(solicitacao.data_cadastro) }}
+                </span>
+
+            </article>
+            }
+        </div>
+        }
+    </div>
+</section>

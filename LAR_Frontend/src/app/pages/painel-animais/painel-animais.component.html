@@ -1,0 +1,154 @@
+<section class="painel-animais">
+
+    <div class="painel-animais__container">
+
+        <a routerLink="/cadastro-animal" class="painel-animais__cadastrar">
+            Cadastrar Animal
+        </a>
+
+        <div class="painel-animais__filtros">
+
+            <button type="button" class="painel-animais__filtros-button" disabled>
+                <span>
+                    <img src="/assets/filtro.svg" alt="Filtro">
+                </span>
+
+                Filtros
+            </button>
+
+        </div>
+
+        <div class="painel-animais__ordenacao">
+
+            <button type="button" [class.painel-animais__ordenacao--ativa]="
+                    ordem === 'recentes'
+                " (click)="ordenar('recentes')">
+                Mais recentes
+            </button>
+
+            <button type="button" [class.painel-animais__ordenacao--ativa]="
+                    ordem === 'antigos'
+                " (click)="ordenar('antigos')">
+                Mais antigos
+            </button>
+
+        </div>
+
+        @if (erro) {
+
+        <div class="painel-animais__erro">
+            {{ erro }}
+        </div>
+
+        }
+
+        @if (carregando) {
+
+        <div class="painel-animais__mensagem">
+            Carregando animais...
+        </div>
+
+        } @else if (animais.length === 0) {
+
+        <div class="painel-animais__mensagem">
+            <strong>Nenhum animal cadastrado.</strong>
+            <span>
+                Cadastre seu primeiro animal para começar.
+            </span>
+        </div>
+
+        } @else {
+
+        <div class="painel-animais__lista">
+
+            @for (animal of animais; track animal.id) {
+
+            <article class="animal-card">
+
+                <img [src]="imagemAnimal(animal)" [alt]="animal.nome" class="animal-card__imagem"
+                    (error)="erroImagem($event)">
+
+                <div class="animal-card__conteudo">
+
+                    <div class="animal-card__linha">
+
+                        <strong>
+                            {{ animal.nome }}
+                        </strong>
+
+                        <span class="animal-card__status">
+
+                            {{ nomeStatus(animal.status) }}
+
+                            <span class="animal-card__status-dot" [class]="classeStatus(animal.status)"></span>
+
+                        </span>
+
+                    </div>
+
+                    <div class="animal-card__linha animal-card__linha--acoes">
+
+                        <span class="animal-card__sexo" [class.animal-card__sexo--macho]="
+                                        animal.sexo === 'MACHO'
+                                    " [class.animal-card__sexo--femea]="
+                                        animal.sexo === 'FEMEA'
+                                    ">
+
+                            @if (animal.sexo === 'MACHO') {
+
+                            <img src="/assets/sexo-masculino.svg" alt="Macho">
+
+                            } @else {
+
+                            <img src="/assets/sexo-feminino.svg" alt="Fêmea">
+
+                            }
+
+                        </span>
+
+                        <a [routerLink]="['/editar-animal', animal.id]" class="animal-card__editar">
+                            Editar
+                        </a>
+
+                        <button type="button" class="animal-card__excluir" [attr.aria-label]="'Excluir ' + animal.nome"
+                            (click)="abrirConfirmacaoExclusao(animal)">
+                            <img src="/assets/lixeira.svg" alt="Excluir">
+                        </button>
+                    </div>
+                </div>
+            </article>
+            }
+        </div>
+        }
+    </div>
+    @if (animalParaExcluir) {
+
+    <div class="painel-animais__confirmacao">
+
+        <div class="painel-animais__confirmacao-conteudo">
+
+            <h2>Excluir animal</h2>
+
+            <p>
+                Tem certeza que deseja excluir
+                <strong>{{ animalParaExcluir.nome }}</strong>?
+            </p>
+
+            <div class="painel-animais__confirmacao-acoes">
+
+                <button type="button" (click)="cancelarExclusao()" [disabled]="excluindo">
+                    Cancelar
+                </button>
+
+                <button type="button" (click)="confirmarExclusao()" [disabled]="excluindo">
+                    @if (excluindo) {
+                    Excluindo...
+                    } @else {
+                    Excluir
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</section>

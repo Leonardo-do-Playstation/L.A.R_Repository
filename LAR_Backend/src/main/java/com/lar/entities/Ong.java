@@ -26,6 +26,8 @@ public class Ong extends Usuario {
     @Enumerated(EnumType.STRING)
     private StatusOng status;
 
+    public String observacoes;
+
 
     public Ong() {
     }
@@ -54,5 +56,13 @@ public class Ong extends Usuario {
 
     public void setStatus(StatusOng status) {
         this.status = status;
+    }
+
+      public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 }
