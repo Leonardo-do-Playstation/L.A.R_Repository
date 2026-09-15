@@ -1,0 +1,131 @@
+.animal-card {
+  overflow: hidden;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+}
+
+.animal-card__foto-wrapper {
+  position: relative;
+}
+
+.animal-card__imagem {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1/0.92;
+  object-fit: cover;
+}
+
+.animal-card__favorito {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
+.animal-card__favorito:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.animal-card__favorito img {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.animal-card__conteudo {
+  padding: 6px 7px 7px;
+}
+
+.animal-card__linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.animal-card__linha strong {
+  overflow: hidden;
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.animal-card__status {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 3px;
+  color: #888;
+  font-size: 0.68rem;
+}
+
+.animal-card__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.animal-card__status-dot--disponivel {
+  background: #36a536;
+}
+
+.animal-card__status-dot--adotado {
+  background: #777;
+}
+
+.animal-card__status-dot--tratamento {
+  background: #e59f24;
+}
+
+.animal-card__status-dot--indefinido {
+  background: #999;
+}
+
+.animal-card__linha--rodape {
+  margin-top: 4px;
+}
+
+.animal-card__sexo {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.animal-card__sexo img {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.animal-card__sexo--macho {
+  color: #29a8e0;
+}
+
+.animal-card__sexo--femea {
+  color: #d77ca8;
+}
+
+.animal-card__ong {
+  overflow: hidden;
+  color: #999;
+  font-size: 0.68rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

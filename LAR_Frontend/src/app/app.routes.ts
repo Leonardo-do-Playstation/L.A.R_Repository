@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 
 import { authGuard } from './services/auth.guard';
+import { perfilGuard } from './services/perfil.guard';
 
 export const routes: Routes = [
   {
@@ -58,7 +59,7 @@ export const routes: Routes = [
       import('./pages/painel-animais/painel-animais.component').then(
         (m) => m.PainelAnimaisComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ONG'])],
   },
   {
     path: 'cadastro-animal',
@@ -66,7 +67,7 @@ export const routes: Routes = [
       import('./pages/cadastro-animal/cadastro-animal.component').then(
         (m) => m.CadastroAnimalComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ONG'])],
   },
   {
     path: 'editar-animal/:id',
@@ -74,7 +75,37 @@ export const routes: Routes = [
       import('./pages/editar-animal/editar-animal.component').then(
         (m) => m.EditarAnimalComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ONG'])],
+  },
+  {
+    path: 'admin/ongs-pendentes',
+    loadComponent: () =>
+      import('./pages/solicitacoes-cadastro/solicitacoes-cadastro.component').then(
+        (m) => m.SolicitacoesCadastroComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+  {
+    path: 'admin/ongs-pendentes/:id',
+    loadComponent: () =>
+      import('./pages/analise-ong/analise-ong.component').then(
+        (m) => m.AnaliseOngComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+  {
+    path: 'catalogo',
+    loadComponent: () =>
+      import('./pages/catalogo-animais/catalogo-animais.component').then(
+        (m) => m.CatalogoAnimaisComponent,
+      ),
+  },
+  {
+    path: 'acesso-negado',
+    loadComponent: () =>
+      import('./pages/acesso-negado/acesso-negado.component').then(
+        (m) => m.AcessoNegadoComponent,
+      ),
   },
   {
     path: 'admin/ongs-pendentes',
