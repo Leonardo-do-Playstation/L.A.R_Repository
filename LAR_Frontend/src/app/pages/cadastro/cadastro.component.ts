@@ -148,30 +148,12 @@ export class CadastroComponent {
     this.authService.login(email, senha).subscribe({
       next: (resposta) => {
         this.authService.salvarToken(resposta.token);
+        this.authService.salvarPerfil(resposta.perfil);
 
-        console.log('Login automático realizado.');
+        this.carregando = false;
+        this.cadastroRealizado = true;
 
-        this.authService.obterUsuarioAutenticado().subscribe({
-          next: (usuario) => {
-            console.log('Usuário autenticado:', usuario);
-
-            this.carregando = false;
-            this.cadastroRealizado = true;
-
-            this.router.navigate(['/home']);
-          },
-
-          error: (erro) => {
-            console.error('Erro ao verificar usuário autenticado:', erro);
-
-            this.carregando = false;
-
-            this.authService.limparToken();
-
-            this.erroCadastro =
-              'Cadastro realizado, mas não foi possível entrar automaticamente.';
-          },
-        });
+        this.router.navigate(['/home']);
       },
 
       error: (erro) => {
