@@ -23,14 +23,14 @@ public class OngStatusInterceptor implements HandlerInterceptor {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth == null || !auth.isAuthenticated()) {
-            return true; // sem autenticação, a cadeia de Security já cuidou disso antes de chegar aqui
+            return true; 
         }
 
         boolean isOng = auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ONG"));
 
         if (!isOng) {
-            return true; // não é ONG, essa regra não se aplica
+            return true;
         }
 
         Ong ong = ongRepository.findByEmail(auth.getName())
@@ -41,7 +41,9 @@ public class OngStatusInterceptor implements HandlerInterceptor {
                     "Sua ONG está com cadastro pendente de aprovação. Aguarde a análise do administrador.");
             case RECUSADA -> throw new AcessoNegadoException(
                     "O cadastro da sua ONG foi recusado. Entre em contato com o suporte.");
-            case APROVADA -> { /* segue normalmente */ }
+            case APROVADA -> {
+                
+            }
         }
 
         return true;

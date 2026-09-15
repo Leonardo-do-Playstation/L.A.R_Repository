@@ -3,6 +3,7 @@ package com.lar.dtos;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import com.lar.validators.CnpjValido;
 
 public class CadastroOngDTO {
     @NotBlank(message = "Nome é obrigatório")
@@ -20,9 +21,9 @@ public class CadastroOngDTO {
     public String endereco;
 
     @NotBlank(message = "CNPJ é obrigatório")
-    @Pattern(regexp = "\\d{14}", message = "CNPJ deve conter 14 dígitos")
+    @CnpjValido
     public String cnpj;
-
+        
     public CadastroOngDTO() {
     }
 }

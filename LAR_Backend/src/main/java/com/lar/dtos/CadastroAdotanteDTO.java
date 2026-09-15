@@ -3,6 +3,7 @@ package com.lar.dtos;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import com.lar.validators.CpfValido;
 
 public class CadastroAdotanteDTO {
      @NotBlank(message = "Nome é obrigatório")
@@ -19,10 +20,12 @@ public class CadastroAdotanteDTO {
 
     public String endereco;
 
-    @NotBlank(message = "CPF é obrigatório")
-    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos")
-    public String cpf;
     
+    @NotBlank(message = "CPF é obrigatório")
+    @CpfValido
+    public String cpf;
+        
     public CadastroAdotanteDTO() {
     }
+
 }
