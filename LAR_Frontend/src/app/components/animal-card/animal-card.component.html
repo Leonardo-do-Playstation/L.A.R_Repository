@@ -1,0 +1,70 @@
+<article class="animal-card" (click)="abrirDetalhes()">
+
+    <div class="animal-card__foto-wrapper">
+
+        <img [src]="imagemAnimal()" [alt]="animal.nome" class="animal-card__imagem" (error)="erroImagem($event)">
+
+        @if (usuarioLogado) {
+
+        <button type="button" class="animal-card__favorito" [disabled]="processandoFavorito"
+            [attr.aria-label]="favoritado ? 'Remover dos favoritos' : 'Favoritar'" (click)="alternarFavorito($event)">
+
+            @if (favoritado) {
+            <img src="/assets/coracao-preenchido.svg" alt="">
+            } @else {
+            <img src="/assets/coracao.svg" alt="">
+            }
+
+        </button>
+
+        }
+
+    </div>
+
+    <div class="animal-card__conteudo">
+
+        <div class="animal-card__linha">
+
+            <strong>
+                {{ animal.nome }}
+            </strong>
+
+            <span class="animal-card__status">
+
+                {{ nomeStatus() }}
+
+                <span class="animal-card__status-dot" [class]="classeStatus()"></span>
+
+            </span>
+
+        </div>
+
+        <div class="animal-card__linha animal-card__linha--rodape">
+
+            <span class="animal-card__sexo" [class.animal-card__sexo--macho]="
+                    animal.sexo === 'MACHO'
+                " [class.animal-card__sexo--femea]="
+                    animal.sexo === 'FEMEA'
+                ">
+
+                @if (animal.sexo === 'MACHO') {
+
+                <img src="/assets/sexo-masculino.svg" alt="Macho">
+
+                } @else {
+
+                <img src="/assets/sexo-feminino.svg" alt="Fêmea">
+
+                }
+
+            </span>
+
+            <span class="animal-card__ong">
+                {{ animal.ong.nome }}
+            </span>
+
+        </div>
+
+    </div>
+
+</article>

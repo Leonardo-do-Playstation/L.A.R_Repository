@@ -92,4 +92,11 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+  {
+    path: 'catalogo',
+    loadComponent: () =>
+      import('./pages/catalogo-animais/catalogo-animais.component').then(
+        (m) => m.CatalogoAnimaisComponent,
+      ),
+  },
 ];
