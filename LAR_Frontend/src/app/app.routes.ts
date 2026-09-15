@@ -76,4 +76,20 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+  {
+    path: 'admin/ongs-pendentes',
+    loadComponent: () =>
+      import('./pages/solicitacoes-cadastro/solicitacoes-cadastro.component').then(
+        (m) => m.SolicitacoesCadastroComponent,
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'admin/ongs-pendentes/:id',
+    loadComponent: () =>
+      import('./pages/analise-ong/analise-ong.component').then(
+        (m) => m.AnaliseOngComponent,
+      ),
+    canActivate: [authGuard],
+  },
 ];
