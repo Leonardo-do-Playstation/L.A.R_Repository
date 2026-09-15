@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+
+export type TipoUsuario = 'ADMINISTRADOR' | 'ONG' | 'ADOTANTE';
+
+export interface Perfil {
+  id: number;
+  nome: string;
+  email: string;
+  tipo: TipoUsuario;
+  statusOng: 'PENDENTE' | 'APROVADA' | 'RECUSADA' | null;
+}
 
 export interface LoginResponse {
   token: string;
+  perfil: Perfil;
 }
 
 export interface RecuperarSenhaResponse {
@@ -22,6 +33,7 @@ interface LoginRequest {
 export class AuthService {
   private readonly apiUrl = 'http://localhost:8080/auth';
   private readonly tokenKey = 'token';
+  private readonly perfilKey = 'perfil';
 
   constructor(private http: HttpClient) {}
 
@@ -62,10 +74,10 @@ export class AuthService {
     );
   }
 
-  obterUsuarioAutenticado(): Observable<string> {
-    return this.http.get(`${this.apiUrl}/me`, {
-      responseType: 'text',
-    });
+  buscarPerfilAtual(): Observable<Perfil> {
+    return this.http
+      .get<Perfil>(`${this.apiUrl}/me`)
+      .pipe(tap((perfil) => this.salvarPerfil(perfil)));
   }
 
   salvarToken(token: string): void {
@@ -76,11 +88,30 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  salvarPerfil(perfil: Perfil): void {
+    localStorage.setItem(this.perfilKey, JSON.stringify(perfil));
+  }
+
+  obterPerfil(): Perfil | null {
+    const bruto = localStorage.getItem(this.perfilKey);
+
+    if (!bruto) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(bruto) as Perfil;
+    } catch {
+      return null;
+    }
+  }
+
   estaAutenticado(): boolean {
     return this.obterToken() !== null;
   }
 
   limparToken(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.perfilKey);
   }
 }
