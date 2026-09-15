@@ -1,0 +1,78 @@
+<section class="catalogo">
+
+    <div class="catalogo__container">
+
+        <h1 class="catalogo__titulo">
+            Animais para Adoção
+        </h1>
+
+        <div class="catalogo__filtros">
+
+            <button type="button" class="catalogo__filtros-button" disabled>
+                <span>
+                    <img src="/assets/filtro.svg" alt="Filtro">
+                </span>
+
+                Filtros
+            </button>
+
+        </div>
+
+        <div class="catalogo__ordenacao">
+
+            <button type="button" [class.catalogo__ordenacao--ativa]="
+                    ordem === 'recentes'
+                " (click)="ordenar('recentes')">
+                Mais recentes
+            </button>
+
+            <button type="button" [class.catalogo__ordenacao--ativa]="
+                    ordem === 'antigos'
+                " (click)="ordenar('antigos')">
+                Mais antigos
+            </button>
+
+        </div>
+
+        @if (erro) {
+
+        <div class="catalogo__erro">
+            {{ erro }}
+        </div>
+
+        }
+
+        @if (carregando) {
+
+        <div class="catalogo__mensagem">
+            Carregando animais...
+        </div>
+
+        } @else if (animais.length === 0) {
+
+        <div class="catalogo__mensagem">
+            <strong>Nenhum animal disponível no momento.</strong>
+            <span>
+                Volte mais tarde para conferir novos animais para adoção.
+            </span>
+        </div>
+
+        } @else {
+
+        <div class="catalogo__lista">
+
+            @for (animal of animais; track animal.id) {
+
+            <article class="animal-card">
+                <strong>{{ animal.nome }}</strong>
+            </article>
+
+            }
+
+        </div>
+
+        }
+
+    </div>
+
+</section>
