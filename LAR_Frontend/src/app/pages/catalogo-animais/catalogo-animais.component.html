@@ -63,9 +63,7 @@
 
             @for (animal of animais; track animal.id) {
 
-            <article class="animal-card">
-                <strong>{{ animal.nome }}</strong>
-            </article>
+            <app-animal-card [animal]="animal" (erroFavorito)="mostrarErroFavorito($event)"></app-animal-card>
 
             }
 

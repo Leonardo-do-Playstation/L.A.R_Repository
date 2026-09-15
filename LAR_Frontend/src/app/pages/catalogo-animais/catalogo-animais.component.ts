@@ -5,11 +5,12 @@ import {
   CatalogoAnimaisService,
   AnimalCatalogo,
 } from '../../services/catalogo-animais.service';
+import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
 
 @Component({
   selector: 'app-catalogo-animais',
   standalone: true,
-  imports: [],
+  imports: [AnimalCardComponent],
   templateUrl: './catalogo-animais.component.html',
   styleUrl: './catalogo-animais.component.css',
 })
@@ -53,5 +54,9 @@ export class CatalogoAnimaisComponent implements OnInit {
     }
 
     this.animais = [...this.animais].reverse();
+  }
+
+  mostrarErroFavorito(mensagem: string): void {
+    this.erro = mensagem;
   }
 }
