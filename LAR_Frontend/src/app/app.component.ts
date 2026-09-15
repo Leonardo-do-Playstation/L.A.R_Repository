@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+
 import {
   NavigationEnd,
   Router,
   RouterLink,
   RouterOutlet,
 } from '@angular/router';
+
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -28,12 +30,14 @@ export class AppComponent {
   }
 
   private updateNavbar(url: string): void {
+    const path = url.split('?')[0];
+
     this.showNavbar = ![
       '/',
       '/login',
       '/cadastro',
       '/cadastro-ong',
       '/recuperar-senha',
-    ].includes(url);
+    ].includes(path);
   }
 }

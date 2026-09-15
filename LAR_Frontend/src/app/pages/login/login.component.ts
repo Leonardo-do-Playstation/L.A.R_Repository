@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService, Perfil } from '../../services/auth.service';
@@ -11,21 +11,30 @@ import { AuthService, Perfil } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm;
 
   erroLogin = '';
   carregando = false;
+  rotaCadastro = '/cadastro';
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
 
       senha: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      this.rotaCadastro =
+        params.get('tipo') === 'ong' ? '/cadastro-ong' : '/cadastro';
     });
   }
 

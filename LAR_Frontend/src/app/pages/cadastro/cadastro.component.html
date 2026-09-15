@@ -191,7 +191,7 @@
 
       Já cadastrado?
 
-      <a routerLink="/login">
+      <a routerLink="/login" [queryParams]="tipo === 'ong' ? { tipo: 'ong' } : {}">
         Faça Login
       </a>
 
