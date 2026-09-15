@@ -1,16 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import {
   CatalogoAnimaisService,
   AnimalCatalogo,
+  FiltrosCatalogo,
 } from '../../services/catalogo-animais.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
+
+type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
 
 @Component({
   selector: 'app-catalogo-animais',
   standalone: true,
-  imports: [AnimalCardComponent],
+  imports: [AnimalCardComponent, FormsModule],
   templateUrl: './catalogo-animais.component.html',
   styleUrl: './catalogo-animais.component.css',
 })
@@ -24,6 +27,11 @@ export class CatalogoAnimaisComponent implements OnInit {
 
   ordem: 'recentes' | 'antigos' = 'recentes';
 
+  filtros: FiltrosCatalogo = {};
+
+  mostrarFiltros = false;
+  categoriaExpandida: CategoriaFiltro | null = null;
+
   ngOnInit(): void {
     this.carregarAnimais();
   }
@@ -32,7 +40,7 @@ export class CatalogoAnimaisComponent implements OnInit {
     this.carregando = true;
     this.erro = '';
 
-    this.catalogoAnimaisService.listar().subscribe({
+    this.catalogoAnimaisService.listar(this.filtros).subscribe({
       next: (animais) => {
         this.animais = animais;
         this.carregando = false;
@@ -58,5 +66,36 @@ export class CatalogoAnimaisComponent implements OnInit {
 
   mostrarErroFavorito(mensagem: string): void {
     this.erro = mensagem;
+  }
+
+  abrirFiltros(): void {
+    this.mostrarFiltros = true;
+  }
+
+  fecharFiltros(): void {
+    this.mostrarFiltros = false;
+    this.categoriaExpandida = null;
+  }
+
+  alternarCategoria(categoria: CategoriaFiltro): void {
+    this.categoriaExpandida =
+      this.categoriaExpandida === categoria ? null : categoria;
+  }
+
+  aplicarFiltros(): void {
+    this.fecharFiltros();
+    this.carregarAnimais();
+  }
+
+  limparFiltros(): void {
+    this.filtros = {};
+    this.fecharFiltros();
+    this.carregarAnimais();
+  }
+
+  get quantidadeFiltrosAtivos(): number {
+    return Object.values(this.filtros).filter(
+      (valor) => valor !== undefined && valor !== null && valor !== '',
+    ).length;
   }
 }
