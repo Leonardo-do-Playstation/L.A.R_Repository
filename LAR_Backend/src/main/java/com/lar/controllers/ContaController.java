@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
+import com.lar.dtos.AlterarSenhaDTO;
 import java.util.Map;
 
 @RestController
@@ -37,6 +38,13 @@ public class ContaController {
     @PostMapping("/excluir/confirmar")
     public ResponseEntity<Void> confirmar(@Valid @RequestBody ConfirmarExclusaoOngDTO dto) {
         contaService.confirmarExclusaoOng(dto.token);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/senha")
+    public ResponseEntity<Void> alterarSenha(@Valid @RequestBody AlterarSenhaDTO dto,
+                                            Authentication authentication) {
+        contaService.alterarSenha(authentication.getName(), dto);
         return ResponseEntity.noContent().build();
     }
 }

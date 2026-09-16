@@ -10,6 +10,7 @@ import com.lar.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.lar.dtos.AlterarSenhaDTO;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -95,4 +96,24 @@ public class ContaService {
         return usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário autenticado não encontrado."));
     }
+
+    public void alterarSenha(String emailAutenticado, AlterarSenhaDTO dto) {
+    Usuario usuario = usuarioRepository.findByEmail(emailAutenticado)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário autenticado não encontrado."));
+
+    if (!passwordEncoder.matches(dto.senhaAtual, usuario.getSenha())) {
+        throw new AcessoNegadoException("Senha atual incorreta.");
+    }
+
+    if (!dto.novaSenha.equals(dto.confirmarNovaSenha)) {
+        throw new RegraDeNegocioException("A nova senha e a confirmação não coincidem.");
+    }
+
+    if (dto.senhaAtual.equals(dto.novaSenha)) {
+        throw new RegraDeNegocioException("A nova senha deve ser diferente da senha atual.");
+    }
+
+    usuario.setSenha(passwordEncoder.encode(dto.novaSenha));
+    usuarioRepository.save(usuario);
+}
 }
