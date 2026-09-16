@@ -181,8 +181,9 @@ export class EditarAnimalComponent implements OnInit {
         error: (erro: HttpErrorResponse) => {
           this.salvando = false;
 
-          if (erro.status === 400) {
+          if (erro.status === 400 || erro.status === 413) {
             this.erroEdicao =
+              erro.error?.mensagem ||
               'Não foi possível salvar as alterações. Verifique os dados informados.';
           } else if (erro.status === 401) {
             this.erroEdicao = 'Sua sessão expirou. Faça login novamente.';
@@ -193,6 +194,7 @@ export class EditarAnimalComponent implements OnInit {
             this.erroEdicao = 'Animal não encontrado.';
           } else {
             this.erroEdicao =
+              erro.error?.mensagem ||
               'Ocorreu um erro ao salvar as alterações. Tente novamente.';
           }
         },

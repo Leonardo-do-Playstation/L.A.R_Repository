@@ -114,8 +114,11 @@ export class CadastroAnimalComponent {
       error: (erro: HttpErrorResponse) => {
         this.carregando = false;
 
-        if (erro.status === 400) {
+        const mensagemBackend = erro.error?.mensagem;
+
+        if (erro.status === 400 || erro.status === 413) {
           this.erroCadastro =
+            mensagemBackend ||
             'Não foi possível cadastrar o animal. Verifique os dados informados.';
         } else if (erro.status === 401) {
           this.erroCadastro = 'Sua sessão expirou. Faça login novamente.';
@@ -124,6 +127,7 @@ export class CadastroAnimalComponent {
             'Você não possui permissão para cadastrar animais.';
         } else {
           this.erroCadastro =
+            mensagemBackend ||
             'Ocorreu um erro ao cadastrar o animal. Tente novamente.';
         }
       },
