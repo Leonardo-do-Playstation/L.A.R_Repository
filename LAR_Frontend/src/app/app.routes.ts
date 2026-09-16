@@ -101,6 +101,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'animais/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-animal/detalhe-animal.component').then(
+        (m) => m.DetalheAnimalComponent,
+      ),
+  },
+  {
     path: 'acesso-negado',
     loadComponent: () =>
       import('./pages/acesso-negado/acesso-negado.component').then(

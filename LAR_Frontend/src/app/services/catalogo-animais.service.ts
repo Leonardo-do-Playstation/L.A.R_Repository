@@ -47,6 +47,10 @@ export class CatalogoAnimaisService {
 
   private readonly apiUrl = 'http://localhost:8080/animais';
 
+  buscarPorId(id: number): Observable<AnimalCatalogo> {
+    return this.http.get<AnimalCatalogo>(`${this.apiUrl}/${id}`);
+  }
+
   listar(filtros: FiltrosCatalogo = {}): Observable<AnimalCatalogo[]> {
     let params = new HttpParams().set('page', 0).set('size', 100);
 
