@@ -4,6 +4,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService, Perfil } from '../../services/auth.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -75,6 +78,10 @@ export class LoginComponent implements OnInit {
         }
       },
     });
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 
   private rotaParaPerfil(perfil: Perfil): string {

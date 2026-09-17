@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../../services/auth.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-cadastro',
   standalone: true,
@@ -30,6 +32,7 @@ export class CadastroComponent {
     private router: Router,
     private http: HttpClient,
     private authService: AuthService,
+    private location: Location,
   ) {
     this.tipo = this.route.snapshot.data['tipo'] ?? 'adotante';
 
@@ -74,6 +77,10 @@ export class CadastroComponent {
     } else {
       this.cadastrarOng();
     }
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 
   private validarFormulario(): boolean {
