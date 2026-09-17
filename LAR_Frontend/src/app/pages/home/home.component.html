@@ -1,11 +1,103 @@
-<div class="text-center">
-  <h1>Bem-vindo ao L.A.R</h1>
-  <p>Frontend funcionando.</p>
+<section class="home">
 
-  <button
-    type="button"
-    class="btn btn-danger"
-    (click)="sair()">
-    Sair
-  </button>
-</div>
+  <div class="home__container">
+
+    <div class="home__cards">
+
+      @if (ehAdotante()) {
+
+      <a class="home__card" routerLink="/catalogo">
+
+        <img class="home__icone" src="/assets/cachorro-icone.svg" alt="">
+
+        <span>
+          Lista de animais
+        </span>
+
+      </a>
+
+      <a class="home__card" routerLink="/ongs">
+
+        <img class="home__icone" src="/assets/casa-icone.svg" alt="">
+
+        <span>
+          Lista de ONGs
+        </span>
+
+      </a>
+
+      }
+
+      @if (ehOng()) {
+
+      <a class="home__card" routerLink="/painel-animais">
+
+        <img class="home__icone" src="/assets/cachorro-icone.svg" alt="">
+
+        <span>
+          Meus Animais
+        </span>
+
+      </a>
+
+      <a class="home__card" routerLink="/perfil">
+
+        <img class="home__icone" src="/assets/pessoa-icone.svg" alt="">
+
+        <span>
+          Meu Perfil
+        </span>
+
+      </a>
+
+      }
+
+      @if (ehAdministrador()) {
+
+      <a class="home__card" routerLink="/catalogo">
+
+        <img class="home__icone" src="/assets/cachorro-icone.svg" alt="">
+
+        <span>
+          Lista de animais
+        </span>
+
+      </a>
+
+      <a class="home__card" routerLink="/ongs">
+
+        <img class="home__icone" src="/assets/casa-icone.svg" alt="">
+
+        <span>
+          Lista de ONGs
+        </span>
+
+      </a>
+
+      <a class="home__card" routerLink="/admin/usuarios">
+
+        <img class="home__icone" src="/assets/pessoa-icone.svg" alt="">
+
+        <span>
+          Lista de Adotantes
+        </span>
+
+      </a>
+
+      <a class="home__card" routerLink="/admin/ongs-pendentes">
+
+        <img class="home__icone" src="/assets/relogio-icone.svg" alt="">
+
+        <span>
+          Cadastros Pendentes
+        </span>
+
+      </a>
+
+      }
+
+    </div>
+
+  </div>
+
+</section>

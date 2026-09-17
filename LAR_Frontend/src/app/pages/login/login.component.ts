@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService, Perfil } from '../../services/auth.service';
-
 import { Location } from '@angular/common';
 
 @Component({
@@ -15,7 +14,6 @@ import { Location } from '@angular/common';
 })
 export class LoginComponent implements OnInit {
   loginForm;
-
   erroLogin = '';
   carregando = false;
   rotaCadastro = '/cadastro';
@@ -29,13 +27,12 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-
       senha: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe((params) => {
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
       this.rotaCadastro =
         params.get('tipo') === 'ong' ? '/cadastro-ong' : '/cadastro';
     });
@@ -50,24 +47,19 @@ export class LoginComponent implements OnInit {
     }
 
     const email = this.loginForm.value.email!;
-
     const senha = this.loginForm.value.senha!;
 
     this.carregando = true;
 
     this.authService.login(email, senha).subscribe({
-      next: (resposta) => {
+      next: (resposta: { token: string; perfil: Perfil }) => {
         this.authService.salvarToken(resposta.token);
         this.authService.salvarPerfil(resposta.perfil);
-
         this.carregando = false;
-
-        this.router.navigateByUrl(this.rotaParaPerfil(resposta.perfil));
+        this.router.navigate(['/home']);
       },
-
-      error: (erro) => {
+      error: (erro: HttpErrorResponse) => {
         console.error('Erro ao realizar login:', erro);
-
         this.carregando = false;
 
         if (erro.status === 401 || erro.status === 403) {
@@ -82,19 +74,5 @@ export class LoginComponent implements OnInit {
 
   voltar(): void {
     this.location.back();
-  }
-
-  private rotaParaPerfil(perfil: Perfil): string {
-    if (perfil.tipo === 'ADMINISTRADOR') {
-      return '/admin/ongs-pendentes';
-    }
-
-    if (perfil.tipo === 'ONG') {
-      return perfil.statusOng === 'APROVADA'
-        ? '/painel-animais'
-        : '/acesso-negado?motivo=ong-' + perfil.statusOng?.toLowerCase();
-    }
-
-    return '/catalogo';
   }
 }

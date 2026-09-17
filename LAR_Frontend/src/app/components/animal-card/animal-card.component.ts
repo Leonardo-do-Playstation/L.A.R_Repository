@@ -71,7 +71,7 @@ export class AnimalCardComponent {
   }
 
   erroImagem(event: Event): void {
-    const imagem = event.target as HTMLImageElement;
+    const imagem = event.target as any;
     imagem.src = '/assets/camera.svg';
   }
 
