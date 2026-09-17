@@ -1,0 +1,13 @@
+package com.lar.dtos;
+
+public class AdotantePerfilDTO {
+    public Long id;
+    public String nome;
+    public String email;
+    public String telefone;
+    public String endereco;
+    public String cpf;
+
+    public AdotantePerfilDTO() {
+    }
+}
