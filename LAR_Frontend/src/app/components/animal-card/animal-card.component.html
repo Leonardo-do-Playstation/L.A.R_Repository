@@ -4,20 +4,17 @@
 
         <img [src]="imagemAnimal()" [alt]="animal.nome" class="animal-card__imagem" (error)="erroImagem($event)">
 
-        @if (usuarioLogado) {
+        <button type="button" class="animal-card__favorito" [disabled]="usuarioLogado && processandoFavorito"
+            [attr.aria-label]="usuarioLogado ? (favoritado ? 'Remover dos favoritos' : 'Favoritar') : 'Entrar para favoritar'"
+            (click)="alternarFavorito($event)">
 
-        <button type="button" class="animal-card__favorito" [disabled]="processandoFavorito"
-            [attr.aria-label]="favoritado ? 'Remover dos favoritos' : 'Favoritar'" (click)="alternarFavorito($event)">
-
-            @if (favoritado) {
+            @if (usuarioLogado && favoritado) {
             <img src="/assets/coracao-preenchido.svg" alt="">
             } @else {
             <img src="/assets/coracao.svg" alt="">
             }
 
         </button>
-
-        }
 
     </div>
 
@@ -41,11 +38,8 @@
 
         <div class="animal-card__linha animal-card__linha--rodape">
 
-            <span class="animal-card__sexo" [class.animal-card__sexo--macho]="
-                    animal.sexo === 'MACHO'
-                " [class.animal-card__sexo--femea]="
-                    animal.sexo === 'FEMEA'
-                ">
+            <span class="animal-card__sexo" [class.animal-card__sexo--macho]="animal.sexo === 'MACHO'"
+                [class.animal-card__sexo--femea]="animal.sexo === 'FEMEA'">
 
                 @if (animal.sexo === 'MACHO') {
 

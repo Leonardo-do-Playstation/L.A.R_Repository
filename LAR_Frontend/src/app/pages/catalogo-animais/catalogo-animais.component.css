@@ -151,9 +151,9 @@
   position: fixed;
   inset: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 20px;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
@@ -313,4 +313,21 @@
 
 .filtros-modal__aplicar:hover {
   background: #24851f;
+}
+
+@media (max-width: 600px) {
+  .filtros-categoria__opcoes--dupla {
+    gap: 8px;
+  }
+
+  .filtros-categoria__opcoes--dupla label {
+    min-width: 0;
+  }
+
+  .filtros-categoria__opcoes--dupla input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 7px;
+    font-size: 0.85rem;
+  }
 }

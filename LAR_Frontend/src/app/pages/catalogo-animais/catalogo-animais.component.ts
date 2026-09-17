@@ -64,10 +64,6 @@ export class CatalogoAnimaisComponent implements OnInit {
     this.animais = [...this.animais].reverse();
   }
 
-  mostrarErroFavorito(mensagem: string): void {
-    this.erro = mensagem;
-  }
-
   abrirFiltros(): void {
     this.mostrarFiltros = true;
   }

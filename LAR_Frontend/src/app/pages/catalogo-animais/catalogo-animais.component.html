@@ -67,7 +67,7 @@
 
             @for (animal of animais; track animal.id) {
 
-            <app-animal-card [animal]="animal" (erroFavorito)="mostrarErroFavorito($event)"></app-animal-card>
+            <app-animal-card [animal]="animal"></app-animal-card>
 
             }
 
@@ -203,7 +203,7 @@
 
                 @if (categoriaExpandida === 'cor') {
                 <div class="filtros-categoria__opcoes">
-                    <input type="text" placeholder="Ex: Preto" [(ngModel)]="filtros.cor">
+                    <input type="text" placeholder="Ex: Marrom" [(ngModel)]="filtros.cor">
                 </div>
                 }
             </div>

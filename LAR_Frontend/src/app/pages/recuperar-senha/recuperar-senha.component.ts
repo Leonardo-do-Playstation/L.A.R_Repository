@@ -4,6 +4,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-recuperar-senha',
   standalone: true,
@@ -26,6 +28,7 @@ export class RecuperarSenhaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -77,5 +80,9 @@ export class RecuperarSenhaComponent implements OnInit {
         }
       },
     });
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }

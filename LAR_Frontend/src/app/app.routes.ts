@@ -8,17 +8,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 
 import { authGuard } from './services/auth.guard';
+import { guestGuard } from './services/guest.guard';
 import { perfilGuard } from './services/perfil.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: EntradaComponent,
+    canActivate: [guestGuard],
   },
 
   {
     path: 'cadastro',
     component: CadastroComponent,
+    canActivate: [guestGuard],
     data: {
       tipo: 'adotante',
     },
@@ -27,6 +30,7 @@ export const routes: Routes = [
   {
     path: 'cadastro-ong',
     component: CadastroComponent,
+    canActivate: [guestGuard],
     data: {
       tipo: 'ong',
     },
@@ -35,11 +39,13 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [guestGuard],
   },
 
   {
     path: 'recuperar-senha',
     component: RecuperarSenhaComponent,
+    canActivate: [guestGuard],
   },
 
   {
@@ -61,6 +67,7 @@ export const routes: Routes = [
       ),
     canActivate: [perfilGuard(['ONG'])],
   },
+
   {
     path: 'cadastro-animal',
     loadComponent: () =>
@@ -69,6 +76,7 @@ export const routes: Routes = [
       ),
     canActivate: [perfilGuard(['ONG'])],
   },
+
   {
     path: 'editar-animal/:id',
     loadComponent: () =>
@@ -77,6 +85,7 @@ export const routes: Routes = [
       ),
     canActivate: [perfilGuard(['ONG'])],
   },
+
   {
     path: 'admin/ongs-pendentes',
     loadComponent: () =>
@@ -85,6 +94,7 @@ export const routes: Routes = [
       ),
     canActivate: [perfilGuard(['ADMINISTRADOR'])],
   },
+
   {
     path: 'admin/ongs-pendentes/:id',
     loadComponent: () =>
@@ -93,6 +103,7 @@ export const routes: Routes = [
       ),
     canActivate: [perfilGuard(['ADMINISTRADOR'])],
   },
+
   {
     path: 'catalogo',
     loadComponent: () =>
@@ -100,6 +111,15 @@ export const routes: Routes = [
         (m) => m.CatalogoAnimaisComponent,
       ),
   },
+
+  {
+    path: 'animais/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-animal/detalhe-animal.component').then(
+        (m) => m.DetalheAnimalComponent,
+      ),
+  },
+
   {
     path: 'acesso-negado',
     loadComponent: () =>

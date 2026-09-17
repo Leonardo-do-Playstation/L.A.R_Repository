@@ -1,0 +1,200 @@
+@if (mostrarNavbar) {
+
+<nav class="navbar-global">
+
+    <div class="navbar-global__conteudo">
+
+        <button type="button" class="navbar-global__botao-menu" aria-label="Abrir menu" (click)="alternarMenu()">
+
+            <img src="/assets/menu.svg" alt="">
+
+        </button>
+
+        <a class="navbar-global__logo" [routerLink]="estaAutenticado() ? '/home' : '/'" aria-label="Página inicial">
+
+            <img src="/assets/LAR-logo.svg" alt="LAR">
+
+        </a>
+
+        <div class="navbar-global__acoes">
+
+            @if (!estaAutenticado() || ehAdotante()) {
+
+            <button type="button" class="navbar-global__icone navbar-global__icone--botao" aria-label="Favoritos"
+                (click)="acessarFavoritos()">
+
+                <img src="/assets/coracao-navbar.svg" alt="">
+
+            </button>
+
+            }
+
+            <button type="button" class="navbar-global__icone navbar-global__icone--botao" aria-label="Perfil">
+
+                <img src="/assets/perfil.svg" alt="">
+
+            </button>
+
+        </div>
+
+    </div>
+
+</nav>
+
+@if (mensagemFavoritos) {
+
+<div class="navbar-global__aviso">
+
+    <span>{{ mensagemFavoritos }}</span>
+
+    <div class="navbar-global__aviso-acoes">
+
+        <a routerLink="/login" (click)="fecharAviso()">
+            Login
+        </a>
+
+        <a routerLink="/cadastro" (click)="fecharAviso()">
+            Cadastro
+        </a>
+
+        <button type="button" (click)="fecharAviso()">
+            Fechar
+        </button>
+
+    </div>
+
+</div>
+
+}
+
+@if (menuAberto) {
+
+<div class="menu-overlay" (click)="fecharMenu()">
+</div>
+
+<aside class="menu-lateral">
+
+    <div class="menu-lateral__cabecalho">
+
+        <button type="button" class="menu-lateral__fechar" aria-label="Fechar menu" (click)="fecharMenu()">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+    <nav class="menu-lateral__opcoes">
+
+        @if (!estaAutenticado()) {
+
+        <a class="menu-lateral__item" routerLink="/" (click)="fecharMenu()">
+
+            Entrada
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/login" (click)="fecharMenu()">
+
+            Login
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/cadastro" (click)="fecharMenu()">
+
+            Cadastro
+
+        </a>
+
+        }
+
+        @if (estaAutenticado()) {
+
+        <a class="menu-lateral__item" routerLink="/home" (click)="fecharMenu()">
+
+            Tela inicial
+
+        </a>
+
+        }
+
+        @if (ehAdotante()) {
+
+        <a class="menu-lateral__item" routerLink="/catalogo" (click)="fecharMenu()">
+
+            Animais
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/ongs" (click)="fecharMenu()">
+
+            ONGs
+
+        </a>
+
+        }
+
+        @if (ehOng()) {
+
+        <a class="menu-lateral__item" routerLink="/painel-animais" (click)="fecharMenu()">
+
+            Meus Animais
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/perfil" (click)="fecharMenu()">
+
+            Meu Perfil
+
+        </a>
+
+        }
+
+        @if (ehAdministrador()) {
+
+        <a class="menu-lateral__item" routerLink="/catalogo" (click)="fecharMenu()">
+
+            Animais
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/ongs" (click)="fecharMenu()">
+
+            ONGs
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/admin/usuarios" (click)="fecharMenu()">
+
+            Lista de Adotantes
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/admin/ongs-pendentes" (click)="fecharMenu()">
+
+            Cadastros Pendentes
+
+        </a>
+
+        }
+
+        @if (estaAutenticado()) {
+
+        <button type="button" class="menu-lateral__item menu-lateral__item--sair" (click)="sair()"
+            [disabled]="carregandoLogout">
+
+            Sair
+
+        </button>
+
+        }
+
+    </nav>
+
+</aside>
+
+}
+
+}
