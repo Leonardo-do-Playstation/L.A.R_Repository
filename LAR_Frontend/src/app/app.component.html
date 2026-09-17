@@ -1,23 +1,5 @@
-@if (showNavbar) {
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">
-      L.A.R
-    </a>
+<app-navbar />
 
-    <div class="navbar-nav">
-      <a class="nav-link" routerLink="/">
-        Início
-      </a>
-
-      <a class="nav-link" routerLink="/sobre">
-        Sobre
-      </a>
-    </div>
-  </div>
-</nav>
-}
-
-<main [class.container]="showNavbar" [class.mt-4]="showNavbar">
+<main>
   <router-outlet></router-outlet>
 </main>
