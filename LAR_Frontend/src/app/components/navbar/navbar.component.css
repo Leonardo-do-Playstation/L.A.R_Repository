@@ -317,3 +317,9 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.navbar-global__logo img {
+  width: 52px;
+  height: auto;
+  display: block;
+}

@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subject, filter, takeUntil } from 'rxjs';
-
 import { AuthService, TipoUsuario } from '../../services/auth.service';
+import { AvisoAuthService } from '../../services/aviso-auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,8 +23,15 @@ export class NavbarComponent implements OnDestroy {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private avisoAuthService: AvisoAuthService,
   ) {
     this.atualizarEstado();
+
+    this.avisoAuthService.mensagem$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((mensagem) => {
+        this.mensagemFavoritos = mensagem;
+      });
 
     this.router.events
       .pipe(
@@ -39,15 +46,12 @@ export class NavbarComponent implements OnDestroy {
 
   private atualizarEstado(): void {
     this.atualizarPerfil();
-
-    const urlAtual = this.router.url;
-
-    this.mostrarNavbar = !this.ehTelaInicial(urlAtual);
+    const caminhoAtual = this.router.url.split('?')[0];
+    this.mostrarNavbar = !this.ehTelaInicial(caminhoAtual);
   }
 
   private atualizarPerfil(): void {
     const perfil = this.authService.obterPerfil();
-
     this.tipoUsuario = perfil?.tipo ?? null;
   }
 
@@ -80,7 +84,7 @@ export class NavbarComponent implements OnDestroy {
 
   alternarMenu(): void {
     this.menuAberto = !this.menuAberto;
-    this.mensagemFavoritos = '';
+    this.avisoAuthService.fechar();
   }
 
   fecharMenu(): void {
@@ -88,15 +92,20 @@ export class NavbarComponent implements OnDestroy {
   }
 
   acessarFavoritos(): void {
-    this.mensagemFavoritos = '';
+    this.avisoAuthService.fechar();
 
     if (this.estaAutenticado()) {
       this.router.navigate(['/favoritos']);
       return;
     }
 
-    this.mensagemFavoritos =
-      'Você precisa estar logado como Adotante para acessar seus favoritos.';
+    this.avisoAuthService.mostrar(
+      'Você precisa estar logado como Adotante para acessar seus favoritos.',
+    );
+  }
+
+  fecharAviso(): void {
+    this.avisoAuthService.fechar();
   }
 
   sair(): void {
@@ -119,11 +128,10 @@ export class NavbarComponent implements OnDestroy {
 
   private finalizarLogout(): void {
     this.authService.limparToken();
-
     this.tipoUsuario = null;
     this.menuAberto = false;
     this.carregandoLogout = false;
-
+    this.avisoAuthService.fechar();
     this.router.navigate(['/']);
   }
 

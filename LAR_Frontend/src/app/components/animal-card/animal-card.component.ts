@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { AnimalCatalogo } from '../../services/catalogo-animais.service';
 import { FavoritoService } from '../../services/favorito.service';
 import { AuthService } from '../../services/auth.service';
+import { AvisoAuthService } from '../../services/aviso-auth.service';
 
 @Component({
   selector: 'app-animal-card',
@@ -15,12 +15,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AnimalCardComponent {
   @Input({ required: true }) animal!: AnimalCatalogo;
-
   @Output() erroFavorito = new EventEmitter<string>();
 
   private readonly router = inject(Router);
   private readonly favoritoService = inject(FavoritoService);
   private readonly authService = inject(AuthService);
+  private readonly avisoAuthService = inject(AvisoAuthService);
 
   favoritado = false;
   processandoFavorito = false;
@@ -35,6 +35,13 @@ export class AnimalCardComponent {
 
   alternarFavorito(evento: Event): void {
     evento.stopPropagation();
+
+    if (!this.usuarioLogado) {
+      this.avisoAuthService.mostrar(
+        'Você precisa estar logado como Adotante para favoritar.',
+      );
+      return;
+    }
 
     if (this.processandoFavorito) {
       return;
@@ -51,12 +58,11 @@ export class AnimalCardComponent {
         this.favoritado = !this.favoritado;
         this.processandoFavorito = false;
       },
-
       error: (erro: HttpErrorResponse) => {
         this.processandoFavorito = false;
 
         if (erro.status === 401 || erro.status === 403) {
-          this.erroFavorito.emit(
+          this.avisoAuthService.mostrar(
             'Você precisa estar logado como Adotante para favoritar.',
           );
         } else {
@@ -71,7 +77,7 @@ export class AnimalCardComponent {
   }
 
   erroImagem(event: Event): void {
-    const imagem = event.target as any;
+    const imagem = event.target as HTMLImageElement;
     imagem.src = '/assets/camera.svg';
   }
 
@@ -79,13 +85,10 @@ export class AnimalCardComponent {
     switch (this.animal.status) {
       case 'DISPONIVEL':
         return 'animal-card__status-dot--disponivel';
-
       case 'ADOTADO':
         return 'animal-card__status-dot--adotado';
-
       case 'EM_TRATAMENTO':
         return 'animal-card__status-dot--tratamento';
-
       default:
         return 'animal-card__status-dot--indefinido';
     }
@@ -95,13 +98,10 @@ export class AnimalCardComponent {
     switch (this.animal.status) {
       case 'DISPONIVEL':
         return 'Disponível';
-
       case 'ADOTADO':
         return 'Adotado';
-
       case 'EM_TRATAMENTO':
         return 'Em tratamento';
-
       default:
         return this.animal.status;
     }

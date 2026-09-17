@@ -12,7 +12,7 @@
 
         <a class="navbar-global__logo" [routerLink]="estaAutenticado() ? '/home' : '/'" aria-label="Página inicial">
 
-            LAR
+            <img src="/assets/LAR-logo.svg" alt="LAR">
 
         </a>
 
@@ -49,22 +49,16 @@
 
     <div class="navbar-global__aviso-acoes">
 
-        <a routerLink="/login" (click)="mensagemFavoritos = ''">
-
+        <a routerLink="/login" (click)="fecharAviso()">
             Login
-
         </a>
 
-        <a routerLink="/cadastro" (click)="mensagemFavoritos = ''">
-
+        <a routerLink="/cadastro" (click)="fecharAviso()">
             Cadastro
-
         </a>
 
-        <button type="button" (click)="mensagemFavoritos = ''">
-
+        <button type="button" (click)="fecharAviso()">
             Fechar
-
         </button>
 
     </div>
@@ -120,7 +114,7 @@
 
         <a class="menu-lateral__item" routerLink="/home" (click)="fecharMenu()">
 
-            Home
+            Tela inicial
 
         </a>
 
@@ -169,6 +163,12 @@
         <a class="menu-lateral__item" routerLink="/ongs" (click)="fecharMenu()">
 
             ONGs
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/admin/usuarios" (click)="fecharMenu()">
+
+            Lista de Adotantes
 
         </a>
 

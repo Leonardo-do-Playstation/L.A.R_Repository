@@ -60,7 +60,29 @@
 
 @media (min-width: 768px) {
   .home__cards {
-    grid-template-columns: repeat(4, 145px);
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 16px;
+  }
+
+  .home__card {
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    padding: 18px 28px;
+    gap: 20px;
+  }
+
+  .home__icone {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .home__card span {
+    max-width: none;
+    text-align: left;
   }
 }
 
