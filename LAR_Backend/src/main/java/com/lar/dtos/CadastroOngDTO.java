@@ -19,8 +19,6 @@ public class CadastroOngDTO {
 
     public String endereco;
 
-    @NotBlank(message = "CNPJ é obrigatório")
-    @Pattern(regexp = "\\d{14}", message = "CNPJ deve conter 14 dígitos")
     public String cnpj;
 
     public CadastroOngDTO() {
