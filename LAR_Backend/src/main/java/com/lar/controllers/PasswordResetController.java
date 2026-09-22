@@ -20,16 +20,26 @@ public class PasswordResetController {
     private PasswordResetService passwordResetService;
 
     @PostMapping("/recuperar-senha")
-    public ResponseEntity<?> recuperarSenha(@RequestBody RecuperarSenhaDTO dto) {
-        String token = passwordResetService.solicitarRecuperacao(dto.email);
-        return ResponseEntity.ok(Map.of(
-                "mensagem", "Se este e-mail estiver cadastrado, um link de recuperação será enviado."
-        ));
+    public ResponseEntity<String> solicitarRecuperacao(
+            @RequestBody RecuperarSenhaDTO dto) {
+
+        passwordResetService.solicitarRecuperacao(dto.email);
+
+        return ResponseEntity.ok(
+                "Se este e-mail estiver cadastrado, " +
+                        "um link de recuperação será enviado.");
     }
 
     @PostMapping("/redefinir-senha")
-    public ResponseEntity<?> redefinirSenha(@RequestBody RedefinirSenhaDTO dto) {
-        passwordResetService.redefinirSenha(dto.token, dto.novaSenha);
-        return ResponseEntity.ok(Map.of("mensagem", "Senha redefinida com sucesso."));
+    public ResponseEntity<?> redefinirSenha(
+            @RequestBody RedefinirSenhaDTO dto) {
+
+        passwordResetService.redefinirSenha(
+                dto.token,
+                dto.novaSenha);
+
+        return ResponseEntity.ok(Map.of(
+                "mensagem",
+                "Senha redefinida com sucesso."));
     }
 }
