@@ -1,6 +1,5 @@
 package com.lar.config;
 
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +23,7 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
 
-     @Value("${frontend.url:http://localhost:4200}")
+    @Value("${frontend.url:http://localhost:4200}")
     private String frontendUrl;
 
     @Bean
@@ -42,9 +41,12 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/auth/recuperar-senha",
                                 "/auth/redefinir-senha",
-                                "/conta/excluir/confirmar")
+                                "/conta/excluir/confirmar",
+                                "/conta/email/confirmar",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html")
                         .permitAll()
-
                         // Vitrine pública: qualquer um vê, sem login
                         .requestMatchers(HttpMethod.GET, "/animais/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ongs/**").permitAll()
