@@ -86,6 +86,30 @@
 
                     </div>
 
+                    <div class="animal-card__status-controle">
+
+                        <label [for]="'status-' + animal.id">
+                            Status
+                        </label>
+
+                        <select [id]="'status-' + animal.id" [ngModel]="animal.status"
+                            [disabled]="alterandoStatusId === animal.id"
+                            (ngModelChange)="alterarStatus(animal, $event)">
+                            @for (status of statusDisponiveis; track status.valor) {
+                            <option [ngValue]="status.valor">
+                                {{ status.nome }}
+                            </option>
+                            }
+                        </select>
+
+                        @if (alterandoStatusId === animal.id) {
+                        <span class="animal-card__status-carregando">
+                            Salvando...
+                        </span>
+                        }
+
+                    </div>
+
                     <div class="animal-card__linha animal-card__linha--acoes">
 
                         <span class="animal-card__sexo" [class.animal-card__sexo--macho]="
@@ -121,6 +145,7 @@
         </div>
         }
     </div>
+
     @if (animalParaExcluir) {
 
     <div class="painel-animais__confirmacao">
@@ -150,5 +175,7 @@
             </div>
         </div>
     </div>
+
     }
+
 </section>
