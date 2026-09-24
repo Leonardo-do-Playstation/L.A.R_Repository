@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export type StatusAnimal = 'DISPONIVEL' | 'ADOTADO' | 'EM_TRATAMENTO';
+
 export interface Animal {
   id: number;
   nome: string;
@@ -13,7 +15,7 @@ export interface Animal {
   cor?: string;
   descricao: string;
   foto?: string;
-  status: string;
+  status: StatusAnimal;
   idOng: number;
   nomeOng: string;
 }
@@ -72,7 +74,12 @@ export class AnimalService {
 
     return this.http.put<Animal>(`${this.apiUrl}/${id}`, formData);
   }
+
   excluirAnimal(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  alterarStatus(id: number, status: StatusAnimal): Observable<Animal> {
+    return this.http.patch<Animal>(`${this.apiUrl}/${id}/status`, { status });
   }
 }
