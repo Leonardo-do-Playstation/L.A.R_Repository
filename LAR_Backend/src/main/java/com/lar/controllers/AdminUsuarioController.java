@@ -35,8 +35,9 @@ public class AdminUsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioAdminDTO> editar(@PathVariable Long id,
-                                                    @Valid @RequestBody AtualizarUsuarioAdminDTO dto) {
-        return ResponseEntity.ok(adminUsuarioService.editar(id, dto));
+            @Valid @RequestBody AtualizarUsuarioAdminDTO dto,
+            Authentication authentication) {
+        return ResponseEntity.ok(adminUsuarioService.editar(id, dto, authentication.getName()));
     }
 
     @PatchMapping("/{id}/bloqueio")

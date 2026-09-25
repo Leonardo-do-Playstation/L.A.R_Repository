@@ -24,22 +24,32 @@ public class AdministradorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Administrador criar(CriarAdministradorDTO dto) {
+    @Autowired
+    private AuditoriaService auditoriaService;
 
-        if (usuarioRepository.existsByEmail(dto.email)) {
-            throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
-        }
-        if (administradorRepository.existsByCodigoAdmin(dto.codigoAdmin)) {
-            throw new RegraDeNegocioException("Este código de administrador já está em uso.");
-        }
+   public Administrador criar(CriarAdministradorDTO dto, String emailAdminCriador) {
 
-        Administrador admin = new Administrador();
-        admin.setNome(dto.nome);
-        admin.setEmail(dto.email);
-        admin.setSenha(passwordEncoder.encode(dto.senha));
-        admin.setCodigoAdmin(dto.codigoAdmin);
-        admin.setData_cadastro(LocalDateTime.now());
+    if (usuarioRepository.existsByEmail(dto.email)) {
+        throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
+    }
+    if (administradorRepository.existsByCodigoAdmin(dto.codigoAdmin)) {
+        throw new RegraDeNegocioException("Este código de administrador já está em uso.");
+    }
 
-        return administradorRepository.save(admin);
+    Administrador admin = new Administrador();
+    admin.setNome(dto.nome);
+    admin.setEmail(dto.email);
+    admin.setSenha(passwordEncoder.encode(dto.senha));
+    admin.setCodigoAdmin(dto.codigoAdmin);
+    admin.setData_cadastro(LocalDateTime.now());
+
+    Administrador salvo = administradorRepository.save(admin);
+
+    if (emailAdminCriador != null) { 
+        auditoriaService.registrar(emailAdminCriador, "CRIAR_ADMINISTRADOR",
+                "Administrador id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
+    }
+
+    return salvo;
     }
 }

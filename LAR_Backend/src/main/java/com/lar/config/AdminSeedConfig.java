@@ -23,7 +23,7 @@ public class AdminSeedConfig {
                 dto.senha = "admin123";
                 dto.codigoAdmin = "ADM-0001";
 
-                Administrador admin = administradorService.criar(dto);
+                Administrador admin = administradorService.criar(dto, null);
                 admin.setSuperAdmin(true);
                 administradorRepository.save(admin);
 

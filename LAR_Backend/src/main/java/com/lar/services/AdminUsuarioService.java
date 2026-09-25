@@ -26,6 +26,9 @@ public class AdminUsuarioService {
     @Autowired
     private OngRepository ongRepository;
 
+    @Autowired
+    private AuditoriaService auditoriaService;
+
     public List<UsuarioAdminDTO> listarTodos() {
         return usuarioRepository.findAll()
                 .stream()
@@ -44,7 +47,7 @@ public class AdminUsuarioService {
         return toAdminDTO(buscarUsuario(id));
     }
 
-    public UsuarioAdminDTO editar(Long id, AtualizarUsuarioAdminDTO dto) {
+    public UsuarioAdminDTO editar(Long id, AtualizarUsuarioAdminDTO dto, String emailAdmin) {
         Usuario usuario = buscarUsuario(id);
 
         if (!usuario.getEmail().equalsIgnoreCase(dto.email) && usuarioRepository.existsByEmail(dto.email)) {
@@ -64,43 +67,52 @@ public class AdminUsuarioService {
         }
 
         Usuario salvo = usuarioRepository.save(usuario);
+
+        auditoriaService.registrar(emailAdmin, "EDITAR_USUARIO",
+                "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
+
         return toAdminDTO(salvo);
     }
 
     public UsuarioAdminDTO alternarBloqueio(Long id, String emailAdminAutenticado) {
-    Usuario usuario = buscarUsuario(id);
+        Usuario usuario = buscarUsuario(id);
 
-    if (usuario.getEmail().equalsIgnoreCase(emailAdminAutenticado)) {
-        throw new AcessoNegadoException("Você não pode bloquear a própria conta.");
-    }
-
-    boolean novoEstado = !Boolean.TRUE.equals(usuario.getBloqueado());
-
-    if (novoEstado && usuario instanceof Administrador) {
-        Usuario solicitante = usuarioRepository.findByEmail(emailAdminAutenticado)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Administrador autenticado não encontrado."));
-
-        boolean ehSuperAdmin = solicitante instanceof Administrador administradorSolicitante
-                && Boolean.TRUE.equals(administradorSolicitante.getSuperAdmin());
-
-        if (!ehSuperAdmin) {
-            throw new AcessoNegadoException("Apenas o administrador principal pode bloquear outros administradores.");
+        if (usuario.getEmail().equalsIgnoreCase(emailAdminAutenticado)) {
+            throw new AcessoNegadoException("Você não pode bloquear a própria conta.");
         }
 
-        long adminsAtivos = usuarioRepository.findAll().stream()
-                .filter(u -> u instanceof Administrador)
-                .filter(u -> !Boolean.TRUE.equals(u.getBloqueado()))
-                .count();
+        boolean novoEstado = !Boolean.TRUE.equals(usuario.getBloqueado());
 
-        if (adminsAtivos <= 1) {
-            throw new RegraDeNegocioException("Não é possível bloquear o único Administrador ativo do sistema.");
+        if (novoEstado && usuario instanceof Administrador) {
+            Usuario solicitante = usuarioRepository.findByEmail(emailAdminAutenticado)
+                    .orElseThrow(() -> new RecursoNaoEncontradoException("Administrador autenticado não encontrado."));
+
+            boolean ehSuperAdmin = solicitante instanceof Administrador administradorSolicitante
+                    && Boolean.TRUE.equals(administradorSolicitante.getSuperAdmin());
+
+            if (!ehSuperAdmin) {
+                throw new AcessoNegadoException(
+                        "Apenas o administrador principal pode bloquear outros administradores.");
+            }
+
+            long adminsAtivos = usuarioRepository.findAll().stream()
+                    .filter(u -> u instanceof Administrador)
+                    .filter(u -> !Boolean.TRUE.equals(u.getBloqueado()))
+                    .count();
+
+            if (adminsAtivos <= 1) {
+                throw new RegraDeNegocioException("Não é possível bloquear o único Administrador ativo do sistema.");
+            }
         }
-    }
 
-    usuario.setBloqueado(novoEstado);
-    Usuario salvo = usuarioRepository.save(usuario);
-    return toAdminDTO(salvo);
-}
+        usuario.setBloqueado(novoEstado);
+        Usuario salvo = usuarioRepository.save(usuario);
+
+        auditoriaService.registrar(emailAdminAutenticado, novoEstado ? "BLOQUEAR_USUARIO" : "DESBLOQUEAR_USUARIO",
+                "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
+
+        return toAdminDTO(salvo);
+    }
 
     private Usuario buscarUsuario(Long id) {
         return usuarioRepository.findById(id)
