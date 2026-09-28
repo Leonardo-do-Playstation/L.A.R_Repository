@@ -105,6 +105,24 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/usuarios',
+    loadComponent: () =>
+      import('./pages/usuarios-admin/usuarios-admin.component').then(
+        (m) => m.UsuariosAdminComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
+  {
+    path: 'admin/usuarios/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-usuario-admin/detalhe-usuario-admin.component').then(
+        (m) => m.DetalheUsuarioAdminComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
+  {
     path: 'catalogo',
     loadComponent: () =>
       import('./pages/catalogo-animais/catalogo-animais.component').then(
@@ -126,21 +144,5 @@ export const routes: Routes = [
       import('./pages/acesso-negado/acesso-negado.component').then(
         (m) => m.AcessoNegadoComponent,
       ),
-  },
-  {
-    path: 'admin/ongs-pendentes',
-    loadComponent: () =>
-      import('./pages/solicitacoes-cadastro/solicitacoes-cadastro.component').then(
-        (m) => m.SolicitacoesCadastroComponent,
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'admin/ongs-pendentes/:id',
-    loadComponent: () =>
-      import('./pages/analise-ong/analise-ong.component').then(
-        (m) => m.AnaliseOngComponent,
-      ),
-    canActivate: [authGuard],
   },
 ];
