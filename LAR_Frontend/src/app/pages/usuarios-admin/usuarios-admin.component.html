@@ -1,0 +1,131 @@
+<section class="usuarios">
+
+    <div class="usuarios__container">
+
+        <h1 class="usuarios__titulo">
+            Gestão de Usuários
+        </h1>
+
+        @if (!carregando && totalUsuarios > 0) {
+
+        <div class="usuarios__resumo">
+
+            <div class="resumo-card">
+                <strong class="resumo-card__valor">{{ totalUsuarios }}</strong>
+                <span class="resumo-card__rotulo">Usuários</span>
+            </div>
+
+            <div class="resumo-card">
+                <strong class="resumo-card__valor">{{ totalAdotantes }}</strong>
+                <span class="resumo-card__rotulo">Adotantes</span>
+            </div>
+
+            <div class="resumo-card">
+                <strong class="resumo-card__valor">{{ totalOngs }}</strong>
+                <span class="resumo-card__rotulo">ONGs</span>
+            </div>
+
+            <div class="resumo-card">
+                <strong class="resumo-card__valor">{{ totalOngsPendentes }}</strong>
+                <span class="resumo-card__rotulo">ONGs pendentes</span>
+            </div>
+
+            <div class="resumo-card">
+                <strong class="resumo-card__valor">{{ totalBloqueados }}</strong>
+                <span class="resumo-card__rotulo">Bloqueados</span>
+            </div>
+
+        </div>
+
+        }
+
+        <h2 class="usuarios__subtitulo">
+            Lista de usuários
+        </h2>
+
+        <input class="usuarios__busca" type="search" placeholder="Buscar por nome ou e-mail" [value]="termo"
+            (input)="aoDigitarBusca($any($event.target).value)">
+
+        <div class="usuarios__filtros">
+
+            @for (filtro of filtros; track filtro.valor) {
+
+            <button type="button" class="usuarios__filtro" [class.usuarios__filtro--ativo]="filtroTipo === filtro.valor"
+                (click)="selecionarFiltro(filtro.valor)">
+                {{ filtro.rotulo }}
+            </button>
+
+            }
+
+        </div>
+
+        @if (erro) {
+
+        <div class="usuarios__erro">
+            {{ erro }}
+        </div>
+
+        }
+
+        @if (carregando || buscando) {
+
+        <div class="usuarios__mensagem">
+            {{ buscando ? 'Buscando...' : 'Carregando usuários...' }}
+        </div>
+
+        } @else if (!erro && usuariosFiltrados.length === 0) {
+
+        <div class="usuarios__mensagem">
+            <strong>Nenhum usuário encontrado.</strong>
+            <span>
+                Ajuste a busca ou o filtro para ver outros resultados.
+            </span>
+        </div>
+
+        } @else {
+
+        <div class="usuarios__lista">
+
+            @for (usuario of usuariosFiltrados; track usuario.id) {
+
+            <article class="usuario-card" (click)="abrirUsuario(usuario)">
+
+                <div class="usuario-card__info">
+
+                    <strong class="usuario-card__nome">
+                        {{ usuario.nome }}
+                    </strong>
+
+                    <span class="usuario-card__email">
+                        {{ usuario.email }}
+                    </span>
+
+                </div>
+
+                <div class="usuario-card__selos">
+
+                    <span class="usuario-card__selo">
+                        {{ rotuloTipo(usuario.tipo) }}
+                    </span>
+
+                    @if (usuario.tipo === 'ONG' && usuario.statusOng) {
+
+                    <span class="usuario-card__selo usuario-card__selo--status">
+                        {{ rotuloStatusOng(usuario.statusOng) }}
+                    </span>
+
+                    }
+
+                    @if (usuario.bloqueado) {
+
+                    <span class="usuario-card__selo usuario-card__selo--bloqueado">
+                        Bloqueado
+                    </span>
+                    }
+                </div>
+            </article>
+            }
+        </div>
+        }
+    </div>
+</section>
