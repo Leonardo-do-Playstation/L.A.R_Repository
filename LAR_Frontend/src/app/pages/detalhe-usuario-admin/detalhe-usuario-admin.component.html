@@ -1,0 +1,107 @@
+<section class="detalhe-usuario">
+
+    <div class="detalhe-usuario__container">
+
+        <button type="button" class="detalhe-usuario__voltar" aria-label="Voltar" (click)="voltar()">
+            <img src="/assets/seta-esquerda.svg" alt="Voltar">
+            Voltar à lista
+        </button>
+
+        @if (carregando) {
+
+        <div class="detalhe-usuario__mensagem">
+            Carregando...
+        </div>
+
+        } @else if (naoEncontrado) {
+
+        <div class="detalhe-usuario__mensagem detalhe-usuario__mensagem--erro">
+            <strong>Usuário não encontrado.</strong>
+            <span>
+                Ele pode ter sido removido.
+            </span>
+        </div>
+
+        } @else if (erro) {
+
+        <div class="detalhe-usuario__mensagem detalhe-usuario__mensagem--erro">
+            {{ erro }}
+        </div>
+
+        } @else if (usuario) {
+
+        <article class="detalhe-usuario__card">
+
+            <div class="detalhe-usuario__cabecalho">
+
+                <h1 class="detalhe-usuario__nome">
+                    {{ usuario.nome }}
+                </h1>
+
+                @if (usuario.bloqueado) {
+
+                <span class="detalhe-usuario__selo detalhe-usuario__selo--bloqueado">
+                    Bloqueado
+                </span>
+
+                }
+
+            </div>
+
+            <dl class="detalhe-usuario__dados">
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Tipo</dt>
+                    <dd>{{ rotuloTipo(usuario.tipo) }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>E-mail</dt>
+                    <dd>{{ usuario.email }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Telefone</dt>
+                    <dd>{{ usuario.telefone || 'Não informado' }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Endereço</dt>
+                    <dd>{{ usuario.endereco || 'Não informado' }}</dd>
+                </div>
+
+                @if (usuario.cpf) {
+
+                <div class="detalhe-usuario__dado">
+                    <dt>CPF</dt>
+                    <dd>{{ usuario.cpf }}</dd>
+                </div>
+
+                }
+
+                @if (usuario.tipo === 'ONG') {
+
+                <div class="detalhe-usuario__dado">
+                    <dt>CNPJ</dt>
+                    <dd>{{ usuario.cnpj || 'Não informado' }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Status da ONG</dt>
+                    <dd>{{ rotuloStatusOng(usuario.statusOng) }}</dd>
+                </div>
+
+                }
+
+                @if (usuario.codigoAdmin) {
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Código do administrador</dt>
+                    <dd>{{ usuario.codigoAdmin }}</dd>
+                </div>
+                }
+            </dl>
+        </article>
+        }
+    </div>
+</section>
