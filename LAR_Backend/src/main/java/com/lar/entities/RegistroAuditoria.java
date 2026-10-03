@@ -27,7 +27,7 @@ public class RegistroAuditoria {
 
     }
 
-     public RegistroAuditoria(String usuarioResponsavel, String acao, String registroAfetado) {
+    public RegistroAuditoria(String usuarioResponsavel, String acao, String registroAfetado) {
         this.usuarioResponsavel = usuarioResponsavel;
         this.acao = acao;
         this.registroAfetado = registroAfetado;

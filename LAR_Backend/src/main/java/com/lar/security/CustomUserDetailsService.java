@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .disabled(Boolean.TRUE.equals(usuario.getBloqueado()))
 
                 .build();
-                
+
         return userDetails;
     }
 }

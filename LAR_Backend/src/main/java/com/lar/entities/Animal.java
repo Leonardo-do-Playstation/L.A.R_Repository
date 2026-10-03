@@ -14,9 +14,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table (name = "tbl_animais")
+@Table(name = "tbl_animais")
 public class Animal {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -44,8 +44,6 @@ public class Animal {
     public Animal() {
     }
 
-
-    
     public Animal(Long id, String nome, String especie, Integer idade, String raca, String sexo, String porte, Ong ong,
             StatusAnimal status) {
         this.id = id;
@@ -58,8 +56,6 @@ public class Animal {
         this.ong = ong;
         this.status = status;
     }
-
-
 
     public String getNome() {
         return nome;
@@ -124,8 +120,5 @@ public class Animal {
     public void setStatus(StatusAnimal status) {
         this.status = status;
     }
-
-   
-    
 
 }

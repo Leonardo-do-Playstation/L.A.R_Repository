@@ -14,7 +14,7 @@ public class AdminSeedConfig {
 
     @Bean
     public CommandLineRunner criarAdminPadrao(AdministradorRepository administradorRepository,
-                                                AdministradorService administradorService) {
+            AdministradorService administradorService) {
         return args -> {
             if (administradorRepository.count() == 0) {
                 CriarAdministradorDTO dto = new CriarAdministradorDTO();

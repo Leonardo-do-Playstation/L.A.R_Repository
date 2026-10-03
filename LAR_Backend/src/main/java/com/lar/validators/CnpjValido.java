@@ -5,11 +5,13 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = CnpjConstraintValidator.class)
 public @interface CnpjValido {
     String message() default "CNPJ inválido";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

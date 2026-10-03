@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 @DiscriminatorValue("ONG")
 public class Ong extends Usuario {
-    
+
     @Column(unique = true)
     public String cnpj;
 
@@ -28,23 +28,22 @@ public class Ong extends Usuario {
 
     public String observacoes;
 
-
     public Ong() {
     }
 
-     public Ong(Long id, String nome, String telefone, String email, String senha, String cnpj, String endereço, LocalDateTime data_cadastro) {
+    public Ong(Long id, String nome, String telefone, String email, String senha, String cnpj, String endereço,
+            LocalDateTime data_cadastro) {
         super(id, nome, telefone, email, senha, data_cadastro, endereço);
         this.cnpj = cnpj;
     }
 
     public String getCnpj() {
-         return cnpj; 
-        }
+        return cnpj;
+    }
 
-    public void setCnpj(String cnpj) { 
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
-     }
-
+    }
 
     public List<Animal> getAnimais() {
         return animais;
@@ -58,7 +57,7 @@ public class Ong extends Usuario {
         this.status = status;
     }
 
-      public String getObservacoes() {
+    public String getObservacoes() {
         return observacoes;
     }
 
