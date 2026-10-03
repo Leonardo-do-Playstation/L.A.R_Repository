@@ -14,7 +14,7 @@ import com.lar.repositories.UsuarioRepository;
 
 @Service
 public class AdotanteService {
-     
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 

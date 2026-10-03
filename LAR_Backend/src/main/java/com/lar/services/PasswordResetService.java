@@ -19,83 +19,72 @@ import java.util.UUID;
 @Service
 public class PasswordResetService {
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
+        @Value("${frontend.url}")
+        private String frontendUrl;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private PasswordResetTokenRepository tokenRepository;
+        @Autowired
+        private PasswordResetTokenRepository tokenRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+        @Autowired
+        private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private EmailService emailService;
+        @Autowired
+        private EmailService emailService;
 
-    public void solicitarRecuperacao(String email) {
+        public void solicitarRecuperacao(String email) {
 
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+                Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
 
+                if (usuarioOptional.isEmpty()) {
+                        return;
+                }
 
-        if (usuarioOptional.isEmpty()) {
-            return;
+                String token = UUID.randomUUID().toString();
+                LocalDateTime expiracao = LocalDateTime.now().plusMinutes(15);
+
+                PasswordResetToken passwordResetToken = new PasswordResetToken(token, email, expiracao);
+
+                tokenRepository.save(passwordResetToken);
+
+                String linkRecuperacao = frontendUrl + "/redefinir-senha?token=" + token;
+
+                emailService.enviar(
+                                email,
+                                "Recuperação de senha — L.A.R.",
+                                "Olá!\n\n" +
+                                                "Recebemos uma solicitação para redefinir sua senha.\n\n" +
+                                                "Acesse o link abaixo para criar uma nova senha:\n\n" +
+                                                linkRecuperacao +
+                                                "\n\nEste link expira em 15 minutos.\n\n" +
+                                                "Se você não solicitou a recuperação de senha, " +
+                                                "ignore este e-mail.");
         }
 
-        String token = UUID.randomUUID().toString();
-        LocalDateTime expiracao = LocalDateTime.now().plusMinutes(15);
+        public void redefinirSenha(String token, String novaSenha) {
 
-        PasswordResetToken passwordResetToken =
-                new PasswordResetToken(token, email, expiracao);
+                PasswordResetToken resetToken = tokenRepository.findByToken(token)
+                                .orElseThrow(() -> new RecursoNaoEncontradoException(
+                                                "Token de recuperação inválido."));
 
-        tokenRepository.save(passwordResetToken);
+                if (resetToken.getDataExpiracao().isBefore(LocalDateTime.now())) {
 
-        String linkRecuperacao =
-                frontendUrl + "/redefinir-senha?token=" + token;
+                        tokenRepository.delete(resetToken);
 
-        emailService.enviar(
-                email,
-                "Recuperação de senha — L.A.R.",
-                "Olá!\n\n" +
-                "Recebemos uma solicitação para redefinir sua senha.\n\n" +
-                "Acesse o link abaixo para criar uma nova senha:\n\n" +
-                linkRecuperacao +
-                "\n\nEste link expira em 15 minutos.\n\n" +
-                "Se você não solicitou a recuperação de senha, " +
-                "ignore este e-mail."
-        );
-    }
+                        throw new RegraDeNegocioException(
+                                        "Token expirado. Solicite a recuperação novamente.");
+                }
 
-    public void redefinirSenha(String token, String novaSenha) {
+                Usuario usuario = usuarioRepository.findByEmail(resetToken.getEmail())
+                                .orElseThrow(() -> new RecursoNaoEncontradoException(
+                                                "Usuário não encontrado."));
 
-        PasswordResetToken resetToken = tokenRepository.findByToken(token)
-                .orElseThrow(() ->
-                        new RecursoNaoEncontradoException(
-                                "Token de recuperação inválido."
-                        )
-                );
+                usuario.setSenha(passwordEncoder.encode(novaSenha));
 
-        if (resetToken.getDataExpiracao().isBefore(LocalDateTime.now())) {
+                usuarioRepository.save(usuario);
 
-            tokenRepository.delete(resetToken);
-
-            throw new RegraDeNegocioException(
-                    "Token expirado. Solicite a recuperação novamente."
-            );
+                tokenRepository.delete(resetToken);
         }
-
-        Usuario usuario = usuarioRepository.findByEmail(resetToken.getEmail())
-                .orElseThrow(() ->
-                        new RecursoNaoEncontradoException(
-                                "Usuário não encontrado."
-                        )
-                );
-
-        usuario.setSenha(passwordEncoder.encode(novaSenha));
-
-        usuarioRepository.save(usuario);
-
-        tokenRepository.delete(resetToken);
-    }
 }

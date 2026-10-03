@@ -23,7 +23,7 @@ public class OngStatusInterceptor implements HandlerInterceptor {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth == null || !auth.isAuthenticated()) {
-            return true; 
+            return true;
         }
 
         boolean isOng = auth.getAuthorities().stream()
@@ -42,7 +42,7 @@ public class OngStatusInterceptor implements HandlerInterceptor {
             case RECUSADA -> throw new AcessoNegadoException(
                     "O cadastro da sua ONG foi recusado. Entre em contato com o suporte.");
             case APROVADA -> {
-                
+
             }
         }
 

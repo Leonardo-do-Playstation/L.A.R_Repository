@@ -11,24 +11,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
-    @Bean
-    public OpenAPI larOpenAPI() {
-        final String securitySchemeName = "bearerAuth";
+        @Bean
+        public OpenAPI larOpenAPI() {
+                final String securitySchemeName = "bearerAuth";
 
-        return new OpenAPI()
-                .info(new Info()
-                        .title("L.A.R. — API")
-                        .description("API do sistema L.A.R. (Lista de adoção e resgate) — " +
-                                "plataforma de divulgação de animais, com cadastro de ONGs, " +
-                                "gestão de animais e favoritos para adotantes.")
-                        .version("v1"))
-                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-                .components(new Components()
-                        .addSecuritySchemes(securitySchemeName,
-                                new SecurityScheme()
-                                        .name(securitySchemeName)
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")));
-    }
+                return new OpenAPI()
+                                .info(new Info()
+                                                .title("L.A.R. — API")
+                                                .description("API do sistema L.A.R. (Lista de adoção e resgate) — " +
+                                                                "plataforma de divulgação de animais, com cadastro de ONGs, "
+                                                                +
+                                                                "gestão de animais e favoritos para adotantes.")
+                                                .version("v1"))
+                                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+                                .components(new Components()
+                                                .addSecuritySchemes(securitySchemeName,
+                                                                new SecurityScheme()
+                                                                                .name(securitySchemeName)
+                                                                                .type(SecurityScheme.Type.HTTP)
+                                                                                .scheme("bearer")
+                                                                                .bearerFormat("JWT")));
+        }
 }
