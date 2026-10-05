@@ -18,6 +18,14 @@ export interface UsuarioAdmin {
   codigoAdmin: string | null;
 }
 
+export interface AtualizarUsuarioAdmin {
+  nome: string;
+  email: string;
+  telefone: string;
+  endereco: string;
+  cnpj?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,5 +46,13 @@ export class UsuarioAdminService {
     const params = new HttpParams().set('termo', termo);
 
     return this.http.get<UsuarioAdmin[]>(`${this.apiUrl}/buscar`, { params });
+  }
+
+  editar(id: number, dados: AtualizarUsuarioAdmin): Observable<UsuarioAdmin> {
+    return this.http.put<UsuarioAdmin>(`${this.apiUrl}/${id}`, dados);
+  }
+
+  alternarBloqueio(id: number): Observable<UsuarioAdmin> {
+    return this.http.patch<UsuarioAdmin>(`${this.apiUrl}/${id}/bloqueio`, {});
   }
 }
