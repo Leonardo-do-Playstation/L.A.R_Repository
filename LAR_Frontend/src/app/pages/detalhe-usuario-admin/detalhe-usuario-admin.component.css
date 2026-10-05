@@ -103,3 +103,133 @@
   font-size: 0.95rem;
   overflow-wrap: anywhere;
 }
+
+.detalhe-usuario__sucesso {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #e8f6e7;
+  color: #1f7a1a;
+  font-size: 0.9rem;
+}
+
+.detalhe-usuario__aviso {
+  margin: 20px 0 0;
+  color: #999;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.detalhe-usuario__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detalhe-usuario__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.detalhe-usuario__campo input {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.detalhe-usuario__campo-erro {
+  color: #a92222;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.detalhe-usuario__erro-form {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #fdecec;
+  color: #a92222;
+  font-size: 0.85rem;
+}
+
+.detalhe-usuario__acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.detalhe-usuario__acoes--coluna {
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.detalhe-usuario__botao {
+  flex: 1;
+  height: 46px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.detalhe-usuario__botao:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.detalhe-usuario__botao--neutro {
+  background: #eee;
+  color: #333;
+}
+
+.detalhe-usuario__botao--principal {
+  background: #2b9e25;
+}
+
+.detalhe-usuario__botao--perigo {
+  background: #d43b3b;
+}
+
+.detalhe-usuario__overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 220px;
+  background: rgba(0, 0, 0, 0.35);
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.detalhe-usuario__modal {
+  width: min(100%, 480px);
+  margin: 0 20px;
+  padding: 18px 20px 22px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.detalhe-usuario__modal-titulo {
+  margin: 0 0 14px;
+  color: #222;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.detalhe-usuario__pergunta {
+  margin: 0 0 16px;
+  color: #333;
+  font-size: 0.95rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
