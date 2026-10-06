@@ -50,6 +50,16 @@
 
       </a>
 
+      <a class="home__card" routerLink="/ongs">
+
+        <img class="home__icone" src="/assets/casa-icone.svg" alt="">
+
+        <span>
+          Lista de ONGs
+        </span>
+
+      </a>
+
       }
 
       @if (ehAdministrador()) {
@@ -91,8 +101,37 @@
         <span>
           Cadastros Pendentes
         </span>
+
       </a>
+
       }
+
+      @if (ehVisitante()) {
+
+      <a class="home__card" routerLink="/catalogo">
+
+        <img class="home__icone" src="/assets/cachorro-icone.svg" alt="">
+
+        <span>
+          Lista de animais
+        </span>
+
+      </a>
+
+      <a class="home__card" routerLink="/ongs">
+
+        <img class="home__icone" src="/assets/casa-icone.svg" alt="">
+
+        <span>
+          Lista de ONGs
+        </span>
+
+      </a>
+
+      }
+
     </div>
+
   </div>
+
 </section>
