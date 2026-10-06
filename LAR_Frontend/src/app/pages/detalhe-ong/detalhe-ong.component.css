@@ -1,0 +1,111 @@
+.detalhe-ong {
+  width: 100%;
+  min-height: 100vh;
+  padding: 12px 0 30px;
+  background: #f5f5f5;
+  box-sizing: border-box;
+}
+
+.detalhe-ong__container {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.detalhe-ong__voltar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  margin-bottom: 12px;
+  border: 0;
+  background: transparent;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.detalhe-ong__voltar img {
+  width: 18px;
+  height: 18px;
+}
+
+.detalhe-ong__mensagem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px;
+  border-radius: 8px;
+  background: #fff;
+  color: #555;
+  text-align: center;
+}
+
+.detalhe-ong__mensagem--erro {
+  color: #a92222;
+  background: #fdecec;
+}
+
+.detalhe-ong__card {
+  padding: 20px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.detalhe-ong__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.detalhe-ong__foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e8f6e7;
+  color: #2b9e25;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.detalhe-ong__nome {
+  margin: 0;
+  color: #222;
+  font-size: 1.2rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.detalhe-ong__vazio {
+  margin: 0;
+  color: #999;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.detalhe-ong__dados {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.detalhe-ong__dado dt {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.detalhe-ong__dado dd {
+  margin: 2px 0 0;
+  color: #222;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
