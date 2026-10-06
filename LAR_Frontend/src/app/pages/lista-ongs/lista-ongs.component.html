@@ -1,0 +1,57 @@
+<section class="lista-ongs">
+
+    <div class="lista-ongs__container">
+
+        <h1 class="lista-ongs__titulo">
+            ONGs parceiras
+        </h1>
+
+        @if (carregando) {
+
+        <div class="lista-ongs__mensagem">
+            Carregando ONGs...
+        </div>
+
+        } @else if (erro) {
+
+        <div class="lista-ongs__mensagem lista-ongs__mensagem--erro">
+            {{ erro }}
+        </div>
+
+        } @else if (ongs.length === 0) {
+
+        <div class="lista-ongs__mensagem">
+            <strong>Nenhuma ONG disponível no momento.</strong>
+            <span>
+                Volte mais tarde para conhecer as instituições parceiras.
+            </span>
+        </div>
+
+        } @else {
+
+        <div class="lista-ongs__lista">
+
+            @for (ong of ongs; track ong.id) {
+
+            <article class="ong-card" (click)="abrirOng(ong)">
+
+                <div class="ong-card__foto" aria-hidden="true">
+                    {{ inicial(ong.nome) }}
+                </div>
+
+                <div class="ong-card__info">
+
+                    <strong class="ong-card__nome">
+                        {{ ong.nome }}
+                    </strong>
+
+                    <span class="ong-card__localizacao">
+                        {{ ong.endereco || 'Localização não informada' }}
+                    </span>
+                </div>
+            </article>
+            }
+        </div>
+        }
+    </div>
+</section>

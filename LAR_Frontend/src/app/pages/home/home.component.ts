@@ -16,6 +16,10 @@ export class HomeComponent {
     this.tipoUsuario = this.authService.obterPerfil()?.tipo ?? null;
   }
 
+  ehVisitante(): boolean {
+    return this.tipoUsuario === null;
+  }
+
   ehAdotante(): boolean {
     return this.tipoUsuario === 'ADOTANTE';
   }

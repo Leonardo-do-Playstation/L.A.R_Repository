@@ -10,7 +10,7 @@
 
         </button>
 
-        <a class="navbar-global__logo" [routerLink]="estaAutenticado() ? '/home' : '/'" aria-label="Página inicial">
+        <a class="navbar-global__logo" routerLink="/home" aria-label="Página inicial">
 
             <img src="/assets/LAR-logo.svg" alt="LAR">
 
@@ -88,7 +88,25 @@
 
     <nav class="menu-lateral__opcoes">
 
+        <a class="menu-lateral__item" routerLink="/home" (click)="fecharMenu()">
+
+            Tela inicial
+
+        </a>
+
         @if (!estaAutenticado()) {
+
+        <a class="menu-lateral__item" routerLink="/catalogo" (click)="fecharMenu()">
+
+            Animais
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/ongs" (click)="fecharMenu()">
+
+            ONGs
+
+        </a>
 
         <a class="menu-lateral__item" routerLink="/" (click)="fecharMenu()">
 
@@ -105,16 +123,6 @@
         <a class="menu-lateral__item" routerLink="/cadastro" (click)="fecharMenu()">
 
             Cadastro
-
-        </a>
-
-        }
-
-        @if (estaAutenticado()) {
-
-        <a class="menu-lateral__item" routerLink="/home" (click)="fecharMenu()">
-
-            Tela inicial
 
         </a>
 
@@ -147,6 +155,12 @@
         <a class="menu-lateral__item" routerLink="/perfil" (click)="fecharMenu()">
 
             Meu Perfil
+
+        </a>
+
+        <a class="menu-lateral__item" routerLink="/ongs" (click)="fecharMenu()">
+
+            ONGs
 
         </a>
 
@@ -188,8 +202,13 @@
             Sair
 
         </button>
+
         }
+
     </nav>
+
 </aside>
+
 }
+
 }

@@ -1,0 +1,96 @@
+<section class="detalhe-ong">
+
+    <div class="detalhe-ong__container">
+
+        <button type="button" class="detalhe-ong__voltar" aria-label="Voltar" (click)="voltar()">
+            <img src="/assets/seta-esquerda.svg" alt="Voltar">
+            Voltar às ONGs
+        </button>
+
+        @if (carregando) {
+
+        <div class="detalhe-ong__mensagem">
+            Carregando...
+        </div>
+
+        } @else if (naoEncontrado) {
+
+        <div class="detalhe-ong__mensagem detalhe-ong__mensagem--erro">
+            <strong>ONG não encontrada.</strong>
+            <span>
+                Ela pode não estar mais disponível.
+            </span>
+        </div>
+
+        } @else if (erro) {
+
+        <div class="detalhe-ong__mensagem detalhe-ong__mensagem--erro">
+            {{ erro }}
+        </div>
+
+        } @else if (ong) {
+
+        <article class="detalhe-ong__card">
+
+            <div class="detalhe-ong__cabecalho">
+
+                <div class="detalhe-ong__foto" aria-hidden="true">
+                    {{ inicial(ong.nome) }}
+                </div>
+
+                <h1 class="detalhe-ong__nome">
+                    {{ ong.nome }}
+                </h1>
+
+            </div>
+
+            @if (semInformacoes) {
+
+            <p class="detalhe-ong__vazio">
+                Esta ONG ainda não disponibilizou outras informações.
+            </p>
+
+            } @else {
+
+            <dl class="detalhe-ong__dados">
+
+                @if (ong.cnpj) {
+
+                <div class="detalhe-ong__dado">
+                    <dt>CNPJ</dt>
+                    <dd>{{ ong.cnpj }}</dd>
+                </div>
+
+                }
+
+                @if (ong.endereco) {
+
+                <div class="detalhe-ong__dado">
+                    <dt>Localização</dt>
+                    <dd>{{ ong.endereco }}</dd>
+                </div>
+
+                }
+
+                @if (ong.telefone) {
+
+                <div class="detalhe-ong__dado">
+                    <dt>Telefone</dt>
+                    <dd>{{ ong.telefone }}</dd>
+                </div>
+
+                }
+
+                @if (ong.observacoes) {
+
+                <div class="detalhe-ong__dado">
+                    <dt>Sobre a ONG</dt>
+                    <dd>{{ ong.observacoes }}</dd>
+                </div>
+                }
+            </dl>
+            }
+        </article>
+        }
+    </div>
+</section>

@@ -7,7 +7,6 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 
-import { authGuard } from './services/auth.guard';
 import { guestGuard } from './services/guest.guard';
 import { perfilGuard } from './services/perfil.guard';
 
@@ -51,7 +50,6 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [authGuard],
   },
 
   {
@@ -120,6 +118,22 @@ export const routes: Routes = [
         (m) => m.DetalheUsuarioAdminComponent,
       ),
     canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
+  {
+    path: 'ongs',
+    loadComponent: () =>
+      import('./pages/lista-ongs/lista-ongs.component').then(
+        (m) => m.ListaOngsComponent,
+      ),
+  },
+
+  {
+    path: 'ongs/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-ong/detalhe-ong.component').then(
+        (m) => m.DetalheOngComponent,
+      ),
   },
 
   {
