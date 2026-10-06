@@ -123,6 +123,22 @@ export const routes: Routes = [
   },
 
   {
+    path: 'ongs',
+    loadComponent: () =>
+      import('./pages/lista-ongs/lista-ongs.component').then(
+        (m) => m.ListaOngsComponent,
+      ),
+  },
+
+  {
+    path: 'ongs/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-ong/detalhe-ong.component').then(
+        (m) => m.DetalheOngComponent,
+      ),
+  },
+
+  {
     path: 'catalogo',
     loadComponent: () =>
       import('./pages/catalogo-animais/catalogo-animais.component').then(
