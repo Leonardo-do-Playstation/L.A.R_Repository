@@ -1,0 +1,27 @@
+<section class="aguardando-aprovacao">
+
+    <div class="aguardando-aprovacao__caixa">
+
+        <img class="aguardando-aprovacao__icone" src="/assets/relogio-icone.svg" alt="">
+
+        <h1>Cadastro enviado!</h1>
+
+        @if (nomeOng) {
+        <p class="aguardando-aprovacao__ong">{{ nomeOng }}</p>
+        }
+
+        <p>
+            Recebemos o cadastro da sua ONG e ele está aguardando a análise de um administrador.
+        </p>
+
+        <p>
+            O acesso às áreas da ONG, como o painel de animais, será liberado somente após a aprovação.
+        </p>
+
+        <a routerLink="/home" class="aguardando-aprovacao__botao">
+            Ir para o início
+        </a>
+
+    </div>
+
+</section>
