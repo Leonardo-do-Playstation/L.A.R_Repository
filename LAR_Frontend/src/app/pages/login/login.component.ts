@@ -56,7 +56,12 @@ export class LoginComponent implements OnInit {
         this.authService.salvarToken(resposta.token);
         this.authService.salvarPerfil(resposta.perfil);
         this.carregando = false;
-        this.router.navigate(['/home']);
+
+        const ongPendente =
+          resposta.perfil.tipo === 'ONG' &&
+          resposta.perfil.statusOng === 'PENDENTE';
+
+        this.router.navigate([ongPendente ? '/aguardando-aprovacao' : '/home']);
       },
       error: (erro: HttpErrorResponse) => {
         console.error('Erro ao realizar login:', erro);

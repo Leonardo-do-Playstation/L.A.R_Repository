@@ -160,7 +160,11 @@ export class CadastroComponent {
         this.carregando = false;
         this.cadastroRealizado = true;
 
-        this.router.navigate(['/home']);
+        const ongPendente =
+          resposta.perfil.tipo === 'ONG' &&
+          resposta.perfil.statusOng === 'PENDENTE';
+
+        this.router.navigate([ongPendente ? '/aguardando-aprovacao' : '/home']);
       },
 
       error: (erro) => {

@@ -9,6 +9,7 @@ import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha
 
 import { guestGuard } from './services/guest.guard';
 import { perfilGuard } from './services/perfil.guard';
+import { ongPendenteGuard } from './services/ong-pendente.guard';
 
 export const routes: Routes = [
   {
@@ -150,6 +151,15 @@ export const routes: Routes = [
       import('./pages/detalhe-animal/detalhe-animal.component').then(
         (m) => m.DetalheAnimalComponent,
       ),
+  },
+
+  {
+    path: 'aguardando-aprovacao',
+    loadComponent: () =>
+      import('./pages/aguardando-aprovacao/aguardando-aprovacao.component').then(
+        (m) => m.AguardandoAprovacaoComponent,
+      ),
+    canActivate: [ongPendenteGuard],
   },
 
   {
