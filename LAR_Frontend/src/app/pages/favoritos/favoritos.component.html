@@ -1,0 +1,48 @@
+<section class="favoritos">
+
+    <div class="favoritos__container">
+
+        <h1 class="favoritos__titulo">
+            Meus Favoritos
+        </h1>
+
+        @if (erro) {
+
+        <div class="favoritos__erro">
+            {{ erro }}
+        </div>
+
+        }
+
+        @if (carregando) {
+
+        <div class="favoritos__mensagem">
+            Carregando favoritos...
+        </div>
+
+        } @else if (animais.length === 0 && !erro) {
+
+        <div class="favoritos__mensagem">
+            <strong>Você ainda não favoritou nenhum animal.</strong>
+            <span>
+                Toque no coração de um animal para guardá-lo aqui.
+            </span>
+            <a routerLink="/catalogo" class="favoritos__link">
+                Ver animais para adoção
+            </a>
+        </div>
+
+        } @else {
+
+        <div class="favoritos__lista">
+
+            @for (animal of animais; track animal.id) {
+
+            <app-animal-card [animal]="animal" [favoritado]="true"
+                (favoritoAlterado)="aoAlterarFavorito(animal.id, $event)" (erroFavorito)="erro = $event">
+            </app-animal-card>
+            }
+        </div>
+        }
+    </div>
+</section>
