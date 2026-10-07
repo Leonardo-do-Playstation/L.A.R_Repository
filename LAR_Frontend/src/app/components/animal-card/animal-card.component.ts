@@ -16,13 +16,14 @@ import { AvisoAuthService } from '../../services/aviso-auth.service';
 export class AnimalCardComponent {
   @Input({ required: true }) animal!: AnimalCatalogo;
   @Output() erroFavorito = new EventEmitter<string>();
+  @Output() favoritoAlterado = new EventEmitter<boolean>();
 
   private readonly router = inject(Router);
   private readonly favoritoService = inject(FavoritoService);
   private readonly authService = inject(AuthService);
   private readonly avisoAuthService = inject(AvisoAuthService);
 
-  favoritado = false;
+  @Input() favoritado = false;
   processandoFavorito = false;
 
   get usuarioLogado(): boolean {
@@ -57,6 +58,7 @@ export class AnimalCardComponent {
       next: () => {
         this.favoritado = !this.favoritado;
         this.processandoFavorito = false;
+        this.favoritoAlterado.emit(this.favoritado);
       },
       error: (erro: HttpErrorResponse) => {
         this.processandoFavorito = false;

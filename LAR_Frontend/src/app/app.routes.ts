@@ -154,6 +154,15 @@ export const routes: Routes = [
   },
 
   {
+    path: 'favoritos',
+    loadComponent: () =>
+      import('./pages/favoritos/favoritos.component').then(
+        (m) => m.FavoritosComponent,
+      ),
+    canActivate: [perfilGuard(['ADOTANTE'])],
+  },
+
+  {
     path: 'aguardando-aprovacao',
     loadComponent: () =>
       import('./pages/aguardando-aprovacao/aguardando-aprovacao.component').then(
