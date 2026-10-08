@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-
-import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService, Perfil } from '../../services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -11,21 +12,29 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm;
-
   erroLogin = '';
   carregando = false;
+  rotaCadastro = '/cadastro';
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-
       senha: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params: ParamMap) => {
+      this.rotaCadastro =
+        params.get('tipo') === 'ong' ? '/cadastro-ong' : '/cadastro';
     });
   }
 
@@ -38,45 +47,24 @@ export class LoginComponent {
     }
 
     const email = this.loginForm.value.email!;
-
     const senha = this.loginForm.value.senha!;
 
     this.carregando = true;
 
     this.authService.login(email, senha).subscribe({
-      next: (resposta) => {
+      next: (resposta: { token: string; perfil: Perfil }) => {
         this.authService.salvarToken(resposta.token);
+        this.authService.salvarPerfil(resposta.perfil);
+        this.carregando = false;
 
-        console.log('Login realizado com sucesso.');
+        const ongPendente =
+          resposta.perfil.tipo === 'ONG' &&
+          resposta.perfil.statusOng === 'PENDENTE';
 
-        this.authService.obterUsuarioAutenticado().subscribe({
-          next: (usuario) => {
-            console.log('Usuário autenticado:', usuario);
-
-            this.carregando = false;
-
-            this.router.navigate(['/home']);
-          },
-
-          error: (erro) => {
-            console.error(
-              'Token salvo, mas não foi possível obter o usuário:',
-              erro,
-            );
-
-            this.carregando = false;
-
-            this.authService.limparToken();
-
-            this.erroLogin =
-              'Não foi possível validar sua sessão. Tente novamente.';
-          },
-        });
+        this.router.navigate([ongPendente ? '/aguardando-aprovacao' : '/home']);
       },
-
-      error: (erro) => {
+      error: (erro: HttpErrorResponse) => {
         console.error('Erro ao realizar login:', erro);
-
         this.carregando = false;
 
         if (erro.status === 401 || erro.status === 403) {
@@ -87,5 +75,9 @@ export class LoginComponent {
         }
       },
     });
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }

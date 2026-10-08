@@ -156,11 +156,49 @@
   background: #999;
 }
 
+.animal-card__status-controle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.animal-card__status-controle label {
+  color: #777;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.animal-card__status-controle select {
+  min-width: 0;
+  flex: 1;
+  height: 27px;
+  padding: 2px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #666;
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.animal-card__status-controle select:disabled {
+  background: #f1f1f1;
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.animal-card__status-carregando {
+  color: #999;
+  font-size: 0.62rem;
+  white-space: nowrap;
+}
+
 .animal-card__linha--acoes {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 2px;
+  margin-top: 5px;
 }
 
 .animal-card__sexo {
@@ -184,6 +222,7 @@
 .animal-card__sexo--femea {
   color: #d77ca8;
 }
+
 .animal-card__editar {
   margin: 2px 0 0 1px;
   padding: 0;
@@ -194,6 +233,7 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
 .animal-card__excluir {
   margin: -20px 0 0 auto;
   padding: 0;

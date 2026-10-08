@@ -1,0 +1,149 @@
+<section class="detalhe-animal">
+
+    <div class="detalhe-animal__container">
+
+        <button type="button" class="detalhe-animal__voltar" aria-label="Voltar" (click)="voltar()">
+            <img src="/assets/seta-esquerda.svg" alt="Voltar">
+            Voltar ao catálogo
+        </button>
+
+        @if (carregando) {
+
+        <div class="detalhe-animal__mensagem">
+            Carregando...
+        </div>
+
+        } @else if (naoEncontrado) {
+
+        <div class="detalhe-animal__mensagem detalhe-animal__mensagem--erro">
+            <strong>Animal não encontrado.</strong>
+            <span>
+                Ele pode ter sido removido ou já ter sido adotado.
+            </span>
+            <a routerLink="/catalogo">Voltar ao catálogo</a>
+        </div>
+
+        } @else if (erro) {
+
+        <div class="detalhe-animal__mensagem detalhe-animal__mensagem--erro">
+            {{ erro }}
+        </div>
+
+        } @else if (animal) {
+
+        <div class="detalhe-animal__conteudo">
+
+            <div class="detalhe-animal__foto-wrapper">
+
+                <img [src]="imagemAnimal()" [alt]="animal.nome" class="detalhe-animal__foto"
+                    (error)="erroImagem($event)">
+
+                @if (usuarioLogado) {
+
+                <button type="button" class="detalhe-animal__favorito" [disabled]="processandoFavorito"
+                    [attr.aria-label]="favoritado ? 'Remover dos favoritos' : 'Favoritar'"
+                    (click)="alternarFavorito()">
+
+                    @if (favoritado) {
+                    <img src="/assets/coracao-preenchido.svg" alt="">
+                    } @else {
+                    <img src="/assets/coracao.svg" alt="">
+                    }
+
+                </button>
+
+                }
+
+            </div>
+
+            @if (erroFavorito) {
+            <div class="detalhe-animal__erro-favorito">
+                {{ erroFavorito }}
+            </div>
+            }
+
+            <div class="detalhe-animal__divisor"></div>
+
+            <div class="detalhe-animal__cabecalho">
+                <h1>{{ animal.nome }}</h1>
+
+                <span class="detalhe-animal__status">
+                    {{ nomeStatus() }}
+                    <span class="detalhe-animal__status-dot" [class]="classeStatus()"></span>
+                </span>
+            </div>
+
+            <div class="detalhe-animal__grade-info">
+
+                <div class="detalhe-animal__info">
+                    <span class="detalhe-animal__rotulo">Espécie</span>
+                    <span class="detalhe-animal__valor">{{ animal.especie }}</span>
+                </div>
+
+                <div class="detalhe-animal__info">
+                    <span class="detalhe-animal__rotulo">Raça</span>
+                    <span class="detalhe-animal__valor">{{ animal.raca }}</span>
+                </div>
+
+                <div class="detalhe-animal__info">
+                    <span class="detalhe-animal__rotulo">Idade</span>
+                    <span class="detalhe-animal__valor">{{ animal.idade }} ano(s)</span>
+                </div>
+
+                <div class="detalhe-animal__info">
+                    <span class="detalhe-animal__rotulo">Porte</span>
+                    <span class="detalhe-animal__valor">{{ animal.porte }}</span>
+                </div>
+
+                <div class="detalhe-animal__info">
+                    <span class="detalhe-animal__rotulo">Sexo</span>
+                    <span class="detalhe-animal__valor">
+                        {{ animal.sexo === 'MACHO' ? 'Macho' : 'Fêmea' }}
+                    </span>
+                </div>
+
+                <div class="detalhe-animal__info">
+                    <span class="detalhe-animal__rotulo">Cor</span>
+                    <span class="detalhe-animal__valor">{{ animal.cor }}</span>
+                </div>
+
+            </div>
+
+            <div class="detalhe-animal__descricao">
+                <span class="detalhe-animal__rotulo">Sobre {{ animal.nome }}</span>
+                <p>{{ animal.descricao }}</p>
+            </div>
+
+            <div class="detalhe-animal__ong">
+
+                <span class="detalhe-animal__rotulo">ONG responsável</span>
+
+                <strong>{{ animal.ong.nome }}</strong>
+
+                <div class="detalhe-animal__ong-contato">
+
+                    @if (animal.ong.telefone) {
+                    <div class="detalhe-animal__info">
+                        <span class="detalhe-animal__rotulo">Telefone</span>
+                        <span class="detalhe-animal__valor">{{ animal.ong.telefone }}</span>
+                    </div>
+                    }
+
+                    @if (animal.ong.endereco) {
+                    <div class="detalhe-animal__info">
+                        <span class="detalhe-animal__rotulo">Endereço</span>
+                        <span class="detalhe-animal__valor">{{ animal.ong.endereco }}</span>
+                    </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</section>

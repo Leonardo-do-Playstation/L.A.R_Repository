@@ -43,8 +43,7 @@ public class MinioStorageService implements StorageService {
                             .object(nomeArquivo)
                             .stream(arquivo.getInputStream(), arquivo.getSize(), -1)
                             .contentType(arquivo.getContentType())
-                            .build()
-            );
+                            .build());
 
             return endpoint + "/" + bucket + "/" + nomeArquivo;
 
@@ -66,10 +65,10 @@ public class MinioStorageService implements StorageService {
                     RemoveObjectArgs.builder()
                             .bucket(bucket)
                             .object(nomeArquivo)
-                            .build()
-            );
+                            .build());
         } catch (Exception e) {
-            //Sout apenas para registrar erro ao remover imagem, porém executa o delete no banco
+            // Sout apenas para registrar erro ao remover imagem, porém executa o delete no
+            // banco
             System.err.println("Falha ao remover imagem do storage: " + e.getMessage());
         }
     }

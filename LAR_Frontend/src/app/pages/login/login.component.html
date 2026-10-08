@@ -1,5 +1,9 @@
 <section class="login">
 
+  <button type="button" class="btn-back" (click)="voltar()" aria-label="Voltar">
+    <img src="/assets/seta-esquerda.svg" alt="">
+  </button>
+
   <div class="login__container">
 
     <div class="login__logo">
@@ -65,7 +69,8 @@
 
       }
 
-      <a class="login__forgot" routerLink="/recuperar-senha">
+      <a class="login__forgot" routerLink="/recuperar-senha"
+        [queryParams]="rotaCadastro === '/cadastro-ong' ? { tipo: 'ong' } : {}">
         Esqueceu a senha?
       </a>
 
@@ -87,7 +92,7 @@
 
       Não cadastrado?&nbsp;
 
-      <a routerLink="/cadastro">
+      <a [routerLink]="rotaCadastro">
         Cadastre-se
       </a>
 

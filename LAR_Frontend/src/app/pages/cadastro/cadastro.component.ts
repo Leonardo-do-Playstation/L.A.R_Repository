@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../../services/auth.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-cadastro',
   standalone: true,
@@ -30,6 +32,7 @@ export class CadastroComponent {
     private router: Router,
     private http: HttpClient,
     private authService: AuthService,
+    private location: Location,
   ) {
     this.tipo = this.route.snapshot.data['tipo'] ?? 'adotante';
 
@@ -74,6 +77,10 @@ export class CadastroComponent {
     } else {
       this.cadastrarOng();
     }
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 
   private validarFormulario(): boolean {
@@ -148,30 +155,16 @@ export class CadastroComponent {
     this.authService.login(email, senha).subscribe({
       next: (resposta) => {
         this.authService.salvarToken(resposta.token);
+        this.authService.salvarPerfil(resposta.perfil);
 
-        console.log('Login automático realizado.');
+        this.carregando = false;
+        this.cadastroRealizado = true;
 
-        this.authService.obterUsuarioAutenticado().subscribe({
-          next: (usuario) => {
-            console.log('Usuário autenticado:', usuario);
+        const ongPendente =
+          resposta.perfil.tipo === 'ONG' &&
+          resposta.perfil.statusOng === 'PENDENTE';
 
-            this.carregando = false;
-            this.cadastroRealizado = true;
-
-            this.router.navigate(['/home']);
-          },
-
-          error: (erro) => {
-            console.error('Erro ao verificar usuário autenticado:', erro);
-
-            this.carregando = false;
-
-            this.authService.limparToken();
-
-            this.erroCadastro =
-              'Cadastro realizado, mas não foi possível entrar automaticamente.';
-          },
-        });
+        this.router.navigate([ongPendente ? '/aguardando-aprovacao' : '/home']);
       },
 
       error: (erro) => {

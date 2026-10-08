@@ -29,10 +29,12 @@ public class OngService {
         if (usuarioRepository.existsByEmail(dto.email)) {
             throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
         }
-        if (ongRepository.existsByCnpj(dto.cnpj)) {
-            throw new RegraDeNegocioException("Este CNPJ já está cadastrado.");
-        }
 
+        if (dto.cnpj != null && !dto.cnpj.isBlank()) {
+            if (ongRepository.existsByCnpj(dto.cnpj)) {
+                throw new RegraDeNegocioException("Este CNPJ já está cadastrado.");
+            }
+        }
         String senhaCriptografada = passwordEncoder.encode(dto.senha);
 
         Ong ong = new Ong();

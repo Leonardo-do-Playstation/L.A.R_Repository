@@ -24,7 +24,10 @@ public class AdministradorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Administrador criar(CriarAdministradorDTO dto) {
+    @Autowired
+    private AuditoriaService auditoriaService;
+
+    public Administrador criar(CriarAdministradorDTO dto, String emailAdminCriador) {
 
         if (usuarioRepository.existsByEmail(dto.email)) {
             throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
@@ -40,6 +43,13 @@ public class AdministradorService {
         admin.setCodigoAdmin(dto.codigoAdmin);
         admin.setData_cadastro(LocalDateTime.now());
 
-        return administradorRepository.save(admin);
+        Administrador salvo = administradorRepository.save(admin);
+
+        if (emailAdminCriador != null) {
+            auditoriaService.registrar(emailAdminCriador, "CRIAR_ADMINISTRADOR",
+                    "Administrador id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
+        }
+
+        return salvo;
     }
 }

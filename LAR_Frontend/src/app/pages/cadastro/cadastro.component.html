@@ -1,5 +1,9 @@
 <section class="cadastro">
 
+  <button type="button" class="btn-back" (click)="voltar()" aria-label="Voltar">
+    <img src="/assets/seta-esquerda.svg" alt="">
+  </button>
+
   <div class="cadastro__container">
 
     <div class="cadastro__logo">
@@ -191,7 +195,7 @@
 
       Já cadastrado?
 
-      <a routerLink="/login">
+      <a routerLink="/login" [queryParams]="tipo === 'ong' ? { tipo: 'ong' } : {}">
         Faça Login
       </a>
 

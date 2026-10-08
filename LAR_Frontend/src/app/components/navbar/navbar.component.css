@@ -1,0 +1,325 @@
+:host {
+  display: block;
+}
+
+.navbar-global {
+  width: 100%;
+  background: #ffffff;
+}
+
+.navbar-global__conteudo {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 70px;
+
+  padding: 0 28px;
+
+  box-sizing: border-box;
+}
+
+.navbar-global__botao-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 7px;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.navbar-global__botao-menu span {
+  display: block;
+
+  width: 23px;
+  height: 2px;
+
+  background: #222222;
+
+  border-radius: 2px;
+}
+
+.navbar-global__logo {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  color: #438c48;
+
+  font-size: 25px;
+  font-weight: 800;
+
+  letter-spacing: -1px;
+
+  text-decoration: none;
+}
+
+.navbar-global__acoes {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+}
+
+.navbar-global__icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  text-decoration: none;
+}
+
+.navbar-global__icone--botao {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.navbar-global__icone img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+}
+
+.icone-usuario {
+  position: relative;
+
+  display: block;
+
+  width: 19px;
+  height: 21px;
+}
+
+.icone-usuario::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 7px;
+  height: 7px;
+
+  transform: translateX(-50%);
+
+  border: 2px solid #222222;
+
+  border-radius: 50%;
+}
+
+.icone-usuario::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 0;
+  left: 50%;
+
+  width: 15px;
+  height: 9px;
+
+  transform: translateX(-50%);
+
+  border: 2px solid #222222;
+
+  border-radius: 9px 9px 3px 3px;
+}
+
+.menu-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 999;
+
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.menu-lateral {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  z-index: 1000;
+
+  width: 300px;
+
+  background: #9b9b9b;
+
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.menu-lateral__cabecalho {
+  display: flex;
+  align-items: center;
+
+  height: 70px;
+
+  padding: 0 20px;
+
+  box-sizing: border-box;
+}
+
+.menu-lateral__fechar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 7px;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.menu-lateral__fechar span {
+  display: block;
+
+  width: 23px;
+  height: 2px;
+
+  background: #ffffff;
+
+  border-radius: 2px;
+}
+
+.menu-lateral__opcoes {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.menu-lateral__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 50px;
+
+  padding: 10px 20px;
+
+  box-sizing: border-box;
+
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.menu-lateral__item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-lateral__item--sair {
+  font-family: inherit;
+}
+
+@media (max-width: 600px) {
+  .navbar-global__conteudo {
+    min-height: 65px;
+    padding: 0 18px;
+  }
+
+  .navbar-global__logo {
+    font-size: 23px;
+  }
+
+  .navbar-global__acoes {
+    gap: 12px;
+  }
+
+  .menu-lateral {
+    width: min(300px, 55vw);
+  }
+}
+
+.navbar-global__icone--botao {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.navbar-global__aviso {
+  position: fixed;
+  top: 85px;
+  left: 50%;
+  z-index: 1100;
+  width: min(90%, 420px);
+  padding: 18px 20px;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  color: #222222;
+  text-align: center;
+}
+
+.navbar-global__aviso-acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.navbar-global__aviso-acoes a,
+.navbar-global__aviso-acoes button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  background: #438c48;
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar-global__logo img {
+  width: 52px;
+  height: auto;
+  display: block;
+}

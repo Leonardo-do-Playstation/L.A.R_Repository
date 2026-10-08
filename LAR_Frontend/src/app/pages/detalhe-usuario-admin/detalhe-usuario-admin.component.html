@@ -1,0 +1,257 @@
+<section class="detalhe-usuario">
+
+    <div class="detalhe-usuario__container">
+
+        <button type="button" class="detalhe-usuario__voltar" aria-label="Voltar" (click)="voltar()">
+            <img src="/assets/seta-esquerda.svg" alt="Voltar">
+            Voltar à lista
+        </button>
+
+        @if (mensagemSucesso) {
+
+        <div class="detalhe-usuario__sucesso">
+            {{ mensagemSucesso }}
+        </div>
+
+        }
+
+        @if (carregando) {
+
+        <div class="detalhe-usuario__mensagem">
+            Carregando...
+        </div>
+
+        } @else if (naoEncontrado) {
+
+        <div class="detalhe-usuario__mensagem detalhe-usuario__mensagem--erro">
+            <strong>Usuário não encontrado.</strong>
+            <span>
+                Ele pode ter sido removido.
+            </span>
+        </div>
+
+        } @else if (erro) {
+
+        <div class="detalhe-usuario__mensagem detalhe-usuario__mensagem--erro">
+            {{ erro }}
+        </div>
+
+        } @else if (usuario) {
+
+        <article class="detalhe-usuario__card">
+
+            <div class="detalhe-usuario__cabecalho">
+
+                <h1 class="detalhe-usuario__nome">
+                    {{ usuario.nome }}
+                </h1>
+
+                @if (usuario.bloqueado) {
+
+                <span class="detalhe-usuario__selo detalhe-usuario__selo--bloqueado">
+                    Bloqueado
+                </span>
+
+                }
+
+            </div>
+
+            @if (editando) {
+
+            <form class="detalhe-usuario__form" [formGroup]="formulario" (ngSubmit)="salvar()">
+
+                @if (erroEdicao) {
+
+                <div class="detalhe-usuario__erro-form">
+                    {{ erroEdicao }}
+                </div>
+
+                }
+
+                <label class="detalhe-usuario__campo">
+                    Nome
+                    <input type="text" formControlName="nome">
+                    @if (formulario.controls.nome.touched && formulario.controls.nome.invalid) {
+                    <small class="detalhe-usuario__campo-erro">Informe o nome.</small>
+                    }
+                </label>
+
+                <label class="detalhe-usuario__campo">
+                    E-mail
+                    <input type="email" formControlName="email">
+                    @if (formulario.controls.email.touched && formulario.controls.email.invalid) {
+                    <small class="detalhe-usuario__campo-erro">Informe um e-mail válido.</small>
+                    }
+                </label>
+
+                <label class="detalhe-usuario__campo">
+                    Telefone
+                    <input type="text" formControlName="telefone">
+                </label>
+
+                <label class="detalhe-usuario__campo">
+                    Endereço
+                    <input type="text" formControlName="endereco">
+                </label>
+
+                @if (usuario.tipo === 'ONG') {
+
+                <label class="detalhe-usuario__campo">
+                    CNPJ
+                    <input type="text" formControlName="cnpj">
+                </label>
+
+                }
+
+                <div class="detalhe-usuario__acoes">
+
+                    <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--neutro"
+                        [disabled]="salvando" (click)="cancelarEdicao()">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="detalhe-usuario__botao detalhe-usuario__botao--principal"
+                        [disabled]="salvando">
+                        {{ salvando ? 'Salvando...' : 'Salvar' }}
+                    </button>
+
+                </div>
+
+            </form>
+
+            } @else {
+
+            <dl class="detalhe-usuario__dados">
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Tipo</dt>
+                    <dd>{{ rotuloTipo(usuario.tipo) }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>E-mail</dt>
+                    <dd>{{ usuario.email }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Telefone</dt>
+                    <dd>{{ usuario.telefone || 'Não informado' }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Endereço</dt>
+                    <dd>{{ usuario.endereco || 'Não informado' }}</dd>
+                </div>
+
+                @if (usuario.cpf) {
+
+                <div class="detalhe-usuario__dado">
+                    <dt>CPF</dt>
+                    <dd>{{ usuario.cpf }}</dd>
+                </div>
+
+                }
+
+                @if (usuario.tipo === 'ONG') {
+
+                <div class="detalhe-usuario__dado">
+                    <dt>CNPJ</dt>
+                    <dd>{{ usuario.cnpj || 'Não informado' }}</dd>
+                </div>
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Status da ONG</dt>
+                    <dd>{{ rotuloStatusOng(usuario.statusOng) }}</dd>
+                </div>
+
+                }
+
+                @if (usuario.codigoAdmin) {
+
+                <div class="detalhe-usuario__dado">
+                    <dt>Código do administrador</dt>
+                    <dd>{{ usuario.codigoAdmin }}</dd>
+                </div>
+
+                }
+
+            </dl>
+
+            @if (ehContaPropria) {
+
+            <p class="detalhe-usuario__aviso">
+                Esta é a sua conta. Não é possível bloqueá-la por aqui.
+            </p>
+
+            } @else {
+
+            <div class="detalhe-usuario__acoes detalhe-usuario__acoes--coluna">
+
+                <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--neutro"
+                    (click)="abrirEdicao()">
+                    Editar dados
+                </button>
+
+                <button type="button" class="detalhe-usuario__botao"
+                    [class.detalhe-usuario__botao--perigo]="!usuario.bloqueado"
+                    [class.detalhe-usuario__botao--principal]="usuario.bloqueado" (click)="abrirConfirmacao()">
+                    {{ usuario.bloqueado ? 'Desbloquear usuário' : 'Bloquear usuário' }}
+                </button>
+
+            </div>
+
+            }
+
+            }
+
+        </article>
+
+        }
+
+    </div>
+
+    @if (mostrarConfirmacao && usuario) {
+
+    <div class="detalhe-usuario__overlay">
+
+        <div class="detalhe-usuario__modal">
+
+            <h2 class="detalhe-usuario__modal-titulo">Atenção</h2>
+
+            @if (erroConfirmacao) {
+
+            <div class="detalhe-usuario__erro-form">
+                {{ erroConfirmacao }}
+            </div>
+
+            }
+
+            <p class="detalhe-usuario__pergunta">
+                {{ usuario.bloqueado
+                ? 'Você tem certeza que deseja desbloquear ' + usuario.nome + '?'
+                : 'Você tem certeza que deseja bloquear ' + usuario.nome + '?' }}
+            </p>
+
+            <div class="detalhe-usuario__acoes">
+
+                <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--neutro"
+                    [disabled]="alternando" (click)="cancelarConfirmacao()">
+                    Cancelar
+                </button>
+
+                <button type="button" class="detalhe-usuario__botao"
+                    [class.detalhe-usuario__botao--perigo]="!usuario.bloqueado"
+                    [class.detalhe-usuario__botao--principal]="usuario.bloqueado" [disabled]="alternando"
+                    (click)="confirmarBloqueio()">
+                    {{ alternando ? 'Aguarde...' : 'Confirmar' }}
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+</section>

@@ -1,0 +1,46 @@
+.acesso-negado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: #f5f5f5;
+  box-sizing: border-box;
+}
+
+.acesso-negado__caixa {
+  width: min(100%, 420px);
+  padding: 28px 24px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.acesso-negado__caixa h1 {
+  margin: 0 0 12px;
+  color: #b42323;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.acesso-negado__caixa p {
+  margin: 0 0 20px;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.acesso-negado__botao {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: #2b9e25;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.acesso-negado__botao:hover {
+  background: #24851f;
+}

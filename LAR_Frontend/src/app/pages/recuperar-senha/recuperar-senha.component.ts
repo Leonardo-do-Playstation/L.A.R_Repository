@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -11,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './recuperar-senha.component.html',
   styleUrl: './recuperar-senha.component.css',
 })
-export class RecuperarSenhaComponent {
+export class RecuperarSenhaComponent implements OnInit {
   recuperarForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });
@@ -20,11 +22,21 @@ export class RecuperarSenhaComponent {
   mensagemSucesso = '';
   mensagemErro = '';
   tokenTeste = '';
+  rotaCadastro = '/cadastro';
 
   constructor(
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private authService: AuthService,
+    private location: Location,
   ) {}
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      this.rotaCadastro =
+        params.get('tipo') === 'ong' ? '/cadastro-ong' : '/cadastro';
+    });
+  }
 
   recuperarSenha(): void {
     this.mensagemSucesso = '';
@@ -68,5 +80,9 @@ export class RecuperarSenhaComponent {
         }
       },
     });
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }

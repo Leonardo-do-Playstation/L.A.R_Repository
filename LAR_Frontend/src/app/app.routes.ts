@@ -7,17 +7,21 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 
-import { authGuard } from './services/auth.guard';
+import { guestGuard } from './services/guest.guard';
+import { perfilGuard } from './services/perfil.guard';
+import { ongPendenteGuard } from './services/ong-pendente.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: EntradaComponent,
+    canActivate: [guestGuard],
   },
 
   {
     path: 'cadastro',
     component: CadastroComponent,
+    canActivate: [guestGuard],
     data: {
       tipo: 'adotante',
     },
@@ -26,6 +30,7 @@ export const routes: Routes = [
   {
     path: 'cadastro-ong',
     component: CadastroComponent,
+    canActivate: [guestGuard],
     data: {
       tipo: 'ong',
     },
@@ -34,17 +39,18 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [guestGuard],
   },
 
   {
     path: 'recuperar-senha',
     component: RecuperarSenhaComponent,
+    canActivate: [guestGuard],
   },
 
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [authGuard],
   },
 
   {
@@ -58,38 +64,118 @@ export const routes: Routes = [
       import('./pages/painel-animais/painel-animais.component').then(
         (m) => m.PainelAnimaisComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ONG'])],
   },
+
   {
     path: 'cadastro-animal',
     loadComponent: () =>
       import('./pages/cadastro-animal/cadastro-animal.component').then(
         (m) => m.CadastroAnimalComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ONG'])],
   },
+
   {
     path: 'editar-animal/:id',
     loadComponent: () =>
       import('./pages/editar-animal/editar-animal.component').then(
         (m) => m.EditarAnimalComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ONG'])],
   },
+
   {
     path: 'admin/ongs-pendentes',
     loadComponent: () =>
       import('./pages/solicitacoes-cadastro/solicitacoes-cadastro.component').then(
         (m) => m.SolicitacoesCadastroComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
   },
+
   {
     path: 'admin/ongs-pendentes/:id',
     loadComponent: () =>
       import('./pages/analise-ong/analise-ong.component').then(
         (m) => m.AnaliseOngComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
+  {
+    path: 'admin/usuarios',
+    loadComponent: () =>
+      import('./pages/usuarios-admin/usuarios-admin.component').then(
+        (m) => m.UsuariosAdminComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
+  {
+    path: 'admin/usuarios/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-usuario-admin/detalhe-usuario-admin.component').then(
+        (m) => m.DetalheUsuarioAdminComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
+  {
+    path: 'ongs',
+    loadComponent: () =>
+      import('./pages/lista-ongs/lista-ongs.component').then(
+        (m) => m.ListaOngsComponent,
+      ),
+  },
+
+  {
+    path: 'ongs/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-ong/detalhe-ong.component').then(
+        (m) => m.DetalheOngComponent,
+      ),
+  },
+
+  {
+    path: 'catalogo',
+    loadComponent: () =>
+      import('./pages/catalogo-animais/catalogo-animais.component').then(
+        (m) => m.CatalogoAnimaisComponent,
+      ),
+  },
+
+  {
+    path: 'animais/:id',
+    loadComponent: () =>
+      import('./pages/detalhe-animal/detalhe-animal.component').then(
+        (m) => m.DetalheAnimalComponent,
+      ),
+  },
+
+  {
+    path: 'favoritos',
+    loadComponent: () =>
+      import('./pages/favoritos/favoritos.component').then(
+        (m) => m.FavoritosComponent,
+      ),
+    canActivate: [perfilGuard(['ADOTANTE'])],
+  },
+
+  {
+    path: 'aguardando-aprovacao',
+    loadComponent: () =>
+      import('./pages/aguardando-aprovacao/aguardando-aprovacao.component').then(
+        (m) => m.AguardandoAprovacaoComponent,
+      ),
+    canActivate: [ongPendenteGuard],
+  },
+
+  {
+    path: 'acesso-negado',
+    loadComponent: () =>
+      import('./pages/acesso-negado/acesso-negado.component').then(
+        (m) => m.AcessoNegadoComponent,
+      ),
   },
 ];

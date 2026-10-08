@@ -1,42 +1,34 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { AuthService } from '../../services/auth.service';
+import { RouterLink } from '@angular/router';
+import { AuthService, TipoUsuario } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  carregandoLogout = false;
+  tipoUsuario: TipoUsuario | null = null;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
+  constructor(private authService: AuthService) {
+    this.tipoUsuario = this.authService.obterPerfil()?.tipo ?? null;
+  }
 
-  sair(): void {
-    if (this.carregandoLogout) {
-      return;
-    }
+  ehVisitante(): boolean {
+    return this.tipoUsuario === null;
+  }
 
-    this.carregandoLogout = true;
+  ehAdotante(): boolean {
+    return this.tipoUsuario === 'ADOTANTE';
+  }
 
-    this.authService.logout().subscribe({
-      next: () => {
-        this.authService.limparToken();
-        this.router.navigate(['/login']);
-      },
+  ehOng(): boolean {
+    return this.tipoUsuario === 'ONG';
+  }
 
-      error: (erro) => {
-        console.error('Erro ao realizar logout:', erro);
-
-        this.authService.limparToken();
-        this.router.navigate(['/login']);
-      },
-    });
+  ehAdministrador(): boolean {
+    return this.tipoUsuario === 'ADMINISTRADOR';
   }
 }

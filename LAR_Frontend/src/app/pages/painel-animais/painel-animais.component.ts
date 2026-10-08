@@ -1,13 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
-import { Animal, AnimalService } from '../../services/animal.service';
+import {
+  Animal,
+  AnimalService,
+  StatusAnimal,
+} from '../../services/animal.service';
 
 @Component({
   selector: 'app-painel-animais',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './painel-animais.component.html',
   styleUrl: './painel-animais.component.css',
 })
@@ -22,6 +27,25 @@ export class PainelAnimaisComponent implements OnInit {
   ordem: 'recentes' | 'antigos' = 'recentes';
   animalParaExcluir: Animal | null = null;
   excluindo = false;
+  alterandoStatusId: number | null = null;
+
+  readonly statusDisponiveis: {
+    valor: StatusAnimal;
+    nome: string;
+  }[] = [
+    {
+      valor: 'DISPONIVEL',
+      nome: 'Disponível',
+    },
+    {
+      valor: 'ADOTADO',
+      nome: 'Adotado',
+    },
+    {
+      valor: 'EM_TRATAMENTO',
+      nome: 'Em tratamento',
+    },
+  ];
 
   ngOnInit(): void {
     this.carregarAnimais();
@@ -60,6 +84,48 @@ export class PainelAnimaisComponent implements OnInit {
     }
 
     this.animais = [...this.animais].reverse();
+  }
+
+  alterarStatus(animal: Animal, novoStatus: StatusAnimal): void {
+    if (novoStatus === animal.status) {
+      return;
+    }
+
+    const statusAnterior = animal.status;
+
+    this.alterandoStatusId = animal.id;
+    this.erro = '';
+
+    this.animalService.alterarStatus(animal.id, novoStatus).subscribe({
+      next: (animalAtualizado) => {
+        const indice = this.animais.findIndex((item) => item.id === animal.id);
+
+        if (indice !== -1) {
+          this.animais[indice] = animalAtualizado;
+          this.animais = [...this.animais];
+        }
+
+        this.alterandoStatusId = null;
+      },
+
+      error: (erro: HttpErrorResponse) => {
+        this.alterandoStatusId = null;
+
+        if (erro.status === 401) {
+          this.erro = 'Sua sessão expirou. Faça login novamente.';
+        } else if (erro.status === 403) {
+          this.erro =
+            'Você não possui permissão para alterar o status deste animal.';
+        } else if (erro.status === 404) {
+          this.erro = 'Animal não encontrado.';
+        } else {
+          this.erro = 'Não foi possível alterar o status do animal.';
+        }
+
+        animal.status = statusAnterior;
+        this.animais = [...this.animais];
+      },
+    });
   }
 
   abrirConfirmacaoExclusao(animal: Animal): void {

@@ -1,39 +1,13 @@
 import { Component } from '@angular/core';
-import {
-  NavigationEnd,
-  Router,
-  RouterLink,
-  RouterOutlet,
-} from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { RouterOutlet } from '@angular/router';
+
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  showNavbar = true;
-
-  constructor(private router: Router) {
-    this.updateNavbar(this.router.url);
-
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event) => {
-        this.updateNavbar((event as NavigationEnd).urlAfterRedirects);
-      });
-  }
-
-  private updateNavbar(url: string): void {
-    this.showNavbar = ![
-      '/',
-      '/login',
-      '/cadastro',
-      '/cadastro-ong',
-      '/recuperar-senha',
-    ].includes(url);
-  }
-}
+export class AppComponent {}

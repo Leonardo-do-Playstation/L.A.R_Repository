@@ -1,5 +1,9 @@
 <section class="recuperar">
 
+    <button type="button" class="btn-back" (click)="voltar()" aria-label="Voltar">
+        <img src="/assets/seta-esquerda.svg" alt="">
+    </button>
+
     <div class="recuperar__container">
 
         <div class="recuperar__icone">
@@ -85,11 +89,12 @@
             <span></span>
         </div>
 
-        <a class="recuperar__cadastro" routerLink="/cadastro">
+        <a class="recuperar__cadastro" [routerLink]="rotaCadastro">
             Criar nova conta
         </a>
 
-        <a class="recuperar__voltar" routerLink="/login">
+        <a class="recuperar__voltar" routerLink="/login"
+            [queryParams]="rotaCadastro === '/cadastro-ong' ? { tipo: 'ong' } : {}">
             Voltar ao login
         </a>
 
