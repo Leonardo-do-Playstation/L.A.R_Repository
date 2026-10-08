@@ -8,6 +8,7 @@ import com.lar.dtos.ConfirmarExclusaoOngDTO;
 import com.lar.dtos.ConfirmarTrocaEmailDTO;
 import com.lar.dtos.SolicitarExclusaoDTO;
 import com.lar.dtos.SolicitarTrocaEmailDTO;
+import com.lar.dtos.AlterarSenhaDTO;
 import com.lar.services.ContaService;
 
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @Tag(
     name = "Conta",
-    description = "Troca de e-mail e exclusão da própria conta."
+    description = "Troca de e-mail, senha e exclusão da própria conta."
 )
 @RestController
 @RequestMapping("/conta")
@@ -29,6 +30,28 @@ public class ContaController {
 
     @Autowired
     private ContaService contaService;
+
+    @Operation(
+        summary = "Altera a senha da própria conta",
+        description = "Valida a senha atual e substitui pela nova senha informada. Requer usuário autenticado."
+    )
+    @PutMapping("/senha")
+    public ResponseEntity<?> alterarSenha(
+            @Valid @RequestBody AlterarSenhaDTO dto,
+            Authentication authentication) {
+
+        contaService.alterarSenha(
+                authentication.getName(),
+                dto
+        );
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "mensagem",
+                        "Senha alterada com sucesso."
+                )
+        );
+    }
 
     @Operation(
         summary = "Solicita exclusão da própria conta",
@@ -46,8 +69,8 @@ public class ContaController {
 
         return ResponseEntity.ok(
                 Map.of(
-                    "mensagem",
-                    "Se for uma ONG, um e-mail de confirmação foi enviado. Adotantes têm apenas uma confirmação em tela para exclusão."
+                        "mensagem",
+                        "Se for uma ONG, um e-mail de confirmação foi enviado. Adotantes têm apenas uma confirmação em tela para exclusão."
                 )
         );
     }

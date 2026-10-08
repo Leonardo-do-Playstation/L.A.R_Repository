@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.lar.dtos.AlterarSenhaDTO;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -48,6 +49,17 @@ public class ContaService {
 
     @Value("${frontend.confirmacao-exclusao-url}")
     private String confirmacaoExclusaoUrl;
+
+        public void alterarSenha(String emailAutenticado, AlterarSenhaDTO dto) {
+        Usuario usuario = buscarUsuarioAutenticado(emailAutenticado);
+
+        if (!passwordEncoder.matches(dto.senhaAtual, usuario.getSenha())) {
+            throw new AcessoNegadoException("Senha atual incorreta.");
+        }
+
+        usuario.setSenha(passwordEncoder.encode(dto.novaSenha));
+        usuarioRepository.save(usuario);
+    }
 
     public void solicitarTrocaEmail(String emailAutenticado, SolicitarTrocaEmailDTO dto) {
         Usuario usuario = usuarioRepository.findByEmail(emailAutenticado)
