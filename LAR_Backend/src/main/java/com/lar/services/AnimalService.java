@@ -156,7 +156,6 @@ public class AnimalService {
                 throw new RegraDeNegocioException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
             }
         } else {
-            // Sem filtro explícito, o catálogo público mostra só quem está disponível pra adoção
             statusFiltro = StatusAnimal.DISPONIVEL;
         }
 

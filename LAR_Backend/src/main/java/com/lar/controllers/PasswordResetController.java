@@ -22,7 +22,6 @@ public class PasswordResetController {
     @PostMapping("/recuperar-senha")
     public ResponseEntity<?> recuperarSenha(@RequestBody RecuperarSenhaDTO dto) {
         String token = passwordResetService.solicitarRecuperacao(dto.email);
-        // Em produção, NÃO devolveríamos o token na resposta — ele iria só por e-mail.
         return ResponseEntity.ok(Map.of(
                 "mensagem", "Se este e-mail estiver cadastrado, um link de recuperação será enviado.",
                 "token_teste", token

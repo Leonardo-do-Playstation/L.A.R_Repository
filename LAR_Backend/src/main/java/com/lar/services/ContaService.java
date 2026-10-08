@@ -48,14 +48,11 @@ public class ContaService {
             LocalDateTime expiracao = LocalDateTime.now().plusMinutes(15);
 
             exclusaoTokenRepository.save(new ExclusaoContaToken(token, usuario.getEmail(), expiracao));
-
-            // TODO: substituir por envio de e-mail real quando configurado.
+            
             System.out.println("Token de confirmação de exclusão para " + usuario.getEmail() + ": " + token);
 
-            return token; // exposto na resposta só enquanto não há envio de e-mail real
         }
 
-        // Adotante: exclui direto, sem etapa extra
         excluirDadosDoUsuario(usuario);
         return null;
     }

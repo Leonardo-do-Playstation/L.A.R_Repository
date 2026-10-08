@@ -28,7 +28,6 @@ public class PasswordResetService {
     public String solicitarRecuperacao(String email) {
 
         if (!usuarioRepository.existsByEmail(email)) {
-           // Status 409 para não revelar se o email existe 
             throw new RegraDeNegocioException("Se este e-mail estiver cadastrado, um link de recuperação será enviado.");
         }
 
