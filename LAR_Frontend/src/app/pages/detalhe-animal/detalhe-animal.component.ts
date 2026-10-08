@@ -53,6 +53,7 @@ export class DetalheAnimalComponent implements OnInit {
       next: (animal) => {
         this.animal = animal;
         this.carregando = false;
+        this.carregarEstadoFavorito(animal.id);
       },
 
       error: (erro: HttpErrorResponse) => {
@@ -64,6 +65,25 @@ export class DetalheAnimalComponent implements OnInit {
           this.erro = 'Não foi possível carregar os dados deste animal.';
         }
       },
+    });
+  }
+
+  carregarEstadoFavorito(animalId: number): void {
+    this.favoritado = false;
+
+    const perfil = this.authService.obterPerfil();
+
+    if (!this.authService.estaAutenticado() || perfil?.tipo !== 'ADOTANTE') {
+      return;
+    }
+
+    this.favoritoService.listarIds().subscribe({
+      next: (ids) => {
+        this.favoritado = ids.has(animalId);
+      },
+
+      // sem a lista, o coração apenas começa vazio
+      error: () => {},
     });
   }
 
@@ -95,6 +115,10 @@ export class DetalheAnimalComponent implements OnInit {
         if (erro.status === 401 || erro.status === 403) {
           this.erroFavorito =
             'Você precisa estar logado como Adotante para favoritar.';
+        } else if (erro.status === 409 && !this.favoritado) {
+          this.favoritado = true;
+        } else if (erro.status === 404 && this.favoritado) {
+          this.favoritado = false;
         } else {
           this.erroFavorito = 'Não foi possível favoritar este animal.';
         }

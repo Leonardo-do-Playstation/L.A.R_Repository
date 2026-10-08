@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AnimalCatalogo } from './catalogo-animais.service';
 
 export interface FavoritoResposta {
@@ -26,5 +26,13 @@ export class FavoritoService {
 
   listar(): Observable<FavoritoResposta[]> {
     return this.http.get<FavoritoResposta[]>(this.apiUrl);
+  }
+
+  listarIds(): Observable<Set<number>> {
+    return this.listar().pipe(
+      map(
+        (favoritos) => new Set(favoritos.map((favorito) => favorito.animal.id)),
+      ),
+    );
   }
 }
