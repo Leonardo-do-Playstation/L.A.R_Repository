@@ -50,6 +50,8 @@ export class AnimalCardComponent {
 
     this.processandoFavorito = true;
 
+    const estavaFavoritado = this.favoritado;
+
     const acao = this.favoritado
       ? this.favoritoService.desfavoritar(this.animal.id)
       : this.favoritoService.favoritar(this.animal.id);
@@ -67,6 +69,14 @@ export class AnimalCardComponent {
           this.avisoAuthService.mostrar(
             'Você precisa estar logado como Adotante para favoritar.',
           );
+        } else if (erro.status === 409 && !estavaFavoritado) {
+          // já estava favoritado no servidor: só sincroniza o estado visual
+          this.favoritado = true;
+          this.favoritoAlterado.emit(true);
+        } else if (erro.status === 404 && estavaFavoritado) {
+          // já não estava favoritado no servidor: só sincroniza o estado visual
+          this.favoritado = false;
+          this.favoritoAlterado.emit(false);
         } else {
           this.erroFavorito.emit('Não foi possível favoritar este animal.');
         }

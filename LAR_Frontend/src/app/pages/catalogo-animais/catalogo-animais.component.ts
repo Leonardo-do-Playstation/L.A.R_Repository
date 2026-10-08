@@ -7,6 +7,8 @@ import {
   FiltrosCatalogo,
 } from '../../services/catalogo-animais.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
+import { AuthService } from '../../services/auth.service';
+import { FavoritoService } from '../../services/favorito.service';
 
 type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
 
@@ -19,8 +21,12 @@ type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
 })
 export class CatalogoAnimaisComponent implements OnInit {
   private readonly catalogoAnimaisService = inject(CatalogoAnimaisService);
+  private readonly favoritoService = inject(FavoritoService);
+  private readonly authService = inject(AuthService);
 
   animais: AnimalCatalogo[] = [];
+
+  favoritosIds = new Set<number>();
 
   carregando = true;
   erro = '';
@@ -34,6 +40,32 @@ export class CatalogoAnimaisComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarAnimais();
+    this.carregarFavoritos();
+  }
+
+  carregarFavoritos(): void {
+    const perfil = this.authService.obterPerfil();
+
+    if (!this.authService.estaAutenticado() || perfil?.tipo !== 'ADOTANTE') {
+      return;
+    }
+
+    this.favoritoService.listarIds().subscribe({
+      next: (ids) => {
+        this.favoritosIds = ids;
+      },
+
+      // sem a lista, os corações apenas começam vazios
+      error: () => {},
+    });
+  }
+
+  aoAlterarFavorito(animalId: number, favoritado: boolean): void {
+    if (favoritado) {
+      this.favoritosIds.add(animalId);
+    } else {
+      this.favoritosIds.delete(animalId);
+    }
   }
 
   carregarAnimais(): void {
