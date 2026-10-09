@@ -13,6 +13,9 @@ import com.lar.repositories.OngRepository;
 import com.lar.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.lar.services.EmailService;
+import com.lar.repositories.AdotanteRepository;
+import com.lar.validators.DocumentoValidator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +31,12 @@ public class AdminUsuarioService {
 
     @Autowired
     private AuditoriaService auditoriaService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private AdotanteRepository adotanteRepository;
 
     public List<UsuarioAdminDTO> listarTodos() {
         return usuarioRepository.findAll()
@@ -48,32 +57,42 @@ public class AdminUsuarioService {
     }
 
     public UsuarioAdminDTO editar(Long id, AtualizarUsuarioAdminDTO dto, String emailAdmin) {
-        Usuario usuario = buscarUsuario(id);
+    Usuario usuario = buscarUsuario(id);
 
-        if (!usuario.getEmail().equalsIgnoreCase(dto.email) && usuarioRepository.existsByEmail(dto.email)) {
-            throw new RegraDeNegocioException("Este e-mail já está em uso por outra conta.");
+    if (usuario instanceof Adotante adotante) {
+        if (dto.cpf == null || dto.cpf.isBlank()) {
+            throw new RegraDeNegocioException("CPF é obrigatório.");
         }
+        if (!DocumentoValidator.cpfValido(dto.cpf)) {
+            throw new RegraDeNegocioException("CPF inválido.");
+        }
+        if (!dto.cpf.equals(adotante.getCpf()) && adotanteRepository.existsByCpf(dto.cpf)) {
+            throw new RegraDeNegocioException("Este CPF já está cadastrado para outra conta.");
+        }
+        adotante.setCpf(dto.cpf);
 
-        usuario.setNome(dto.nome);
-        usuario.setEmail(dto.email);
-        usuario.setTelefone(dto.telefone);
-        usuario.setEndereco(dto.endereco);
-
-        if (usuario instanceof Ong ong && dto.cnpj != null && !dto.cnpj.isBlank()) {
+    } else if (usuario instanceof Ong ong) {
+        if (dto.cnpj != null && !dto.cnpj.isBlank()) {
+            if (!DocumentoValidator.cnpjValido(dto.cnpj)) {
+                throw new RegraDeNegocioException("CNPJ inválido.");
+            }
             if (!dto.cnpj.equals(ong.getCnpj()) && ongRepository.existsByCnpj(dto.cnpj)) {
                 throw new RegraDeNegocioException("Este CNPJ já está cadastrado para outra ONG.");
             }
             ong.setCnpj(dto.cnpj);
         }
 
-        Usuario salvo = usuarioRepository.save(usuario);
-
-        auditoriaService.registrar(emailAdmin, "EDITAR_USUARIO",
-                "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
-
-        return toAdminDTO(salvo);
+    } else {
+        throw new RegraDeNegocioException("Este tipo de usuário não possui campo editável nesta tela.");
     }
 
+    Usuario salvo = usuarioRepository.save(usuario);
+
+    auditoriaService.registrar(emailAdmin, "EDITAR_USUARIO",
+            "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
+
+    return toAdminDTO(salvo);
+}
     public UsuarioAdminDTO alternarBloqueio(Long id, String emailAdminAutenticado) {
         Usuario usuario = buscarUsuario(id);
 
@@ -107,6 +126,17 @@ public class AdminUsuarioService {
 
         usuario.setBloqueado(novoEstado);
         Usuario salvo = usuarioRepository.save(usuario);
+
+        emailService.enviar(
+                salvo.getEmail(),
+                novoEstado ? "Conta bloqueada — L.A.R." : "Conta reativada — L.A.R.",
+                "Olá, " + salvo.getNome() + ".\n\n" +
+                        (novoEstado
+                                ? "Sua conta no sistema L.A.R. foi bloqueada por um administrador e o acesso está temporariamente suspenso.\n\n"
+                                : "Sua conta no sistema L.A.R. foi reativada e você já pode acessar normalmente.\n\n")
+                        +
+                        "Se você acredita que isso é um engano, entre em contato com nosso suporte.\n\n" +
+                        "Equipe L.A.R.");
 
         auditoriaService.registrar(emailAdminAutenticado, novoEstado ? "BLOQUEAR_USUARIO" : "DESBLOQUEAR_USUARIO",
                 "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
