@@ -55,7 +55,6 @@ export class CatalogoAnimaisComponent implements OnInit {
         this.favoritosIds = ids;
       },
 
-      // sem a lista, os corações apenas começam vazios
       error: () => {},
     });
   }

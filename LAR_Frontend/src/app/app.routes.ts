@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RecuperarSenhaComponent } from './pages/recuperar-senha/recuperar-senha.component';
 
 import { guestGuard } from './services/guest.guard';
+import { authGuard } from './services/auth.guard';
 import { perfilGuard } from './services/perfil.guard';
 import { ongPendenteGuard } from './services/ong-pendente.guard';
 
@@ -160,6 +161,21 @@ export const routes: Routes = [
         (m) => m.FavoritosComponent,
       ),
     canActivate: [perfilGuard(['ADOTANTE'])],
+  },
+
+  {
+    path: 'perfil',
+    loadComponent: () =>
+      import('./pages/perfil/perfil.component').then((m) => m.PerfilComponent),
+    canActivate: [authGuard],
+  },
+
+  {
+    path: 'confirmar-exclusao',
+    loadComponent: () =>
+      import('./pages/confirmar-exclusao/confirmar-exclusao.component').then(
+        (m) => m.ConfirmarExclusaoComponent,
+      ),
   },
 
   {

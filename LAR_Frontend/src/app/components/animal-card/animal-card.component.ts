@@ -70,11 +70,9 @@ export class AnimalCardComponent {
             'Você precisa estar logado como Adotante para favoritar.',
           );
         } else if (erro.status === 409 && !estavaFavoritado) {
-          // já estava favoritado no servidor: só sincroniza o estado visual
           this.favoritado = true;
           this.favoritoAlterado.emit(true);
         } else if (erro.status === 404 && estavaFavoritado) {
-          // já não estava favoritado no servidor: só sincroniza o estado visual
           this.favoritado = false;
           this.favoritoAlterado.emit(false);
         } else {
