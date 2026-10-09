@@ -1,0 +1,265 @@
+<section class="perfil">
+
+    <div class="perfil__container">
+
+        <h1 class="perfil__titulo">
+            Meu Perfil
+        </h1>
+
+        @if (carregando) {
+
+        <div class="perfil__mensagem">
+            Carregando perfil...
+        </div>
+
+        } @else if (erroCarregar) {
+
+        <div class="perfil__mensagem perfil__mensagem--erro">
+            {{ erroCarregar }}
+            <button type="button" class="perfil__botao perfil__botao--secundario" (click)="carregarPerfil()">
+                Tentar novamente
+            </button>
+        </div>
+
+        } @else if (perfil) {
+
+        <div class="perfil__cartao">
+
+            <div class="perfil__cabecalho">
+                <h2>Dados da conta</h2>
+                <span class="perfil__tipo">{{ rotuloTipo }}</span>
+            </div>
+
+            @if (sucessoPerfil) {
+            <div class="perfil__aviso perfil__aviso--sucesso">{{ sucessoPerfil }}</div>
+            }
+
+            @if (!editando) {
+
+            <dl class="perfil__dados">
+
+                <dt>Nome</dt>
+                <dd>{{ perfil.nome }}</dd>
+
+                <dt>E-mail</dt>
+                <dd>{{ perfil.email }}</dd>
+
+                <dt>Telefone</dt>
+                <dd>{{ perfil.telefone || 'Não informado' }}</dd>
+
+                <dt>Endereço</dt>
+                <dd>{{ perfil.endereco || 'Não informado' }}</dd>
+
+                @if (ehOng) {
+                <dt>Observações</dt>
+                <dd>{{ perfil.observacoes || 'Não informado' }}</dd>
+                }
+
+                @if (documento) {
+                <dt>{{ documento.rotulo }}</dt>
+                <dd>{{ documento.valor }}</dd>
+                }
+
+            </dl>
+
+            <button type="button" class="perfil__botao" (click)="iniciarEdicao()">
+                Editar perfil
+            </button>
+
+            } @else {
+
+            <form [formGroup]="formPerfil" (ngSubmit)="salvarPerfil()">
+
+                <div class="perfil__campo">
+                    <label for="nome">Nome</label>
+                    <input id="nome" type="text" formControlName="nome" autocomplete="name">
+
+                    @if (formPerfil.controls.nome.touched && formPerfil.controls.nome.errors?.['required']) {
+                    <span class="perfil__erro">Informe o nome.</span>
+                    }
+                </div>
+
+                <div class="perfil__campo">
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" [value]="perfil.email" disabled>
+                </div>
+
+                <div class="perfil__campo">
+                    <label for="telefone">Telefone</label>
+                    <input id="telefone" type="tel" formControlName="telefone" autocomplete="tel">
+                </div>
+
+                <div class="perfil__campo">
+                    <label for="endereco">Endereço</label>
+                    <input id="endereco" type="text" formControlName="endereco" autocomplete="street-address">
+                </div>
+
+                @if (ehOng) {
+                <div class="perfil__campo">
+                    <label for="observacoes">Observações</label>
+                    <textarea id="observacoes" rows="3" formControlName="observacoes"></textarea>
+                </div>
+                }
+
+                @if (erroPerfil) {
+                <div class="perfil__aviso perfil__aviso--erro">{{ erroPerfil }}</div>
+                }
+
+                <div class="perfil__acoes">
+                    <button type="button" class="perfil__botao perfil__botao--secundario" (click)="cancelarEdicao()"
+                        [disabled]="salvandoPerfil">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="perfil__botao" [disabled]="salvandoPerfil">
+                        {{ salvandoPerfil ? 'Salvando...' : 'Salvar' }}
+                    </button>
+                </div>
+
+            </form>
+
+            }
+
+        </div>
+
+        <div class="perfil__cartao">
+
+            <div class="perfil__cabecalho">
+                <h2>Senha</h2>
+            </div>
+
+            @if (sucessoSenha) {
+            <div class="perfil__aviso perfil__aviso--sucesso">{{ sucessoSenha }}</div>
+            }
+
+            @if (!mostrarSenha) {
+
+            <button type="button" class="perfil__botao perfil__botao--secundario" (click)="alternarSenha()">
+                Alterar senha
+            </button>
+
+            } @else {
+
+            <form [formGroup]="formSenha" (ngSubmit)="salvarSenha()">
+
+                <div class="perfil__campo">
+                    <label for="senhaAtual">Senha atual</label>
+                    <input id="senhaAtual" type="password" formControlName="senhaAtual" autocomplete="current-password">
+
+                    @if (formSenha.controls.senhaAtual.touched && formSenha.controls.senhaAtual.errors?.['required']) {
+                    <span class="perfil__erro">Informe sua senha atual.</span>
+                    }
+                </div>
+
+                <div class="perfil__campo">
+                    <label for="novaSenha">Nova senha</label>
+                    <input id="novaSenha" type="password" formControlName="novaSenha" autocomplete="new-password">
+
+                    @if (formSenha.controls.novaSenha.touched && formSenha.controls.novaSenha.errors?.['required']) {
+                    <span class="perfil__erro">Informe a nova senha.</span>
+                    }
+
+                    @if (formSenha.controls.novaSenha.touched && formSenha.controls.novaSenha.errors?.['minlength']) {
+                    <span class="perfil__erro">A nova senha deve ter pelo menos 6 caracteres.</span>
+                    }
+                </div>
+
+                <div class="perfil__campo">
+                    <label for="confirmarNovaSenha">Confirmar nova senha</label>
+                    <input id="confirmarNovaSenha" type="password" formControlName="confirmarNovaSenha"
+                        autocomplete="new-password">
+
+                    @if (formSenha.controls.confirmarNovaSenha.touched && formSenha.errors?.['senhasDiferentes']) {
+                    <span class="perfil__erro">As senhas não conferem.</span>
+                    }
+                </div>
+
+                @if (erroSenha) {
+                <div class="perfil__aviso perfil__aviso--erro">{{ erroSenha }}</div>
+                }
+
+                <div class="perfil__acoes">
+                    <button type="button" class="perfil__botao perfil__botao--secundario" (click)="alternarSenha()"
+                        [disabled]="salvandoSenha">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="perfil__botao" [disabled]="salvandoSenha">
+                        {{ salvandoSenha ? 'Salvando...' : 'Alterar senha' }}
+                    </button>
+                </div>
+
+            </form>
+
+            }
+
+        </div>
+
+        @if (podeExcluirConta) {
+
+        <div class="perfil__cartao perfil__cartao--perigo">
+
+            <div class="perfil__cabecalho">
+                <h2>Excluir conta</h2>
+            </div>
+
+            @if (!mostrarExclusao) {
+
+            <p class="perfil__texto">
+                Essa ação é permanente
+                @if (ehOng) {
+                e também remove todos os animais cadastrados pela sua ONG.
+                } @else {
+                e remove seus dados e favoritos.
+                }
+            </p>
+
+            <button type="button" class="perfil__botao perfil__botao--perigo" (click)="alternarExclusao()">
+                Excluir minha conta
+            </button>
+
+            } @else {
+
+            <form [formGroup]="formExclusao" (ngSubmit)="confirmarExclusao()">
+
+                <p class="perfil__texto">
+                    Tem certeza? Digite sua senha para confirmar.
+                    @if (ehOng) {
+                    Você receberá um e-mail para concluir a exclusão.
+                    }
+                </p>
+
+                <div class="perfil__campo">
+                    <label for="senhaExclusao">Senha</label>
+                    <input id="senhaExclusao" type="password" formControlName="senha" autocomplete="current-password">
+
+                    @if (formExclusao.controls.senha.touched && formExclusao.controls.senha.errors?.['required']) {
+                    <span class="perfil__erro">Informe sua senha.</span>
+                    }
+                </div>
+
+                @if (erroExclusao) {
+                <div class="perfil__aviso perfil__aviso--erro">{{ erroExclusao }}</div>
+                }
+
+                @if (mensagemExclusaoOng) {
+                <div class="perfil__aviso perfil__aviso--sucesso">{{ mensagemExclusaoOng }}</div>
+                }
+
+                <div class="perfil__acoes">
+                    <button type="button" class="perfil__botao perfil__botao--secundario" (click)="alternarExclusao()"
+                        [disabled]="excluindo">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="perfil__botao perfil__botao--perigo" [disabled]="excluindo">
+                        {{ excluindo ? 'Processando...' : 'Confirmar exclusão' }}
+                    </button>
+                </div>
+            </form>
+            }
+        </div>
+        }
+        }
+    </div>
+</section>
