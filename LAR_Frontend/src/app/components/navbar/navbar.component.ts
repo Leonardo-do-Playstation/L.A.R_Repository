@@ -104,6 +104,12 @@ export class NavbarComponent implements OnDestroy {
     );
   }
 
+  acessarPerfil(): void {
+    this.avisoAuthService.fechar();
+
+    this.router.navigate([this.estaAutenticado() ? '/perfil' : '/login']);
+  }
+
   fecharAviso(): void {
     this.avisoAuthService.fechar();
   }

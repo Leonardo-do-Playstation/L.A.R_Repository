@@ -1,0 +1,53 @@
+<section class="confirmar-exclusao">
+
+    <div class="confirmar-exclusao__caixa">
+
+        @if (concluido) {
+
+        <h1>Conta excluída</h1>
+
+        <p>
+            A conta da sua ONG e os animais cadastrados foram removidos.
+        </p>
+
+        <a routerLink="/" class="confirmar-exclusao__botao">
+            Ir para o início
+        </a>
+
+        } @else if (!token) {
+
+        <h1>Link inválido</h1>
+
+        <p>
+            Não encontramos o código de confirmação. Solicite a exclusão novamente pelo seu perfil.
+        </p>
+
+        <a routerLink="/login" class="confirmar-exclusao__botao">
+            Ir para o login
+        </a>
+
+        } @else {
+
+        <h1>Confirmar exclusão</h1>
+
+        <p>
+            Ao confirmar, a conta da sua ONG e todos os animais cadastrados serão removidos. Essa ação não pode ser
+            desfeita.
+        </p>
+
+        @if (erro) {
+        <div class="confirmar-exclusao__erro">{{ erro }}</div>
+        }
+
+        <button type="button" class="confirmar-exclusao__botao confirmar-exclusao__botao--perigo" (click)="confirmar()"
+            [disabled]="processando">
+            {{ processando ? 'Processando...' : 'Confirmar exclusão' }}
+        </button>
+
+        <a routerLink="/home" class="confirmar-exclusao__cancelar">
+            Cancelar
+        </a>
+
+        }
+    </div>
+</section>

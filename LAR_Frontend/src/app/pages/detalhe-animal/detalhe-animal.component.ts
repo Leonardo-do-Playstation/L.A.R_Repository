@@ -82,7 +82,6 @@ export class DetalheAnimalComponent implements OnInit {
         this.favoritado = ids.has(animalId);
       },
 
-      // sem a lista, o coração apenas começa vazio
       error: () => {},
     });
   }

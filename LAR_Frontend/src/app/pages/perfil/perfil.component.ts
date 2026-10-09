@@ -1,0 +1,302 @@
+import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+
+import { AuthService, TipoUsuario } from '../../services/auth.service';
+import { ContaService, PerfilDetalhe } from '../../services/conta.service';
+
+function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
+  const nova = grupo.get('novaSenha')?.value;
+  const confirmacao = grupo.get('confirmarNovaSenha')?.value;
+
+  return nova === confirmacao ? null : { senhasDiferentes: true };
+}
+
+@Component({
+  selector: 'app-perfil',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './perfil.component.html',
+  styleUrl: './perfil.component.css',
+})
+export class PerfilComponent implements OnInit {
+  private readonly contaService = inject(ContaService);
+  private readonly authService = inject(AuthService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
+
+  tipo: TipoUsuario | null = this.authService.obterPerfil()?.tipo ?? null;
+
+  perfil: PerfilDetalhe | null = null;
+
+  carregando = true;
+  erroCarregar = '';
+
+  editando = false;
+  salvandoPerfil = false;
+  erroPerfil = '';
+  sucessoPerfil = '';
+
+  mostrarSenha = false;
+  salvandoSenha = false;
+  erroSenha = '';
+  sucessoSenha = '';
+
+  mostrarExclusao = false;
+  excluindo = false;
+  erroExclusao = '';
+  mensagemExclusaoOng = '';
+
+  formPerfil = this.formBuilder.group({
+    nome: ['', [Validators.required, Validators.maxLength(120)]],
+    telefone: [''],
+    endereco: [''],
+    observacoes: [''],
+  });
+
+  formSenha = this.formBuilder.group(
+    {
+      senhaAtual: ['', Validators.required],
+      novaSenha: ['', [Validators.required, Validators.minLength(6)]],
+      confirmarNovaSenha: ['', Validators.required],
+    },
+    { validators: senhasIguais },
+  );
+
+  formExclusao = this.formBuilder.group({
+    senha: ['', Validators.required],
+  });
+
+  get ehOng(): boolean {
+    return this.tipo === 'ONG';
+  }
+
+  get podeExcluirConta(): boolean {
+    return this.tipo !== 'ADMINISTRADOR';
+  }
+
+  get rotuloTipo(): string {
+    switch (this.tipo) {
+      case 'ADOTANTE':
+        return 'Adotante';
+      case 'ONG':
+        return 'ONG';
+      default:
+        return 'Administrador';
+    }
+  }
+
+  get documento(): { rotulo: string; valor: string } | null {
+    if (this.perfil?.cpf) {
+      return { rotulo: 'CPF', valor: this.perfil.cpf };
+    }
+
+    if (this.perfil?.cnpj) {
+      return { rotulo: 'CNPJ', valor: this.perfil.cnpj };
+    }
+
+    if (this.perfil?.codigoAdmin) {
+      return {
+        rotulo: 'Código de administrador',
+        valor: this.perfil.codigoAdmin,
+      };
+    }
+
+    return null;
+  }
+
+  ngOnInit(): void {
+    this.carregarPerfil();
+  }
+
+  carregarPerfil(): void {
+    if (!this.tipo) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.carregando = true;
+    this.erroCarregar = '';
+
+    this.contaService.buscarPerfil(this.tipo).subscribe({
+      next: (perfil) => {
+        this.perfil = perfil;
+        this.carregando = false;
+      },
+
+      error: () => {
+        this.carregando = false;
+        this.erroCarregar = 'Não foi possível carregar seu perfil.';
+      },
+    });
+  }
+
+  iniciarEdicao(): void {
+    if (!this.perfil) {
+      return;
+    }
+
+    this.formPerfil.reset({
+      nome: this.perfil.nome,
+      telefone: this.perfil.telefone ?? '',
+      endereco: this.perfil.endereco ?? '',
+      observacoes: this.perfil.observacoes ?? '',
+    });
+
+    this.erroPerfil = '';
+    this.sucessoPerfil = '';
+    this.editando = true;
+  }
+
+  cancelarEdicao(): void {
+    this.editando = false;
+    this.erroPerfil = '';
+  }
+
+  salvarPerfil(): void {
+    if (this.formPerfil.invalid || !this.tipo || this.salvandoPerfil) {
+      this.formPerfil.markAllAsTouched();
+      return;
+    }
+
+    const valores = this.formPerfil.getRawValue();
+
+    this.salvandoPerfil = true;
+    this.erroPerfil = '';
+    this.sucessoPerfil = '';
+
+    this.contaService
+      .atualizarPerfil(this.tipo, {
+        nome: (valores.nome ?? '').trim(),
+        telefone: (valores.telefone ?? '').trim() || null,
+        endereco: (valores.endereco ?? '').trim() || null,
+        ...(this.ehOng
+          ? { observacoes: (valores.observacoes ?? '').trim() || null }
+          : {}),
+      })
+      .subscribe({
+        next: (perfilAtualizado) => {
+          this.perfil = perfilAtualizado;
+          this.salvandoPerfil = false;
+          this.editando = false;
+          this.sucessoPerfil = 'Perfil atualizado com sucesso.';
+          this.atualizarNomeNoCache(perfilAtualizado.nome);
+        },
+
+        error: (erro: HttpErrorResponse) => {
+          this.salvandoPerfil = false;
+          this.erroPerfil = this.mensagemErro(
+            erro,
+            'Não foi possível atualizar o perfil.',
+          );
+        },
+      });
+  }
+
+  private atualizarNomeNoCache(nome: string): void {
+    const cache = this.authService.obterPerfil();
+
+    if (cache) {
+      this.authService.salvarPerfil({ ...cache, nome });
+    }
+  }
+
+  alternarSenha(): void {
+    this.mostrarSenha = !this.mostrarSenha;
+    this.formSenha.reset();
+    this.erroSenha = '';
+    this.sucessoSenha = '';
+  }
+
+  salvarSenha(): void {
+    if (this.formSenha.invalid || this.salvandoSenha) {
+      this.formSenha.markAllAsTouched();
+      return;
+    }
+
+    const { senhaAtual, novaSenha } = this.formSenha.getRawValue();
+
+    this.salvandoSenha = true;
+    this.erroSenha = '';
+    this.sucessoSenha = '';
+
+    this.contaService
+      .alterarSenha(senhaAtual ?? '', novaSenha ?? '')
+      .subscribe({
+        next: () => {
+          this.salvandoSenha = false;
+          this.mostrarSenha = false;
+          this.formSenha.reset();
+          this.sucessoSenha = 'Senha alterada com sucesso.';
+        },
+
+        error: (erro: HttpErrorResponse) => {
+          this.salvandoSenha = false;
+          this.erroSenha = this.mensagemErro(
+            erro,
+            'Não foi possível alterar a senha.',
+          );
+        },
+      });
+  }
+
+  alternarExclusao(): void {
+    this.mostrarExclusao = !this.mostrarExclusao;
+    this.formExclusao.reset();
+    this.erroExclusao = '';
+    this.mensagemExclusaoOng = '';
+  }
+
+  confirmarExclusao(): void {
+    if (this.formExclusao.invalid || this.excluindo) {
+      this.formExclusao.markAllAsTouched();
+      return;
+    }
+
+    this.excluindo = true;
+    this.erroExclusao = '';
+
+    this.contaService
+      .solicitarExclusao(this.formExclusao.getRawValue().senha ?? '')
+      .subscribe({
+        next: () => {
+          this.excluindo = false;
+
+          if (this.ehOng) {
+            this.formExclusao.reset();
+            this.mensagemExclusaoOng =
+              'Enviamos um e-mail com um link de confirmação (válido por 15 minutos). Sua conta continua ativa até você confirmar.';
+            return;
+          }
+
+          this.authService.limparToken();
+          this.router.navigate(['/']);
+        },
+
+        error: (erro: HttpErrorResponse) => {
+          this.excluindo = false;
+          this.erroExclusao = this.mensagemErro(
+            erro,
+            'Não foi possível excluir a conta.',
+          );
+        },
+      });
+  }
+
+  private mensagemErro(erro: HttpErrorResponse, padrao: string): string {
+    const campos = erro.error?.campos as Record<string, string> | undefined;
+
+    if (campos && Object.keys(campos).length > 0) {
+      return Object.values(campos).join(' ');
+    }
+
+    return erro.error?.mensagem ?? padrao;
+  }
+}
