@@ -43,4 +43,10 @@ public class AnimalSpecification {
     public static Specification<Animal> comCor(String cor) {
         return (root, query, cb) -> cor == null ? null : cb.equal(cb.lower(root.get("cor")), cor.toLowerCase());
     }
+
+    public static Specification<Animal> ongNaoBloqueada() {
+    return (root, query, cb) -> cb.or(
+            cb.isNull(root.get("ong").get("bloqueado")),
+            cb.isFalse(root.get("ong").get("bloqueado")));
+}
 }

@@ -156,19 +156,19 @@ public class AnimalService {
                 throw new RegraDeNegocioException("Status inválido. Use DISPONIVEL, ADOTADO ou EM_TRATAMENTO.");
             }
         } else {
-            // Sem filtro explícito, o catálogo público mostra só quem está disponível pra adoção
             statusFiltro = StatusAnimal.DISPONIVEL;
         }
 
         Specification<Animal> filtro = Specification
-                .where(AnimalSpecification.comEspecie(especie))
-                .and(AnimalSpecification.comPorte(porte))
-                .and(AnimalSpecification.comSexo(sexo))
-                .and(AnimalSpecification.comStatus(statusFiltro))
-                .and(AnimalSpecification.comRaca(raca))
-                .and(AnimalSpecification.comCor(cor))
-                .and(AnimalSpecification.comIdadeMinima(idadeMinima))
-                .and(AnimalSpecification.comIdadeMaxima(idadeMaxima));
+            .where(AnimalSpecification.comEspecie(especie))
+            .and(AnimalSpecification.comPorte(porte))
+            .and(AnimalSpecification.comSexo(sexo))
+            .and(AnimalSpecification.comStatus(statusFiltro))
+            .and(AnimalSpecification.comRaca(raca))
+            .and(AnimalSpecification.comCor(cor))
+            .and(AnimalSpecification.comIdadeMinima(idadeMinima))
+            .and(AnimalSpecification.comIdadeMaxima(idadeMaxima))
+            .and(AnimalSpecification.ongNaoBloqueada());
 
         return animalRepository.findAll(filtro, pageable)
                 .map(this::paraDetalhesDTO);
