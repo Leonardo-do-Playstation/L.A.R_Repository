@@ -83,4 +83,14 @@ public class OngPerfilService {
         dto.observacoes = ong.getObservacoes();
         return dto;
     }
+
+    public List<OngPublicaDTO> listarPublicas(String nome) {
+    List<Ong> ongs = (nome == null || nome.isBlank())
+                ? ongRepository.findByStatus(StatusOng.APROVADA)
+                : ongRepository.findByStatusAndNomeContainingIgnoreCase(StatusOng.APROVADA, nome.trim());
+
+        return ongs.stream()
+                .map(this::toPublicaDTO)
+                .collect(Collectors.toList());
+    }
 }
