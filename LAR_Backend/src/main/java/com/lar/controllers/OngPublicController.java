@@ -21,13 +21,14 @@ public class OngPublicController {
     @Autowired
     private OngPerfilService ongPerfilService;
 
-    @Operation(summary = "Lista ONGs públicas", description = "Retorna as ONGs disponíveis para consulta pública.")
+    @Operation(summary = "Lista ONGs públicas", description = "Retorna as ONGs disponíveis para consulta pública, com filtro opcional por nome.")
     @SecurityRequirements
     @GetMapping
-    public ResponseEntity<List<OngPublicaDTO>> listarPublicas() {
+    public ResponseEntity<List<OngPublicaDTO>> listarPublicas(
+            @RequestParam(required = false) String nome) {
 
         return ResponseEntity.ok(
-                ongPerfilService.listarPublicas());
+                ongPerfilService.listarPublicas(nome));
     }
 
     @Operation(summary = "Consulta uma ONG pública", description = "Retorna os dados públicos da ONG pelo ID.")

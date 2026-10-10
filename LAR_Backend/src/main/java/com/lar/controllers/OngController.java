@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.lar.dtos.CadastroOngDTO;
+import com.lar.dtos.OngPerfilDTO;
 import com.lar.entities.Ong;
 import com.lar.services.OngService;
+import com.lar.services.OngPerfilService;
 
 import jakarta.validation.Valid;
 
@@ -22,14 +24,18 @@ public class OngController {
     @Autowired
     private OngService ongService;
 
+    @Autowired
+    private OngPerfilService ongPerfilService;
+
     @Operation(summary = "Cadastra uma ONG", description = "Cria uma nova conta de ONG/protetor para posterior análise administrativa.")
     @SecurityRequirements
     @PostMapping("/cadastro")
-    public ResponseEntity<Ong> cadastrar(
+    public ResponseEntity<OngPerfilDTO> cadastrar(
             @Valid @RequestBody CadastroOngDTO dto) {
 
         Ong novaOng = ongService.cadastrar(dto);
 
-        return ResponseEntity.ok(novaOng);
+        return ResponseEntity.ok(
+                ongPerfilService.buscarMeuPerfil(novaOng.getEmail()));
     }
 }

@@ -37,13 +37,6 @@ public class OngPerfilService {
         return toPerfilDTO(salva);
     }
 
-    public List<OngPublicaDTO> listarPublicas() {
-        return ongRepository.findByStatus(StatusOng.APROVADA)
-                .stream()
-                .map(this::toPublicaDTO)
-                .collect(Collectors.toList());
-    }
-
     public OngPublicaDTO buscarPublicaPorId(Long id) {
         Ong ong = ongRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("ONG não encontrada."));
@@ -53,6 +46,16 @@ public class OngPerfilService {
         }
 
         return toPublicaDTO(ong);
+    }
+
+    public List<OngPublicaDTO> listarPublicas(String nome) {
+        List<Ong> ongs = (nome == null || nome.isBlank())
+                ? ongRepository.findByStatus(StatusOng.APROVADA)
+                : ongRepository.findByStatusAndNomeContainingIgnoreCase(StatusOng.APROVADA, nome.trim());
+
+        return ongs.stream()
+                .map(this::toPublicaDTO)
+                .collect(Collectors.toList());
     }
 
     private Ong buscarOngAutenticada(String email) {
@@ -70,6 +73,7 @@ public class OngPerfilService {
         dto.observacoes = ong.getObservacoes();
         dto.cnpj = ong.getCnpj();
         dto.status = ong.getStatus().name();
+        dto.dataCadastro = ong.getData_cadastro();
         return dto;
     }
 

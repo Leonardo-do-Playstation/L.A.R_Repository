@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.lar.dtos.CriarAdministradorDTO;
 import com.lar.entities.Administrador;
+import com.lar.exceptions.AcessoNegadoException;
+import com.lar.exceptions.RecursoNaoEncontradoException;
 import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.AdministradorRepository;
 import com.lar.repositories.UsuarioRepository;
@@ -28,6 +30,14 @@ public class AdministradorService {
     private AuditoriaService auditoriaService;
 
     public Administrador criar(CriarAdministradorDTO dto, String emailAdminCriador) {
+
+        Administrador solicitante = administradorRepository.findByEmail(emailAdminCriador)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Administrador autenticado não encontrado."));
+
+        if (!Boolean.TRUE.equals(solicitante.getSuperAdmin())) {
+            throw new AcessoNegadoException(
+                    "Apenas o administrador principal pode cadastrar novos administradores.");
+        }
 
         if (usuarioRepository.existsByEmail(dto.email)) {
             throw new RegraDeNegocioException("Este e-mail já está cadastrado.");

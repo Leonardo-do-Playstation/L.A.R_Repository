@@ -4,9 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import com.lar.dtos.AdotantePerfilDTO;
 import com.lar.dtos.CadastroAdotanteDTO;
 import com.lar.entities.Adotante;
 import com.lar.services.AdotanteService;
+import com.lar.services.AdotantePerfilService;
 
 import jakarta.validation.Valid;
 
@@ -22,14 +24,18 @@ public class AdotanteController {
     @Autowired
     private AdotanteService adotanteService;
 
+    @Autowired
+    private AdotantePerfilService adotantePerfilService;
+
     @Operation(summary = "Cadastra um adotante", description = "Cria uma nova conta de adotante.")
     @SecurityRequirements
     @PostMapping("/cadastro")
-    public ResponseEntity<Adotante> cadastrarAdotante(
+    public ResponseEntity<AdotantePerfilDTO> cadastrarAdotante(
             @Valid @RequestBody CadastroAdotanteDTO dto) {
 
         Adotante novoAdotante = adotanteService.cadastrar(dto);
 
-        return ResponseEntity.ok(novoAdotante);
+        return ResponseEntity.ok(
+                adotantePerfilService.buscarMeuPerfil(novoAdotante.getEmail()));
     }
 }

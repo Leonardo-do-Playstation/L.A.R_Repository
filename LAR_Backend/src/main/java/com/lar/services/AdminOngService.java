@@ -1,13 +1,15 @@
 package com.lar.services;
 
+import com.lar.dtos.OngPerfilDTO;
 import com.lar.entities.Ong;
 import com.lar.enums.StatusOng;
 import com.lar.exceptions.RecursoNaoEncontradoException;
+import com.lar.repositories.OngRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.lar.repositories.OngRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminOngService {
@@ -16,16 +18,22 @@ public class AdminOngService {
         private OngRepository ongRepository;
 
         @Autowired
+        private OngPerfilService ongPerfilService;
+
+        @Autowired
         private EmailService emailService;
 
         @Autowired
         private AuditoriaService auditoriaService;
 
-        public List<Ong> listarPendentes() {
-                return ongRepository.findByStatus(StatusOng.PENDENTE);
+        public List<OngPerfilDTO> listarPendentes() {
+                return ongRepository.findByStatus(StatusOng.PENDENTE)
+                                .stream()
+                                .map(ong -> ongPerfilService.buscarMeuPerfil(ong.getEmail()))
+                                .collect(Collectors.toList());
         }
 
-        public Ong aprovar(Long idOng, String emailAdmin) {
+        public OngPerfilDTO aprovar(Long idOng, String emailAdmin) {
                 Ong ong = buscarOng(idOng);
                 boolean reanalise = ong.getStatus() != StatusOng.PENDENTE;
 
@@ -46,10 +54,10 @@ public class AdminOngService {
                 auditoriaService.registrar(emailAdmin, "APROVAR_ONG",
                                 "ONG id=" + salva.getId() + " (" + salva.getNome() + ")");
 
-                return salva;
+                return ongPerfilService.buscarMeuPerfil(salva.getEmail());
         }
 
-        public Ong recusar(Long idOng, String motivo, String emailAdmin) {
+        public OngPerfilDTO recusar(Long idOng, String motivo, String emailAdmin) {
                 Ong ong = buscarOng(idOng);
                 boolean reanalise = ong.getStatus() != StatusOng.PENDENTE;
 
@@ -73,7 +81,7 @@ public class AdminOngService {
                 auditoriaService.registrar(emailAdmin, "RECUSAR_ONG",
                                 "ONG id=" + salva.getId() + " (" + salva.getNome() + ") — motivo: " + motivo);
 
-                return salva;
+                return ongPerfilService.buscarMeuPerfil(salva.getEmail());
         }
 
         private Ong buscarOng(Long idOng) {

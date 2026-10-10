@@ -1,5 +1,7 @@
 package com.lar.dtos;
 
+import java.time.LocalDateTime;
+
 public class OngPerfilDTO {
     public Long id;
     public String nome;
@@ -9,6 +11,7 @@ public class OngPerfilDTO {
     public String observacoes;
     public String cnpj;
     public String status;
+    public LocalDateTime dataCadastro;
 
     public OngPerfilDTO() {
     }

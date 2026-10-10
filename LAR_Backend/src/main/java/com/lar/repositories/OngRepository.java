@@ -12,5 +12,7 @@ public interface OngRepository extends JpaRepository<Ong, Long> {
 
     List<Ong> findByStatus(StatusOng status);
 
+    List<Ong> findByStatusAndNomeContainingIgnoreCase(StatusOng status, String nome);
+
     Optional<Ong> findByEmail(String email);
 }

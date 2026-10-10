@@ -3,7 +3,7 @@ package com.lar.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import com.lar.entities.Ong;
+import com.lar.dtos.OngPerfilDTO;
 import com.lar.services.AdminOngService;
 import com.lar.dtos.RecusarOngDTO;
 
@@ -26,13 +26,13 @@ public class AdminOngController {
 
     @Operation(summary = "Lista os cadastros de ONGs pendentes de análise", description = "Retorna as ONGs que aguardam análise administrativa.")
     @GetMapping("/pendentes")
-    public ResponseEntity<List<Ong>> listarPendentes() {
+    public ResponseEntity<List<OngPerfilDTO>> listarPendentes() {
         return ResponseEntity.ok(adminOngService.listarPendentes());
     }
 
     @Operation(summary = "Aprova o cadastro de uma ONG", description = "Altera a situação da ONG para aprovada e registra a ação administrativa.")
     @PutMapping("/{id}/aprovar")
-    public ResponseEntity<Ong> aprovar(
+    public ResponseEntity<OngPerfilDTO> aprovar(
             @PathVariable Long id,
             Authentication authentication) {
 
@@ -42,7 +42,7 @@ public class AdminOngController {
 
     @Operation(summary = "Recusa o cadastro de uma ONG", description = "Recusa a ONG usando o motivo informado e registra a ação administrativa.")
     @PutMapping("/{id}/recusar")
-    public ResponseEntity<Ong> recusar(
+    public ResponseEntity<OngPerfilDTO> recusar(
             @PathVariable Long id,
             @Valid @RequestBody RecusarOngDTO dto,
             Authentication authentication) {
