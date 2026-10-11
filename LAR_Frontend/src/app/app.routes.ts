@@ -203,6 +203,14 @@ export const routes: Routes = [
   },
 
   {
+    path: 'confirmar-email',
+    loadComponent: () =>
+      import('./pages/confirmar-email/confirmar-email.component').then(
+        (m) => m.ConfirmarEmailComponent,
+      ),
+  },
+
+  {
     path: 'aguardando-aprovacao',
     loadComponent: () =>
       import('./pages/aguardando-aprovacao/aguardando-aprovacao.component').then(
