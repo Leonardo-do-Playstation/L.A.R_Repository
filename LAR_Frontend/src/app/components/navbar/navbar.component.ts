@@ -59,6 +59,8 @@ export class NavbarComponent implements OnDestroy {
     return (
       url === '/' ||
       url === '/entrada' ||
+      url === '/adotante' ||
+      url === '/ong' ||
       url === '/login' ||
       url === '/cadastro' ||
       url === '/cadastro-ong' ||
