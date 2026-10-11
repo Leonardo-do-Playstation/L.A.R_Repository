@@ -125,6 +125,73 @@
         <div class="perfil__cartao">
 
             <div class="perfil__cabecalho">
+                <h2>E-mail</h2>
+            </div>
+
+            @if (sucessoEmail) {
+            <div class="perfil__aviso perfil__aviso--sucesso">{{ sucessoEmail }}</div>
+            }
+
+            @if (!mostrarEmail) {
+
+            <p class="perfil__texto">
+                Para trocar o e-mail, enviaremos um link de confirmação para o e-mail atual da conta.
+            </p>
+
+            <button type="button" class="perfil__botao perfil__botao--secundario" (click)="alternarEmail()">
+                Alterar e-mail
+            </button>
+
+            } @else {
+
+            <form [formGroup]="formEmail" (ngSubmit)="solicitarTrocaEmail()">
+
+                <div class="perfil__campo">
+                    <label for="novoEmail">Novo e-mail</label>
+                    <input id="novoEmail" type="email" formControlName="novoEmail" autocomplete="email">
+
+                    @if (formEmail.controls.novoEmail.touched && formEmail.controls.novoEmail.errors?.['required']) {
+                    <span class="perfil__erro">Informe o novo e-mail.</span>
+                    }
+
+                    @if (formEmail.controls.novoEmail.touched && formEmail.controls.novoEmail.errors?.['email']) {
+                    <span class="perfil__erro">Informe um e-mail válido.</span>
+                    }
+                </div>
+
+                <div class="perfil__campo">
+                    <label for="senhaEmail">Senha atual</label>
+                    <input id="senhaEmail" type="password" formControlName="senha" autocomplete="current-password">
+
+                    @if (formEmail.controls.senha.touched && formEmail.controls.senha.errors?.['required']) {
+                    <span class="perfil__erro">Informe sua senha atual.</span>
+                    }
+                </div>
+
+                @if (erroEmail) {
+                <div class="perfil__aviso perfil__aviso--erro">{{ erroEmail }}</div>
+                }
+
+                <div class="perfil__acoes">
+                    <button type="button" class="perfil__botao perfil__botao--secundario" (click)="alternarEmail()"
+                        [disabled]="salvandoEmail">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="perfil__botao" [disabled]="salvandoEmail">
+                        {{ salvandoEmail ? 'Enviando...' : 'Enviar link' }}
+                    </button>
+                </div>
+
+            </form>
+
+            }
+
+        </div>
+
+        <div class="perfil__cartao">
+
+            <div class="perfil__cabecalho">
                 <h2>Senha</h2>
             </div>
 
