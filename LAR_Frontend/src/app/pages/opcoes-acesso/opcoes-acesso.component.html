@@ -1,0 +1,38 @@
+<section class="acesso">
+
+    <button type="button" class="btn-back" routerLink="/" aria-label="Voltar">
+        <img src="/assets/seta-esquerda.svg" alt="">
+    </button>
+
+    <div class="acesso__overlay">
+
+        <div class="acesso__content">
+
+            <div class="acesso__logo">
+                L.A.R.
+            </div>
+
+            <h1 class="acesso__titulo">
+                {{ titulo }}
+            </h1>
+
+            <div class="acesso__actions">
+
+                @for (opcao of opcoes; track opcao.rotulo) {
+
+                <a class="btn" [class.btn-principal]="$first" [class.btn-secundario]="!$first" [routerLink]="opcao.rota"
+                    [queryParams]="opcao.queryParams">
+                    {{ opcao.rotulo }}
+                </a>
+
+                }
+
+            </div>
+
+            <div class="acesso__divider"></div>
+
+        </div>
+
+    </div>
+
+</section>

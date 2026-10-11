@@ -20,6 +20,30 @@ export const routes: Routes = [
   },
 
   {
+    path: 'adotante',
+    loadComponent: () =>
+      import('./pages/opcoes-acesso/opcoes-acesso.component').then(
+        (m) => m.OpcoesAcessoComponent,
+      ),
+    canActivate: [guestGuard],
+    data: {
+      tipo: 'adotante',
+    },
+  },
+
+  {
+    path: 'ong',
+    loadComponent: () =>
+      import('./pages/opcoes-acesso/opcoes-acesso.component').then(
+        (m) => m.OpcoesAcessoComponent,
+      ),
+    canActivate: [guestGuard],
+    data: {
+      tipo: 'ong',
+    },
+  },
+
+  {
     path: 'cadastro',
     component: CadastroComponent,
     canActivate: [guestGuard],

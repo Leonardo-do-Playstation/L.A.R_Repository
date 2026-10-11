@@ -67,7 +67,11 @@ export class LoginComponent implements OnInit {
         console.error('Erro ao realizar login:', erro);
         this.carregando = false;
 
-        if (erro.status === 401 || erro.status === 403) {
+        if (erro.status === 403) {
+          this.erroLogin =
+            erro.error?.erro ??
+            'Esta conta está suspensa. Entre em contato com o suporte.';
+        } else if (erro.status === 401) {
           this.erroLogin = 'E-mail ou senha inválidos.';
         } else {
           this.erroLogin =
