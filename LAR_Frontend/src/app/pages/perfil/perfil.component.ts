@@ -44,6 +44,11 @@ export class PerfilComponent implements OnInit {
   erroPerfil = '';
   sucessoPerfil = '';
 
+  mostrarEmail = false;
+  salvandoEmail = false;
+  erroEmail = '';
+  sucessoEmail = '';
+
   mostrarSenha = false;
   salvandoSenha = false;
   erroSenha = '';
@@ -59,6 +64,11 @@ export class PerfilComponent implements OnInit {
     telefone: [''],
     endereco: [''],
     observacoes: [''],
+  });
+
+  formEmail = this.formBuilder.group({
+    novoEmail: ['', [Validators.required, Validators.email]],
+    senha: ['', Validators.required],
   });
 
   formSenha = this.formBuilder.group(
@@ -206,6 +216,50 @@ export class PerfilComponent implements OnInit {
     if (cache) {
       this.authService.salvarPerfil({ ...cache, nome });
     }
+  }
+
+  alternarEmail(): void {
+    this.mostrarEmail = !this.mostrarEmail;
+    this.formEmail.reset();
+    this.erroEmail = '';
+    this.sucessoEmail = '';
+  }
+
+  solicitarTrocaEmail(): void {
+    if (this.formEmail.invalid || this.salvandoEmail) {
+      this.formEmail.markAllAsTouched();
+      return;
+    }
+
+    const { novoEmail, senha } = this.formEmail.getRawValue();
+    const emailNovo = (novoEmail ?? '').trim();
+
+    if (emailNovo.toLowerCase() === (this.perfil?.email ?? '').toLowerCase()) {
+      this.erroEmail = 'O novo e-mail deve ser diferente do atual.';
+      return;
+    }
+
+    this.salvandoEmail = true;
+    this.erroEmail = '';
+    this.sucessoEmail = '';
+
+    this.contaService.solicitarTrocaEmail(emailNovo, senha ?? '').subscribe({
+      next: () => {
+        this.salvandoEmail = false;
+        this.mostrarEmail = false;
+        this.formEmail.reset();
+        this.sucessoEmail =
+          'Enviamos um link de confirmação para o seu e-mail atual (válido por 15 minutos). Seu e-mail só muda depois de confirmar.';
+      },
+
+      error: (erro: HttpErrorResponse) => {
+        this.salvandoEmail = false;
+        this.erroEmail = this.mensagemErro(
+          erro,
+          'Não foi possível solicitar a troca de e-mail.',
+        );
+      },
+    });
   }
 
   alternarSenha(): void {

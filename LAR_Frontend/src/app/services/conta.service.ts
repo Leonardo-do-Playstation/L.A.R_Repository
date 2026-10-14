@@ -68,6 +68,23 @@ export class ContaService {
     });
   }
 
+  solicitarTrocaEmail(
+    novoEmail: string,
+    senha: string,
+  ): Observable<MensagemResponse> {
+    return this.http.post<MensagemResponse>(
+      `${this.baseUrl}/conta/email/solicitar`,
+      { novoEmail, senha },
+    );
+  }
+
+  confirmarTrocaEmail(token: string): Observable<MensagemResponse> {
+    return this.http.post<MensagemResponse>(
+      `${this.baseUrl}/conta/email/confirmar`,
+      { token },
+    );
+  }
+
   solicitarExclusao(senha: string): Observable<MensagemResponse> {
     return this.http.post<MensagemResponse>(
       `${this.baseUrl}/conta/excluir/solicitar`,

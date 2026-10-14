@@ -1,0 +1,51 @@
+<section class="confirmar-email">
+
+    <div class="confirmar-email__caixa">
+
+        @if (concluido) {
+
+        <h1>E-mail alterado</h1>
+
+        <p>
+            O e-mail da sua conta foi atualizado. Entre novamente usando o novo e-mail.
+        </p>
+
+        <a routerLink="/login" class="confirmar-email__botao">
+            Ir para o login
+        </a>
+
+        } @else if (!token) {
+
+        <h1>Link inválido</h1>
+
+        <p>
+            Não encontramos o código de confirmação. Solicite a troca de e-mail novamente pelo seu perfil.
+        </p>
+
+        <a routerLink="/login" class="confirmar-email__botao">
+            Ir para o login
+        </a>
+
+        } @else {
+
+        <h1>Confirmar troca de e-mail</h1>
+
+        <p>
+            Ao confirmar, o e-mail da sua conta será alterado e você precisará entrar novamente com o novo e-mail.
+        </p>
+
+        @if (erro) {
+        <div class="confirmar-email__erro">{{ erro }}</div>
+        }
+
+        <button type="button" class="confirmar-email__botao" (click)="confirmar()" [disabled]="processando">
+            {{ processando ? 'Processando...' : 'Confirmar troca' }}
+        </button>
+
+        <a routerLink="/home" class="confirmar-email__cancelar">
+            Cancelar
+        </a>
+
+        }
+    </div>
+</section>
