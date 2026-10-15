@@ -25,6 +25,7 @@ export class CatalogoAnimaisComponent implements OnInit {
   private readonly authService = inject(AuthService);
 
   animais: AnimalCatalogo[] = [];
+  private animaisOriginais: AnimalCatalogo[] = [];
 
   favoritosIds = new Set<number>();
 
@@ -54,7 +55,6 @@ export class CatalogoAnimaisComponent implements OnInit {
       next: (ids) => {
         this.favoritosIds = ids;
       },
-
       error: () => {},
     });
   }
@@ -73,10 +73,10 @@ export class CatalogoAnimaisComponent implements OnInit {
 
     this.catalogoAnimaisService.listar(this.filtros).subscribe({
       next: (animais) => {
-        this.animais = animais;
+        this.animaisOriginais = [...animais];
+        this.atualizarOrdenacao();
         this.carregando = false;
       },
-
       error: () => {
         this.carregando = false;
         this.erro = 'Não foi possível carregar o catálogo de animais.';
@@ -86,13 +86,12 @@ export class CatalogoAnimaisComponent implements OnInit {
 
   ordenar(tipo: 'recentes' | 'antigos'): void {
     this.ordem = tipo;
+    this.atualizarOrdenacao();
+  }
 
-    if (tipo === 'recentes') {
-      this.animais = [...this.animais];
-      return;
-    }
-
-    this.animais = [...this.animais].reverse();
+  private atualizarOrdenacao(): void {
+    const animais = [...this.animaisOriginais];
+    this.animais = this.ordem === 'recentes' ? animais : animais.reverse();
   }
 
   abrirFiltros(): void {
