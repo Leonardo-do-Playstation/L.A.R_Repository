@@ -183,11 +183,15 @@ export class CadastroComponent {
 
     if (erro.status === 409) {
       this.erroCadastro =
-        erro.error?.erro ??
+        erro.error?.mensagem ??
         erro.error?.message ??
         'E-mail ou CPF já cadastrado.';
     } else if (erro.status === 400) {
-      this.erroCadastro = 'Verifique os dados informados.';
+      const campos = erro.error?.campos as Record<string, string> | undefined;
+      this.erroCadastro =
+        (campos && Object.values(campos).join(' ')) ||
+        erro.error?.mensagem ||
+        'Verifique os dados informados.';
     } else {
       this.erroCadastro =
         'Não foi possível realizar o cadastro. Tente novamente.';

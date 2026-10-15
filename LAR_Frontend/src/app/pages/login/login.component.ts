@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
 
         if (erro.status === 403) {
           this.erroLogin =
+            erro.error?.mensagem ??
             erro.error?.erro ??
             'Esta conta está suspensa. Entre em contato com o suporte.';
         } else if (erro.status === 401) {
