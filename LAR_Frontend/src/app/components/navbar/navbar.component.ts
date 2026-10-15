@@ -15,7 +15,7 @@ export class NavbarComponent implements OnDestroy {
   menuAberto = false;
   tipoUsuario: TipoUsuario | null = null;
   carregandoLogout = false;
-  mostrarNavbar = true;
+  mostrarNavbar = false;
   mensagemFavoritos = '';
 
   private readonly destroy$ = new Subject<void>();
@@ -46,8 +46,16 @@ export class NavbarComponent implements OnDestroy {
 
   private atualizarEstado(): void {
     this.atualizarPerfil();
-    const caminhoAtual = this.router.url.split('?')[0];
-    this.mostrarNavbar = !this.ehTelaInicial(caminhoAtual);
+
+    const rota =
+      this.router.url.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+
+    this.mostrarNavbar = !this.ehTelaInicial(rota);
+
+    console.log('[Navbar]', {
+      rota,
+      mostrarNavbar: this.mostrarNavbar,
+    });
   }
 
   private atualizarPerfil(): void {
