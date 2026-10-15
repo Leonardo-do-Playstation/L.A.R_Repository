@@ -25,6 +25,9 @@ export class CatalogoAnimaisComponent implements OnInit {
   private readonly authService = inject(AuthService);
 
   animais: AnimalCatalogo[] = [];
+  private animaisOriginais: AnimalCatalogo[] = [];
+  racasDisponiveis: string[] = [];
+  coresDisponiveis: string[] = [];
 
   favoritosIds = new Set<number>();
 
@@ -39,8 +42,26 @@ export class CatalogoAnimaisComponent implements OnInit {
   categoriaExpandida: CategoriaFiltro | null = null;
 
   ngOnInit(): void {
+    this.carregarOpcoesFiltros();
     this.carregarAnimais();
     this.carregarFavoritos();
+  }
+
+  private carregarOpcoesFiltros(): void {
+    this.catalogoAnimaisService.listar({}).subscribe({
+      next: (animais) => {
+        this.racasDisponiveis = animais
+          .map((animal) => animal.raca?.trim())
+          .filter((raca): raca is string => Boolean(raca));
+        this.coresDisponiveis = animais
+          .map((animal) => animal.cor?.trim())
+          .filter((cor): cor is string => Boolean(cor));
+      },
+      error: () => {
+        this.racasDisponiveis = [];
+        this.coresDisponiveis = [];
+      },
+    });
   }
 
   carregarFavoritos(): void {
@@ -54,7 +75,6 @@ export class CatalogoAnimaisComponent implements OnInit {
       next: (ids) => {
         this.favoritosIds = ids;
       },
-
       error: () => {},
     });
   }
@@ -73,10 +93,10 @@ export class CatalogoAnimaisComponent implements OnInit {
 
     this.catalogoAnimaisService.listar(this.filtros).subscribe({
       next: (animais) => {
-        this.animais = animais;
+        this.animaisOriginais = [...animais];
+        this.atualizarOrdenacao();
         this.carregando = false;
       },
-
       error: () => {
         this.carregando = false;
         this.erro = 'Não foi possível carregar o catálogo de animais.';
@@ -86,13 +106,12 @@ export class CatalogoAnimaisComponent implements OnInit {
 
   ordenar(tipo: 'recentes' | 'antigos'): void {
     this.ordem = tipo;
+    this.atualizarOrdenacao();
+  }
 
-    if (tipo === 'recentes') {
-      this.animais = [...this.animais];
-      return;
-    }
-
-    this.animais = [...this.animais].reverse();
+  private atualizarOrdenacao(): void {
+    const animais = [...this.animaisOriginais];
+    this.animais = this.ordem === 'recentes' ? animais : animais.reverse();
   }
 
   abrirFiltros(): void {
