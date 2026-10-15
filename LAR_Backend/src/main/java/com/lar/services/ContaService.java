@@ -113,11 +113,14 @@ public class ContaService {
     }
 
    public void solicitarExclusao(String emailAutenticado, SolicitarExclusaoDTO dto) {
-    Usuario usuario = buscarUsuarioAutenticado(emailAutenticado);
+        Usuario usuario = buscarUsuarioAutenticado(emailAutenticado);
+
+        validarExclusaoPermitida(usuario);
 
     if (!passwordEncoder.matches(dto.senha, usuario.getSenha())) {
         throw new AcessoNegadoException("Senha incorreta. Exclusão não realizada.");
     }
+
 
     if (usuario instanceof Ong) {
         String token = UUID.randomUUID().toString();
@@ -153,11 +156,19 @@ public class ContaService {
         Usuario usuario = usuarioRepository.findByEmail(exclusaoToken.email)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado."));
 
+
+                
+    if (!(usuario instanceof Ong)) {
+        throw new RegraDeNegocioException(
+                "Este fluxo de confirmação é exclusivo para ONGs."
+        );
+    }
         excluirDadosDoUsuario(usuario);
         exclusaoTokenRepository.delete(exclusaoToken);
     }
 
     private void excluirDadosDoUsuario(Usuario usuario) {
+         validarExclusaoPermitida(usuario);
         if (usuario instanceof Ong ong) {
             for (Animal animal : animalRepository.findByOngId(ong.getId())) {
                 if (animal.foto != null && !animal.foto.isBlank()) {
@@ -177,4 +188,13 @@ public class ContaService {
         return usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário autenticado não encontrado."));
     }
+
+    private void validarExclusaoPermitida(Usuario usuario) {
+    if (usuario instanceof Administrador admin
+            && Boolean.TRUE.equals(admin.getSuperAdmin())) {
+        throw new RegraDeNegocioException(
+            "O superadministrador não pode excluir sua própria conta."
+        );
+    }
+}
 }
