@@ -26,6 +26,8 @@ export class CatalogoAnimaisComponent implements OnInit {
 
   animais: AnimalCatalogo[] = [];
   private animaisOriginais: AnimalCatalogo[] = [];
+  racasDisponiveis: string[] = [];
+  coresDisponiveis: string[] = [];
 
   favoritosIds = new Set<number>();
 
@@ -40,8 +42,26 @@ export class CatalogoAnimaisComponent implements OnInit {
   categoriaExpandida: CategoriaFiltro | null = null;
 
   ngOnInit(): void {
+    this.carregarOpcoesFiltros();
     this.carregarAnimais();
     this.carregarFavoritos();
+  }
+
+  private carregarOpcoesFiltros(): void {
+    this.catalogoAnimaisService.listar({}).subscribe({
+      next: (animais) => {
+        this.racasDisponiveis = animais
+          .map((animal) => animal.raca?.trim())
+          .filter((raca): raca is string => Boolean(raca));
+        this.coresDisponiveis = animais
+          .map((animal) => animal.cor?.trim())
+          .filter((cor): cor is string => Boolean(cor));
+      },
+      error: () => {
+        this.racasDisponiveis = [];
+        this.coresDisponiveis = [];
+      },
+    });
   }
 
   carregarFavoritos(): void {

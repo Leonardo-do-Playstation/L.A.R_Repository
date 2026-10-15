@@ -128,7 +128,12 @@
 
                 @if (categoriaExpandida === 'raca') {
                 <div class="filtros-categoria__opcoes">
-                    <input type="text" placeholder="Ex: Labrador" [(ngModel)]="filtros.raca">
+                    <select [(ngModel)]="filtros.raca">
+                        <option [ngValue]="undefined">Todas</option>
+                        @for (raca of racasDisponiveis; track $index) {
+                        <option [value]="raca">{{ raca }}</option>
+                        }
+                    </select>
                 </div>
                 }
             </div>
@@ -204,7 +209,12 @@
 
                 @if (categoriaExpandida === 'cor') {
                 <div class="filtros-categoria__opcoes">
-                    <input type="text" placeholder="Ex: Marrom" [(ngModel)]="filtros.cor">
+                    <select [(ngModel)]="filtros.cor">
+                        <option [ngValue]="undefined">Todas</option>
+                        @for (cor of coresDisponiveis; track $index) {
+                        <option [value]="cor">{{ cor }}</option>
+                        }
+                    </select>
                 </div>
                 }
             </div>
