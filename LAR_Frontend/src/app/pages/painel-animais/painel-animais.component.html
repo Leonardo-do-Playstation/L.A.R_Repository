@@ -8,12 +8,16 @@
 
         <div class="painel-animais__filtros">
 
-            <button type="button" class="painel-animais__filtros-button" disabled>
+            <button type="button" class="painel-animais__filtros-button" (click)="abrirFiltros()">
                 <span>
                     <img src="/assets/filtro.svg" alt="Filtro">
                 </span>
 
                 Filtros
+
+                @if (quantidadeFiltrosAtivos > 0) {
+                <span class="painel-animais__filtros-contador">{{ quantidadeFiltrosAtivos }}</span>
+                }
             </button>
 
         </div>
@@ -51,10 +55,13 @@
         } @else if (animais.length === 0) {
 
         <div class="painel-animais__mensagem">
+            @if (quantidadeFiltrosAtivos > 0) {
+            <strong>Nenhum animal encontrado.</strong>
+            <span>Altere os filtros ou limpe a seleção para ver outros animais.</span>
+            } @else {
             <strong>Nenhum animal cadastrado.</strong>
-            <span>
-                Cadastre seu primeiro animal para começar.
-            </span>
+            <span>Cadastre seu primeiro animal para começar.</span>
+            }
         </div>
 
         } @else {
@@ -145,6 +152,149 @@
         </div>
         }
     </div>
+
+    @if (mostrarFiltros) {
+
+    <div class="filtros-overlay">
+
+        <div class="filtros-modal">
+
+            <div class="filtros-modal__cabecalho">
+                <button type="button" class="filtros-modal__voltar" aria-label="Fechar" (click)="fecharFiltros()">
+                    <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                </button>
+                <h2>Filtros</h2>
+            </div>
+
+            <div class="filtros-modal__categorias">
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('especie')">
+                        Espécies
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'especie'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'especie') {
+                    <div class="filtros-categoria__opcoes">
+                        <select [(ngModel)]="filtros.especie">
+                            <option [ngValue]="undefined">Todas</option>
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    }
+                </div>
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('raca')">
+                        Raças
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'raca'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'raca') {
+                    <div class="filtros-categoria__opcoes">
+                        <input type="text" placeholder="Ex.: Labrador" [(ngModel)]="filtros.raca">
+                    </div>
+                    }
+                </div>
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('porte')">
+                        Portes
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'porte'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'porte') {
+                    <div class="filtros-categoria__opcoes">
+                        <select [(ngModel)]="filtros.porte">
+                            <option [ngValue]="undefined">Todos</option>
+                            <option value="Pequeno">Pequeno</option>
+                            <option value="Médio">Médio</option>
+                            <option value="Grande">Grande</option>
+                        </select>
+                    </div>
+                    }
+                </div>
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('idade')">
+                        Idades
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'idade'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'idade') {
+                    <div class="filtros-categoria__opcoes filtros-categoria__opcoes--dupla">
+                        <label>
+                            Mínima
+                            <input type="number" min="0" [(ngModel)]="filtros.idadeMinima">
+                        </label>
+                        <label>
+                            Máxima
+                            <input type="number" min="0" [(ngModel)]="filtros.idadeMaxima">
+                        </label>
+                    </div>
+                    }
+                </div>
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('sexo')">
+                        Sexos
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'sexo'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'sexo') {
+                    <div class="filtros-categoria__opcoes">
+                        <select [(ngModel)]="filtros.sexo">
+                            <option [ngValue]="undefined">Todos</option>
+                            <option value="MACHO">Macho</option>
+                            <option value="FEMEA">Fêmea</option>
+                        </select>
+                    </div>
+                    }
+                </div>
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('cor')">
+                        Cores
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'cor'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'cor') {
+                    <div class="filtros-categoria__opcoes">
+                        <input type="text" placeholder="Ex.: Marrom" [(ngModel)]="filtros.cor">
+                    </div>
+                    }
+                </div>
+
+                <div class="filtros-categoria">
+                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('status')">
+                        Status
+                        <span class="filtros-categoria__seta"
+                            [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'status'">›</span>
+                    </button>
+                    @if (categoriaExpandida === 'status') {
+                    <div class="filtros-categoria__opcoes">
+                        <select [(ngModel)]="filtros.status">
+                            <option [ngValue]="undefined">Todos</option>
+                            @for (status of statusDisponiveis; track status.valor) {
+                            <option [ngValue]="status.valor">{{ status.nome }}</option>
+                            }
+                        </select>
+                    </div>
+                    }
+                </div>
+
+            </div>
+
+            <button type="button" class="filtros-modal__limpar" (click)="limparFiltros()">Limpar filtros</button>
+            <button type="button" class="filtros-modal__aplicar" (click)="aplicarFiltros()">Aplicar filtros</button>
+
+        </div>
+
+    </div>
+
+    }
 
     @if (animalParaExcluir) {
 
