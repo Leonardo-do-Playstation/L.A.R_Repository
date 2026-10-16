@@ -12,12 +12,8 @@ public class CriarAdministradorDTO {
     @Email(message = "E-mail inválido")
     public String email;
 
-    @NotBlank(message = "Senha é obrigatória")
-    public String senha;
-
     @NotBlank(message = "Código de admin é obrigatório")
     public String codigoAdmin;
 
-    public CriarAdministradorDTO() {
-    }
+    public CriarAdministradorDTO() {}
 }

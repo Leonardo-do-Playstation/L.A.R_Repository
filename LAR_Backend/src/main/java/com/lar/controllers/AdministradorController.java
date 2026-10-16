@@ -1,13 +1,12 @@
 package com.lar.controllers;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-import com.lar.dtos.AdminPerfilDTO;
+import com.lar.dtos.AtivarAdministradorDTO;
 import com.lar.dtos.CriarAdministradorDTO;
-import com.lar.entities.Administrador;
 import com.lar.services.AdministradorService;
-import com.lar.services.AdminPerfilService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
 
@@ -16,9 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Tag(
     name = "Administradores",
-    description = "Cadastro de novos administradores."
+    description = "Convites e ativação de administradores"
 )
 @RestController
 @RequestMapping("/admin/administradores")
@@ -27,24 +28,34 @@ public class AdministradorController {
     @Autowired
     private AdministradorService administradorService;
 
-    @Autowired
-    private AdminPerfilService adminPerfilService;
-
     @Operation(
-        summary = "Cria um administrador",
-        description = "Cadastra um novo administrador conforme as permissões do administrador autenticado."
+        summary = "Envia convite para novo administrador (somente superadministrador)"
     )
     @PostMapping
-    public ResponseEntity<AdminPerfilDTO> criar(
+    public ResponseEntity<Map<String, String>> convidar(
             @Valid @RequestBody CriarAdministradorDTO dto,
             Authentication authentication) {
 
-        Administrador novoAdmin = administradorService.criar(
+        administradorService.convidar(
                 dto,
                 authentication.getName()
         );
 
+        return ResponseEntity.accepted().body(
+                Map.of("mensagem", "Convite enviado por e-mail.")
+        );
+    }
+
+    @Operation(summary = "Ativa conta administrativa por convite")
+    @SecurityRequirements
+    @PostMapping("/ativar")
+    public ResponseEntity<Map<String, String>> ativar(
+            @Valid @RequestBody AtivarAdministradorDTO dto) {
+
+        administradorService.ativar(dto);
+
         return ResponseEntity.ok(
-                adminPerfilService.buscarMeuPerfil(novoAdmin.getEmail()));
+                Map.of("mensagem", "Conta ativada. Você já pode entrar.")
+        );
     }
 }

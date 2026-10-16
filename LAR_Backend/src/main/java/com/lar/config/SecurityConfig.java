@@ -43,6 +43,7 @@ public class SecurityConfig {
                                 "/auth/redefinir-senha",
                                 "/conta/excluir/confirmar",
                                 "/conta/email/confirmar",
+                                "/admin/administradores/ativar",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html")
