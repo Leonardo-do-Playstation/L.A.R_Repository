@@ -93,7 +93,7 @@ public class AdminUsuarioService {
 
     return toAdminDTO(salvo);
 }
-    public UsuarioAdminDTO alternarBloqueio(Long id, String emailAdminAutenticado) {
+    public UsuarioAdminDTO alternarBloqueio(Long id, String mensagemAdmin, String emailAdminAutenticado) {
         Usuario usuario = buscarUsuario(id);
 
         if (usuario.getEmail().equalsIgnoreCase(emailAdminAutenticado)) {
@@ -127,19 +127,25 @@ public class AdminUsuarioService {
         usuario.setBloqueado(novoEstado);
         Usuario salvo = usuarioRepository.save(usuario);
 
+        String mensagemPersonalizada = (mensagemAdmin != null && !mensagemAdmin.isBlank())
+                ? "\nMensagem do administrador:\n" + mensagemAdmin.trim() + "\n"
+                : "";
+
         emailService.enviar(
                 salvo.getEmail(),
                 novoEstado ? "Conta bloqueada — L.A.R." : "Conta reativada — L.A.R.",
                 "Olá, " + salvo.getNome() + ".\n\n" +
                         (novoEstado
-                                ? "Sua conta no sistema L.A.R. foi bloqueada por um administrador e o acesso está temporariamente suspenso.\n\n"
-                                : "Sua conta no sistema L.A.R. foi reativada e você já pode acessar normalmente.\n\n")
+                                ? "Sua conta no sistema L.A.R. foi bloqueada por um administrador e o acesso está temporariamente suspenso.\n"
+                                : "Sua conta no sistema L.A.R. foi reativada e você já pode acessar normalmente.\n")
                         +
-                        "Se você acredita que isso é um engano, entre em contato com nosso suporte.\n\n" +
+                        mensagemPersonalizada +
+                        "\nSe você acredita que isso é um engano, entre em contato com nosso suporte.\n\n" +
                         "Equipe L.A.R.");
 
         auditoriaService.registrar(emailAdminAutenticado, novoEstado ? "BLOQUEAR_USUARIO" : "DESBLOQUEAR_USUARIO",
-                "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
+                "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")"
+                        + (mensagemAdmin != null && !mensagemAdmin.isBlank() ? " — mensagem: " + mensagemAdmin.trim() : ""));
 
         return toAdminDTO(salvo);
     }
