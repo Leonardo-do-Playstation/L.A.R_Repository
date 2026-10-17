@@ -3,6 +3,7 @@ package com.lar.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import com.lar.dtos.AlternarBloqueioDTO;
 import com.lar.dtos.AtualizarUsuarioAdminDTO;
 import com.lar.dtos.UsuarioAdminDTO;
 import com.lar.services.AdminUsuarioService;
@@ -60,15 +61,19 @@ public class AdminUsuarioController {
                         authentication.getName()));
     }
 
-    @Operation(summary = "Bloqueia ou reativa um usuário", description = "Alterna o estado de bloqueio da conta respeitando as permissões administrativas.")
+    @Operation(summary = "Bloqueia ou reativa um usuário", description = "Alterna o estado de bloqueio da conta respeitando as permissões administrativas. O corpo é opcional: se enviar 'mensagem', ela é incluída no e-mail de notificação.")
     @PatchMapping("/{id}/bloqueio")
     public ResponseEntity<UsuarioAdminDTO> alternarBloqueio(
             @PathVariable Long id,
+            @RequestBody(required = false) AlternarBloqueioDTO dto,
             Authentication authentication) {
+
+        String mensagem = dto != null ? dto.mensagem : null;
 
         return ResponseEntity.ok(
                 adminUsuarioService.alternarBloqueio(
                         id,
+                        mensagem,
                         authentication.getName()));
     }
 }
