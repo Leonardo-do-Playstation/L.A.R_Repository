@@ -3,8 +3,8 @@ package com.lar.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import com.lar.entities.RegistroAuditoria;
-import com.lar.repositories.RegistroAuditoriaRepository;
+import com.lar.dtos.RegistroAuditoriaDTO;
+import com.lar.services.AuditoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,15 @@ import java.util.List;
 public class AuditoriaController {
 
     @Autowired
-    private RegistroAuditoriaRepository registroAuditoriaRepository;
+    private AuditoriaService auditoriaService;
 
-    @Operation(summary = "Lista os registros de auditoria", description = "Retorna os registros de auditoria em ordem decrescente de data e hora.")
+    @Operation(summary = "Lista os registros de auditoria", description = "Retorna os registros de auditoria em ordem decrescente de data e hora. Aceita filtro opcional por responsável (nome ou e-mail do admin, busca parcial) e por data (formato AAAA-MM-DD).")
     @GetMapping
-    public ResponseEntity<List<RegistroAuditoria>> listar() {
+    public ResponseEntity<List<RegistroAuditoriaDTO>> listar(
+            @RequestParam(required = false) String responsavel,
+            @RequestParam(required = false) String data) {
 
         return ResponseEntity.ok(
-                registroAuditoriaRepository.findAllByOrderByDataHoraDesc());
+                auditoriaService.listar(responsavel, data));
     }
 }
