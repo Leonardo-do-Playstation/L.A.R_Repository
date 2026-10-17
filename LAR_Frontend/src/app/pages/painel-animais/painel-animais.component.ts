@@ -9,6 +9,7 @@ import {
   StatusAnimal,
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 type CategoriaFiltro =
   | 'especie'
@@ -33,7 +34,7 @@ interface FiltrosPainelAnimais {
 @Component({
   selector: 'app-painel-animais',
   standalone: true,
-  imports: [RouterLink, FormsModule, BotaoVoltarComponent],
+  imports: [RouterLink, FormsModule, BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './painel-animais.component.html',
   styleUrl: './painel-animais.component.css',
 })

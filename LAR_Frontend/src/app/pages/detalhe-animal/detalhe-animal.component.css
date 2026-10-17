@@ -12,24 +12,7 @@
   padding: 0 20px;
 }
 
-.detalhe-animal__mensagem {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 24px;
-  border-radius: 8px;
-  background: #fff;
-  color: #555;
-  text-align: center;
-}
-
-.detalhe-animal__mensagem--erro {
-  color: #a92222;
-  background: #fdecec;
-}
-
-.detalhe-animal__mensagem a {
-  margin-top: 6px;
+.detalhe-animal__link {
   color: #2b9e25;
   font-weight: 700;
 }

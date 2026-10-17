@@ -5,11 +5,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngAdminService, OngPendente } from '../../services/ong-admin.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 @Component({
   selector: 'app-analise-ong',
   standalone: true,
-  imports: [FormsModule, BotaoVoltarComponent],
+  imports: [FormsModule, BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './analise-ong.component.html',
   styleUrl: './analise-ong.component.css',
 })

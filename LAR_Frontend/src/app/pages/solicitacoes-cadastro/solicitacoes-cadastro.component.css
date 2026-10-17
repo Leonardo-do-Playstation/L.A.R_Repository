@@ -19,23 +19,6 @@
   font-weight: 700;
 }
 
-.solicitacoes__mensagem,
-.solicitacoes__erro {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 16px;
-  border-radius: 6px;
-  background: #fff;
-  color: #555;
-  text-align: center;
-}
-
-.solicitacoes__erro {
-  color: #a92222;
-  background: #fdecec;
-}
-
 .solicitacoes__lista {
   display: flex;
   flex-direction: column;

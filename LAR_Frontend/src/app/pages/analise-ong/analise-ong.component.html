@@ -16,17 +16,13 @@
 
         @if (erro) {
 
-        <div class="analise-ong__erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         }
 
         @if (carregando) {
 
-        <div class="analise-ong__mensagem">
-            Carregando...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando..." />
 
         } @else if (ong && !mensagemSucesso) {
 

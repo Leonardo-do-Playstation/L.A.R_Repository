@@ -78,30 +78,6 @@
   font-weight: 600;
 }
 
-.catalogo__mensagem,
-.catalogo__erro {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px;
-  border-radius: 7px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
-  color: #777;
-  text-align: center;
-  font-size: 0.85rem;
-}
-
-.catalogo__mensagem strong {
-  margin-bottom: 6px;
-  color: #555;
-}
-
-.catalogo__erro {
-  color: #b42323;
-  background: #fff3f3;
-}
-
 .catalogo__lista {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

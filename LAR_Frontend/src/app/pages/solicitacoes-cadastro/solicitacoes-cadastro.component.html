@@ -10,26 +10,17 @@
 
         @if (erro) {
 
-        <div class="solicitacoes__erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         }
 
         @if (carregando) {
 
-        <div class="solicitacoes__mensagem">
-            Carregando solicitações...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando solicitações..." />
 
         } @else if (solicitacoes.length === 0) {
 
-        <div class="solicitacoes__mensagem">
-            <strong>Nenhuma solicitação pendente.</strong>
-            <span>
-                Novos cadastros de ONGs aparecerão aqui.
-            </span>
-        </div>
+        <app-mensagem-estado tipo="vazio" titulo="Nenhuma solicitação pendente." texto="Novos cadastros de ONGs aparecerão aqui." />
 
         } @else {
 

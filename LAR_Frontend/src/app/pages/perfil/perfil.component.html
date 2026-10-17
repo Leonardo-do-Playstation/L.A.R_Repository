@@ -10,18 +10,15 @@
 
         @if (carregando) {
 
-        <div class="perfil__mensagem">
-            Carregando perfil...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando perfil..." />
 
         } @else if (erroCarregar) {
 
-        <div class="perfil__mensagem perfil__mensagem--erro">
-            {{ erroCarregar }}
+        <app-mensagem-estado tipo="erro" [texto]="erroCarregar">
             <button type="button" class="perfil__botao perfil__botao--secundario" (click)="carregarPerfil()">
                 Tentar novamente
             </button>
-        </div>
+        </app-mensagem-estado>
 
         } @else if (perfil) {
 

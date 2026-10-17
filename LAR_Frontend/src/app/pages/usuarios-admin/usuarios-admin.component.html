@@ -63,26 +63,17 @@
 
         @if (erro) {
 
-        <div class="usuarios__erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         }
 
         @if (carregando || buscando) {
 
-        <div class="usuarios__mensagem">
-            {{ buscando ? 'Buscando...' : 'Carregando usuários...' }}
-        </div>
+        <app-mensagem-estado tipo="carregando" [texto]="buscando ? 'Buscando...' : 'Carregando usuários...'" />
 
         } @else if (!erro && usuariosFiltrados.length === 0) {
 
-        <div class="usuarios__mensagem">
-            <strong>Nenhum usuário encontrado.</strong>
-            <span>
-                Ajuste a busca ou o filtro para ver outros resultados.
-            </span>
-        </div>
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum usuário encontrado." texto="Ajuste a busca ou o filtro para ver outros resultados." />
 
         } @else {
 

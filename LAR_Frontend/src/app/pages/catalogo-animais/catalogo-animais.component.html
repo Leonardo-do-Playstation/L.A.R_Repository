@@ -42,26 +42,17 @@
 
         @if (erro) {
 
-        <div class="catalogo__erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         }
 
         @if (carregando) {
 
-        <div class="catalogo__mensagem">
-            Carregando animais...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando animais..." />
 
         } @else if (animais.length === 0) {
 
-        <div class="catalogo__mensagem">
-            <strong>Nenhum animal disponível no momento.</strong>
-            <span>
-                Volte mais tarde para conferir novos animais para adoção.
-            </span>
-        </div>
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum animal disponível no momento." texto="Volte mais tarde para conferir novos animais para adoção." />
 
         } @else {
 

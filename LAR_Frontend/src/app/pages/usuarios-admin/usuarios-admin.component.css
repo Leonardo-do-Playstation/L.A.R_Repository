@@ -88,24 +88,6 @@
   color: #fff;
 }
 
-.usuarios__mensagem,
-.usuarios__erro {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 16px;
-  border-radius: 6px;
-  background: #fff;
-  color: #555;
-  text-align: center;
-}
-
-.usuarios__erro {
-  margin-bottom: 14px;
-  color: #a92222;
-  background: #fdecec;
-}
-
 .usuarios__lista {
   display: flex;
   flex-direction: column;

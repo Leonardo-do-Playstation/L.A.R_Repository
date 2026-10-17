@@ -4,11 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngAdminService, OngPendente } from '../../services/ong-admin.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 @Component({
   selector: 'app-solicitacoes-cadastro',
   standalone: true,
-  imports: [BotaoVoltarComponent],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './solicitacoes-cadastro.component.html',
   styleUrl: './solicitacoes-cadastro.component.css',
 })

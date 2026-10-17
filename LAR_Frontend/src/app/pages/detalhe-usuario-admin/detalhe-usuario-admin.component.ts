@@ -10,11 +10,12 @@ import {
   UsuarioAdminService,
 } from '../../services/usuario-admin.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 @Component({
   selector: 'app-detalhe-usuario-admin',
   standalone: true,
-  imports: [ReactiveFormsModule, BotaoVoltarComponent],
+  imports: [ReactiveFormsModule, BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './detalhe-usuario-admin.component.html',
   styleUrl: './detalhe-usuario-admin.component.css',
 })
