@@ -14,24 +14,15 @@
 
         @if (carregando) {
 
-        <div class="detalhe-usuario__mensagem">
-            Carregando...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando..." />
 
         } @else if (naoEncontrado) {
 
-        <div class="detalhe-usuario__mensagem detalhe-usuario__mensagem--erro">
-            <strong>Usuário não encontrado.</strong>
-            <span>
-                Ele pode ter sido removido.
-            </span>
-        </div>
+        <app-mensagem-estado tipo="erro" titulo="Usuário não encontrado." texto="Ele pode ter sido removido." />
 
         } @else if (erro) {
 
-        <div class="detalhe-usuario__mensagem detalhe-usuario__mensagem--erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         } @else if (usuario) {
 

@@ -19,22 +19,6 @@
   font-weight: 700;
 }
 
-.lista-ongs__mensagem {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 16px;
-  border-radius: 6px;
-  background: #fff;
-  color: #555;
-  text-align: center;
-}
-
-.lista-ongs__mensagem--erro {
-  color: #a92222;
-  background: #fdecec;
-}
-
 .lista-ongs__lista {
   display: flex;
   flex-direction: column;

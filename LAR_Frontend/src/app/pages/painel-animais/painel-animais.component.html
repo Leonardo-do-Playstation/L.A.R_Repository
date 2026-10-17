@@ -42,29 +42,21 @@
 
         @if (erro) {
 
-        <div class="painel-animais__erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         }
 
         @if (carregando) {
 
-        <div class="painel-animais__mensagem">
-            Carregando animais...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando animais..." />
 
         } @else if (animais.length === 0) {
 
-        <div class="painel-animais__mensagem">
-            @if (quantidadeFiltrosAtivos > 0) {
-            <strong>Nenhum animal encontrado.</strong>
-            <span>Altere os filtros ou limpe a seleção para ver outros animais.</span>
-            } @else {
-            <strong>Nenhum animal cadastrado.</strong>
-            <span>Cadastre seu primeiro animal para começar.</span>
-            }
-        </div>
+        @if (quantidadeFiltrosAtivos > 0) {
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum animal encontrado." texto="Altere os filtros ou limpe a seleção para ver outros animais." />
+        } @else {
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum animal cadastrado." texto="Cadastre seu primeiro animal para começar." />
+        }
 
         } @else {
 

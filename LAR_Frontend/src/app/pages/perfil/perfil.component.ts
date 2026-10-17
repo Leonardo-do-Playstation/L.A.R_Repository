@@ -12,6 +12,7 @@ import {
 import { AuthService, TipoUsuario } from '../../services/auth.service';
 import { ContaService, PerfilDetalhe } from '../../services/conta.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
   const nova = grupo.get('novaSenha')?.value;
@@ -23,7 +24,7 @@ function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [ReactiveFormsModule, BotaoVoltarComponent],
+  imports: [ReactiveFormsModule, BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
 })

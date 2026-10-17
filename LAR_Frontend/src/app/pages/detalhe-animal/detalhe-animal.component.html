@@ -6,25 +6,17 @@
 
         @if (carregando) {
 
-        <div class="detalhe-animal__mensagem">
-            Carregando...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando..." />
 
         } @else if (naoEncontrado) {
 
-        <div class="detalhe-animal__mensagem detalhe-animal__mensagem--erro">
-            <strong>Animal não encontrado.</strong>
-            <span>
-                Ele pode ter sido removido ou já ter sido adotado.
-            </span>
-            <a routerLink="/catalogo">Voltar ao catálogo</a>
-        </div>
+        <app-mensagem-estado tipo="erro" titulo="Animal não encontrado." texto="Ele pode ter sido removido ou já ter sido adotado.">
+            <a routerLink="/catalogo" class="detalhe-animal__link">Voltar ao catálogo</a>
+        </app-mensagem-estado>
 
         } @else if (erro) {
 
-        <div class="detalhe-animal__mensagem detalhe-animal__mensagem--erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         } @else if (animal) {
 

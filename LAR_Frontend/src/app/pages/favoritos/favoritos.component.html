@@ -10,29 +10,21 @@
 
         @if (erro) {
 
-        <div class="favoritos__erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         }
 
         @if (carregando) {
 
-        <div class="favoritos__mensagem">
-            Carregando favoritos...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando favoritos..." />
 
         } @else if (animais.length === 0 && !erro) {
 
-        <div class="favoritos__mensagem">
-            <strong>Você ainda não favoritou nenhum animal.</strong>
-            <span>
-                Toque no coração de um animal para guardá-lo aqui.
-            </span>
+        <app-mensagem-estado tipo="vazio" titulo="Você ainda não favoritou nenhum animal." texto="Toque no coração de um animal para guardá-lo aqui.">
             <a routerLink="/catalogo" class="favoritos__link">
                 Ver animais para adoção
             </a>
-        </div>
+        </app-mensagem-estado>
 
         } @else {
 

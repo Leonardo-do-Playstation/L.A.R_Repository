@@ -9,11 +9,12 @@ import {
 import { FavoritoService } from '../../services/favorito.service';
 import { AuthService } from '../../services/auth.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 @Component({
   selector: 'app-detalhe-animal',
   standalone: true,
-  imports: [RouterLink, BotaoVoltarComponent],
+  imports: [RouterLink, BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './detalhe-animal.component.html',
   styleUrl: './detalhe-animal.component.css',
 })

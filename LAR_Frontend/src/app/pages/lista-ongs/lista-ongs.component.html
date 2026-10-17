@@ -10,24 +10,15 @@
 
         @if (carregando) {
 
-        <div class="lista-ongs__mensagem">
-            Carregando ONGs...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando ONGs..." />
 
         } @else if (erro) {
 
-        <div class="lista-ongs__mensagem lista-ongs__mensagem--erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         } @else if (ongs.length === 0) {
 
-        <div class="lista-ongs__mensagem">
-            <strong>Nenhuma ONG disponível no momento.</strong>
-            <span>
-                Volte mais tarde para conhecer as instituições parceiras.
-            </span>
-        </div>
+        <app-mensagem-estado tipo="vazio" titulo="Nenhuma ONG disponível no momento." texto="Volte mais tarde para conhecer as instituições parceiras." />
 
         } @else {
 

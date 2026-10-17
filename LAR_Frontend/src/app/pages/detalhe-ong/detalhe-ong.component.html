@@ -6,24 +6,15 @@
 
         @if (carregando) {
 
-        <div class="detalhe-ong__mensagem">
-            Carregando...
-        </div>
+        <app-mensagem-estado tipo="carregando" texto="Carregando..." />
 
         } @else if (naoEncontrado) {
 
-        <div class="detalhe-ong__mensagem detalhe-ong__mensagem--erro">
-            <strong>ONG não encontrada.</strong>
-            <span>
-                Ela pode não estar mais disponível.
-            </span>
-        </div>
+        <app-mensagem-estado tipo="erro" titulo="ONG não encontrada." texto="Ela pode não estar mais disponível." />
 
         } @else if (erro) {
 
-        <div class="detalhe-ong__mensagem detalhe-ong__mensagem--erro">
-            {{ erro }}
-        </div>
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
 
         } @else if (ong) {
 

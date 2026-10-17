@@ -20,8 +20,6 @@
   font-weight: 700;
 }
 
-.analise-ong__mensagem,
-.analise-ong__erro,
 .analise-ong__sucesso {
   padding: 16px;
   margin-bottom: 16px;
@@ -29,11 +27,6 @@
   background: #fff;
   color: #555;
   text-align: center;
-}
-
-.analise-ong__erro {
-  color: #a92222;
-  background: #fdecec;
 }
 
 .analise-ong__sucesso {

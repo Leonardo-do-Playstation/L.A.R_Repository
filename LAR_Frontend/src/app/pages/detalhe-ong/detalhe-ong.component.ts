@@ -4,11 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngPublica, OngService } from '../../services/ong.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 
 @Component({
   selector: 'app-detalhe-ong',
   standalone: true,
-  imports: [BotaoVoltarComponent],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent],
   templateUrl: './detalhe-ong.component.html',
   styleUrl: './detalhe-ong.component.css',
 })
