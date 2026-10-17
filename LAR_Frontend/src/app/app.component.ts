@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HistoricoNavegacaoService } from './services/historico-navegacao.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {
+    inject(HistoricoNavegacaoService);
+  }
+}

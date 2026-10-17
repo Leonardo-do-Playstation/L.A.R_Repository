@@ -1,0 +1,7 @@
+<button type="button" class="botao-voltar" [attr.aria-label]="rotulo || 'Voltar'" (click)="voltar()">
+    <img class="botao-voltar__icone" src="/assets/seta-esquerda.svg" alt="">
+
+    @if (rotulo) {
+    <span class="botao-voltar__rotulo">{{ rotulo }}</span>
+    }
+</button>
