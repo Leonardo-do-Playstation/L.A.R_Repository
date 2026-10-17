@@ -30,6 +30,17 @@ public class AdminOngController {
         return ResponseEntity.ok(adminOngService.listarPendentes());
     }
 
+     @Operation(summary = "Lista ONGs para administração", description = "Retorna as ONGs de qualquer status (ou de um status específico), com filtro opcional por nome e cidade.")
+    @GetMapping
+    public ResponseEntity<List<OngPerfilDTO>> listarTodas(
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String cidade) {
+
+        return ResponseEntity.ok(
+                adminOngService.listarTodas(status, nome, cidade));
+    }
+
     @Operation(summary = "Aprova o cadastro de uma ONG", description = "Altera a situação da ONG para aprovada e registra a ação administrativa.")
     @PutMapping("/{id}/aprovar")
     public ResponseEntity<OngPerfilDTO> aprovar(

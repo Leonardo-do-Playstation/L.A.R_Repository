@@ -8,7 +8,9 @@ import com.lar.enums.StatusOng;
 import com.lar.exceptions.RecursoNaoEncontradoException;
 import com.lar.exceptions.RegraDeNegocioException;
 import com.lar.repositories.OngRepository;
+import com.lar.specifications.OngSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,13 +50,37 @@ public class OngPerfilService {
         return toPublicaDTO(ong);
     }
 
-    public List<OngPublicaDTO> listarPublicas(String nome) {
-        List<Ong> ongs = (nome == null || nome.isBlank())
-                ? ongRepository.findByStatus(StatusOng.APROVADA)
-                : ongRepository.findByStatusAndNomeContainingIgnoreCase(StatusOng.APROVADA, nome.trim());
+    public List<OngPublicaDTO> listarPublicas(String nome, String cidade) {
+        Specification<Ong> filtro = Specification
+                .where(OngSpecification.comStatus(StatusOng.APROVADA))
+                .and(OngSpecification.comNome(nome))
+                .and(OngSpecification.comCidade(cidade));
 
-        return ongs.stream()
+        return ongRepository.findAll(filtro)
+                .stream()
                 .map(this::toPublicaDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<OngPerfilDTO> listarParaAdmin(String status, String nome, String cidade) {
+        StatusOng statusFiltro = null;
+
+        if (status != null && !status.isBlank()) {
+            try {
+                statusFiltro = StatusOng.valueOf(status.trim().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new RegraDeNegocioException("Status inválido. Use PENDENTE, APROVADA ou RECUSADA.");
+            }
+        }
+
+        Specification<Ong> filtro = Specification
+                .where(OngSpecification.comStatus(statusFiltro))
+                .and(OngSpecification.comNome(nome))
+                .and(OngSpecification.comCidade(cidade));
+
+        return ongRepository.findAll(filtro)
+                .stream()
+                .map(this::toPerfilDTO)
                 .collect(Collectors.toList());
     }
 
