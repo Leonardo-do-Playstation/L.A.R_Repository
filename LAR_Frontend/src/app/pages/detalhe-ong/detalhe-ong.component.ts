@@ -1,19 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngPublica, OngService } from '../../services/ong.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-detalhe-ong',
   standalone: true,
-  imports: [],
+  imports: [BotaoVoltarComponent],
   templateUrl: './detalhe-ong.component.html',
   styleUrl: './detalhe-ong.component.css',
 })
 export class DetalheOngComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly ongService = inject(OngService);
 
   ong: OngPublica | null = null;
@@ -70,7 +70,4 @@ export class DetalheOngComponent implements OnInit {
     return nome.trim().charAt(0).toUpperCase();
   }
 
-  voltar(): void {
-    this.router.navigate(['/ongs']);
-  }
 }

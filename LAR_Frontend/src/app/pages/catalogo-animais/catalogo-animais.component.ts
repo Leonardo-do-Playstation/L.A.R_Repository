@@ -9,13 +9,14 @@ import {
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
 import { AuthService } from '../../services/auth.service';
 import { FavoritoService } from '../../services/favorito.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
 
 @Component({
   selector: 'app-catalogo-animais',
   standalone: true,
-  imports: [AnimalCardComponent, FormsModule],
+  imports: [AnimalCardComponent, FormsModule, BotaoVoltarComponent],
   templateUrl: './catalogo-animais.component.html',
   styleUrl: './catalogo-animais.component.css',
 })

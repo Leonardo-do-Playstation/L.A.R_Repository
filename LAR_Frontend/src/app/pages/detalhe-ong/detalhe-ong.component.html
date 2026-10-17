@@ -2,10 +2,7 @@
 
     <div class="detalhe-ong__container">
 
-        <button type="button" class="detalhe-ong__voltar" aria-label="Voltar" (click)="voltar()">
-            <img src="/assets/seta-esquerda.svg" alt="Voltar">
-            Voltar às ONGs
-        </button>
+        <app-botao-voltar fallback="/ongs" />
 
         @if (carregando) {
 

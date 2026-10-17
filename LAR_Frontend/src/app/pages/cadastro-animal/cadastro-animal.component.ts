@@ -4,11 +4,12 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AnimalService, CadastroAnimal } from '../../services/animal.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-cadastro-animal',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent],
   templateUrl: './cadastro-animal.component.html',
   styleUrl: './cadastro-animal.component.css',
 })

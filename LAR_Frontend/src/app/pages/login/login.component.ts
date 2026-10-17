@@ -3,12 +3,12 @@ import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService, Perfil } from '../../services/auth.service';
-import { Location } from '@angular/common';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -82,7 +81,4 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  voltar(): void {
-    this.location.back();
-  }
 }

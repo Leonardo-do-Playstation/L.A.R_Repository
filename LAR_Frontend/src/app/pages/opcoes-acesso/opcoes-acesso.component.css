@@ -18,37 +18,14 @@
   mix-blend-mode: multiply;
 }
 
-.btn-back {
+.acesso__voltar {
   position: absolute;
   top: 24px;
   left: 24px;
 
   z-index: 4;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
-  height: 40px;
-
-  padding: 0;
-
-  border: none;
-  background: transparent;
-
-  cursor: pointer;
-}
-
-.btn-back img {
-  width: 28px;
-  height: 28px;
-
-  object-fit: contain;
-}
-
-.btn-back:hover {
-  opacity: 0.7;
+  margin-bottom: 0;
 }
 
 .acesso__overlay {

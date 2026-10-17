@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngPublica, OngService } from '../../services/ong.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-lista-ongs',
   standalone: true,
-  imports: [],
+  imports: [BotaoVoltarComponent],
   templateUrl: './lista-ongs.component.html',
   styleUrl: './lista-ongs.component.css',
 })

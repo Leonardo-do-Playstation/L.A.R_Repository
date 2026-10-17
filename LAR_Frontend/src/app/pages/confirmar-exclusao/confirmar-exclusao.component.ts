@@ -4,11 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { AuthService } from '../../services/auth.service';
 import { ContaService } from '../../services/conta.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-confirmar-exclusao',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, BotaoVoltarComponent],
   templateUrl: './confirmar-exclusao.component.html',
   styleUrl: './confirmar-exclusao.component.css',
 })

@@ -8,11 +8,12 @@ import {
   AnimalService,
   CadastroAnimal,
 } from '../../services/animal.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-editar-animal',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent],
   templateUrl: './editar-animal.component.html',
   styleUrl: './editar-animal.component.css',
 })

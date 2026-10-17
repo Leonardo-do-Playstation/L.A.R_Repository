@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-acesso-negado',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, BotaoVoltarComponent],
   templateUrl: './acesso-negado.component.html',
   styleUrl: './acesso-negado.component.css',
 })

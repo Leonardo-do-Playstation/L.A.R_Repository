@@ -6,12 +6,12 @@ import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../../services/auth.service';
 
-import { Location } from '@angular/common';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
 })
@@ -32,7 +32,6 @@ export class CadastroComponent {
     private router: Router,
     private http: HttpClient,
     private authService: AuthService,
-    private location: Location,
   ) {
     this.tipo = this.route.snapshot.data['tipo'] ?? 'adotante';
 
@@ -77,10 +76,6 @@ export class CadastroComponent {
     } else {
       this.cadastrarOng();
     }
-  }
-
-  voltar(): void {
-    this.location.back();
   }
 
   private validarFormulario(): boolean {

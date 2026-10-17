@@ -2,10 +2,7 @@
 
     <div class="detalhe-usuario__container">
 
-        <button type="button" class="detalhe-usuario__voltar" aria-label="Voltar" (click)="voltar()">
-            <img src="/assets/seta-esquerda.svg" alt="Voltar">
-            Voltar à lista
-        </button>
+        <app-botao-voltar fallback="/admin/usuarios" />
 
         @if (mensagemSucesso) {
 
