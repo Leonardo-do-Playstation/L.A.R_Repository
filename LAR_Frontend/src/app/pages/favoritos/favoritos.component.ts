@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { AnimalCatalogo } from '../../services/catalogo-animais.service';
 import { FavoritoService } from '../../services/favorito.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-favoritos',
   standalone: true,
-  imports: [AnimalCardComponent, RouterLink],
+  imports: [AnimalCardComponent, RouterLink, BotaoVoltarComponent],
   templateUrl: './favoritos.component.html',
   styleUrl: './favoritos.component.css',
 })

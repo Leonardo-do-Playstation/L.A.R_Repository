@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngAdminService, OngPendente } from '../../services/ong-admin.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-analise-ong',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, BotaoVoltarComponent],
   templateUrl: './analise-ong.component.html',
   styleUrl: './analise-ong.component.css',
 })
@@ -64,10 +65,6 @@ export class AnaliseOngComponent implements OnInit {
         }
       },
     });
-  }
-
-  voltar(): void {
-    this.router.navigate(['/admin/ongs-pendentes']);
   }
 
   abrirRecusa(): void {

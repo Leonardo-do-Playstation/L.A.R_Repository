@@ -233,35 +233,13 @@
   cursor: not-allowed;
 }
 
-.btn-back {
+.login__voltar {
   position: absolute;
   top: 24px;
   left: 24px;
 
   z-index: 3;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
-  height: 40px;
-
-  padding: 0;
-
-  border: none;
-  background: transparent;
-
-  cursor: pointer;
+  margin-bottom: 0;
 }
 
-.btn-back img {
-  width: 28px;
-  height: 28px;
-
-  object-fit: contain;
-}
-
-.btn-back:hover {
-  opacity: 0.7;
-}

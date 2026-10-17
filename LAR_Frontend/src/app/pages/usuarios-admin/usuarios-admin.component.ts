@@ -16,13 +16,14 @@ import {
   UsuarioAdmin,
   UsuarioAdminService,
 } from '../../services/usuario-admin.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 type FiltroTipo = 'TODOS' | TipoUsuario;
 
 @Component({
   selector: 'app-usuarios-admin',
   standalone: true,
-  imports: [],
+  imports: [BotaoVoltarComponent],
   templateUrl: './usuarios-admin.component.html',
   styleUrl: './usuarios-admin.component.css',
 })

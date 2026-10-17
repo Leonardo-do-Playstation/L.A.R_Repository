@@ -12,25 +12,6 @@
   padding: 0 20px;
 }
 
-.detalhe-ong__voltar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 0;
-  margin-bottom: 12px;
-  border: 0;
-  background: transparent;
-  color: #333;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.detalhe-ong__voltar img {
-  width: 18px;
-  height: 18px;
-}
-
 .detalhe-ong__mensagem {
   display: flex;
   flex-direction: column;

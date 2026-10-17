@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-aguardando-aprovacao',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, BotaoVoltarComponent],
   templateUrl: './aguardando-aprovacao.component.html',
   styleUrl: './aguardando-aprovacao.component.css',
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -9,17 +9,17 @@ import {
   UsuarioAdmin,
   UsuarioAdminService,
 } from '../../services/usuario-admin.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-detalhe-usuario-admin',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, BotaoVoltarComponent],
   templateUrl: './detalhe-usuario-admin.component.html',
   styleUrl: './detalhe-usuario-admin.component.css',
 })
 export class DetalheUsuarioAdminComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly usuarioAdminService = inject(UsuarioAdminService);
@@ -216,10 +216,6 @@ export class DetalheUsuarioAdminComponent implements OnInit {
       default:
         return 'Não informado';
     }
-  }
-
-  voltar(): void {
-    this.router.navigate(['/admin/usuarios']);
   }
 
   private mensagemDoErro(erro: HttpErrorResponse, padrao: string): string {

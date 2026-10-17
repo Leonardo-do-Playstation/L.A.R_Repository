@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 interface OpcaoAcesso {
   rotulo: string;
@@ -21,7 +22,7 @@ const OPCOES_ONG: OpcaoAcesso[] = [
 @Component({
   selector: 'app-opcoes-acesso',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, BotaoVoltarComponent],
   templateUrl: './opcoes-acesso.component.html',
   styleUrl: './opcoes-acesso.component.css',
 })

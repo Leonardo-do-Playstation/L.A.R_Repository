@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import {
@@ -8,17 +8,17 @@ import {
 } from '../../services/catalogo-animais.service';
 import { FavoritoService } from '../../services/favorito.service';
 import { AuthService } from '../../services/auth.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-detalhe-animal',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, BotaoVoltarComponent],
   templateUrl: './detalhe-animal.component.html',
   styleUrl: './detalhe-animal.component.css',
 })
 export class DetalheAnimalComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly catalogoAnimaisService = inject(CatalogoAnimaisService);
   private readonly favoritoService = inject(FavoritoService);
   private readonly authService = inject(AuthService);
@@ -84,10 +84,6 @@ export class DetalheAnimalComponent implements OnInit {
 
       error: () => {},
     });
-  }
-
-  voltar(): void {
-    this.router.navigate(['/catalogo']);
   }
 
   alternarFavorito(): void {

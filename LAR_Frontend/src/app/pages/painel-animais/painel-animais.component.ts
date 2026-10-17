@@ -8,6 +8,7 @@ import {
   AnimalService,
   StatusAnimal,
 } from '../../services/animal.service';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 type CategoriaFiltro =
   | 'especie'
@@ -32,7 +33,7 @@ interface FiltrosPainelAnimais {
 @Component({
   selector: 'app-painel-animais',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, BotaoVoltarComponent],
   templateUrl: './painel-animais.component.html',
   styleUrl: './painel-animais.component.css',
 })

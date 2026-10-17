@@ -32,9 +32,7 @@
 
         <div class="analise-ong__detalhe">
 
-            <button type="button" class="analise-ong__voltar" aria-label="Voltar" (click)="voltar()">
-                <img src="/assets/seta-esquerda.svg" alt="Voltar">
-            </button>
+            <app-botao-voltar fallback="/admin/ongs-pendentes" />
 
             <h2 class="analise-ong__nome">
                 {{ ong.nome }}

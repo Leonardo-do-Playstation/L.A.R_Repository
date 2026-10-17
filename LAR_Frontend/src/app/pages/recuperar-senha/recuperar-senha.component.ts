@@ -4,12 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
-import { Location } from '@angular/common';
+import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
   selector: 'app-recuperar-senha',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent],
   templateUrl: './recuperar-senha.component.html',
   styleUrl: './recuperar-senha.component.css',
 })
@@ -28,7 +28,6 @@ export class RecuperarSenhaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +81,4 @@ export class RecuperarSenhaComponent implements OnInit {
     });
   }
 
-  voltar(): void {
-    this.location.back();
-  }
 }

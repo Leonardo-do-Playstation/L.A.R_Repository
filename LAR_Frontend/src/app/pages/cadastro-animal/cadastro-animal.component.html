@@ -4,9 +4,7 @@
 
         <div class="cadastro-animal__cabecalho">
 
-            <a routerLink="/painel-animais" class="cadastro-animal__voltar" aria-label="Voltar">
-                <img src="/assets/seta-esquerda.svg" alt="Voltar">
-            </a>
+            <app-botao-voltar class="cadastro-animal__voltar" fallback="/painel-animais" />
 
             <h1>Cadastrar Animal</h1>
 
