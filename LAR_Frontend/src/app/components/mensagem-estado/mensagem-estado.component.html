@@ -1,0 +1,12 @@
+<div class="mensagem-estado" [class.mensagem-estado--erro]="tipo === 'erro'"
+    [attr.role]="tipo === 'erro' ? 'alert' : 'status'">
+
+    @if (titulo) {
+    <strong class="mensagem-estado__titulo">{{ titulo }}</strong>
+    }
+
+    @if (texto) {
+    <span class="mensagem-estado__texto">{{ texto }}</span>
+    }
+    <ng-content />
+</div>

@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.mensagem-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+  color: #666;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.mensagem-estado__titulo {
+  color: #555;
+}
+
+.mensagem-estado--erro {
+  background: #fdecec;
+  box-shadow: none;
+  color: #a92222;
+}
+
+.mensagem-estado--erro .mensagem-estado__titulo {
+  color: #a92222;
+}
