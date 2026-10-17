@@ -22,7 +22,7 @@ public class AnimalPublicController {
     @Autowired
     private AnimalService animalService;
 
-    @Operation(summary = "Lista e filtra animais", description = "Retorna o catálogo paginado de animais usando os filtros opcionais informados.")
+    @Operation(summary = "Lista e filtra animais", description = "Retorna o catálogo paginado de animais usando os filtros opcionais informados. Use idOng para ver só os animais de uma ONG específica (ex: botão 'Quero conhecer' na página da ONG).")
     @SecurityRequirements
     @GetMapping
     public ResponseEntity<Page<AnimalDetalhesDTO>> listarComFiltros(
@@ -34,6 +34,7 @@ public class AnimalPublicController {
             @RequestParam(required = false) String cor,
             @RequestParam(required = false) Integer idadeMinima,
             @RequestParam(required = false) Integer idadeMaxima,
+            @RequestParam(required = false) Long idOng,
             @PageableDefault(page = 0, size = 12) Pageable pageable) {
 
         Page<AnimalDetalhesDTO> animais = animalService.buscarComFiltros(
@@ -45,6 +46,7 @@ public class AnimalPublicController {
                 cor,
                 idadeMinima,
                 idadeMaxima,
+                idOng,
                 pageable);
 
         return ResponseEntity.ok(animais);

@@ -33,6 +33,10 @@ public class AdminOngService {
                                 .collect(Collectors.toList());
         }
 
+        public List<OngPerfilDTO> listarTodas(String status, String nome, String cidade) {
+                return ongPerfilService.listarParaAdmin(status, nome, cidade);
+        }
+
         public OngPerfilDTO aprovar(Long idOng, String emailAdmin) {
                 Ong ong = buscarOng(idOng);
                 boolean reanalise = ong.getStatus() != StatusOng.PENDENTE;

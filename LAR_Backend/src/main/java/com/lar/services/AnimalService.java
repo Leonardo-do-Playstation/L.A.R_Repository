@@ -146,6 +146,7 @@ public class AnimalService {
     public Page<AnimalDetalhesDTO> buscarComFiltros(String especie, String porte, String sexo, String status,
                                                  String raca, String cor,
                                                  Integer idadeMinima, Integer idadeMaxima,
+                                                 Long idOng,
                                                  Pageable pageable) {
 
         StatusAnimal statusFiltro;
@@ -168,7 +169,8 @@ public class AnimalService {
             .and(AnimalSpecification.comCor(cor))
             .and(AnimalSpecification.comIdadeMinima(idadeMinima))
             .and(AnimalSpecification.comIdadeMaxima(idadeMaxima))
-            .and(AnimalSpecification.ongNaoBloqueada());
+            .and(AnimalSpecification.comOngId(idOng))
+            .and(AnimalSpecification.ongDisponivelPublicamente());
 
         return animalRepository.findAll(filtro, pageable)
                 .map(this::paraDetalhesDTO);

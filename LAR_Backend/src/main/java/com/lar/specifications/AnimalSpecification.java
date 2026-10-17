@@ -2,6 +2,7 @@ package com.lar.specifications;
 
 import com.lar.entities.Animal;
 import com.lar.enums.StatusAnimal;
+import com.lar.enums.StatusOng;
 import org.springframework.data.jpa.domain.Specification;
 
 public class AnimalSpecification {
@@ -44,9 +45,11 @@ public class AnimalSpecification {
         return (root, query, cb) -> cor == null ? null : cb.equal(cb.lower(root.get("cor")), cor.toLowerCase());
     }
 
-    public static Specification<Animal> ongNaoBloqueada() {
-    return (root, query, cb) -> cb.or(
-            cb.isNull(root.get("ong").get("bloqueado")),
-            cb.isFalse(root.get("ong").get("bloqueado")));
-}
+    public static Specification<Animal> ongDisponivelPublicamente() {
+        return (root, query, cb) -> cb.and(
+                cb.or(
+                        cb.isNull(root.get("ong").get("bloqueado")),
+                        cb.isFalse(root.get("ong").get("bloqueado"))),
+                cb.equal(root.get("ong").get("status"), StatusOng.APROVADA));
+    }
 }
