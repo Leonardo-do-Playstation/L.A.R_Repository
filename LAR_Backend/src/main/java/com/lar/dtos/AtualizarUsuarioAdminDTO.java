@@ -5,6 +5,8 @@ public class AtualizarUsuarioAdminDTO {
 
     public String cnpj;
 
+    public String justificativa;
+
     public AtualizarUsuarioAdminDTO() {
     }
 }

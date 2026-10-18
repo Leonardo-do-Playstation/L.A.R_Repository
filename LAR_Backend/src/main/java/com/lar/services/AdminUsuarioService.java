@@ -57,42 +57,69 @@ public class AdminUsuarioService {
     }
 
     public UsuarioAdminDTO editar(Long id, AtualizarUsuarioAdminDTO dto, String emailAdmin) {
-    Usuario usuario = buscarUsuario(id);
+        Usuario usuario = buscarUsuario(id);
 
-    if (usuario instanceof Adotante adotante) {
-        if (dto.cpf == null || dto.cpf.isBlank()) {
-            throw new RegraDeNegocioException("CPF é obrigatório.");
-        }
-        if (!DocumentoValidator.cpfValido(dto.cpf)) {
-            throw new RegraDeNegocioException("CPF inválido.");
-        }
-        if (!dto.cpf.equals(adotante.getCpf()) && adotanteRepository.existsByCpf(dto.cpf)) {
-            throw new RegraDeNegocioException("Este CPF já está cadastrado para outra conta.");
-        }
-        adotante.setCpf(dto.cpf);
+        String campoAlterado = null;
 
-    } else if (usuario instanceof Ong ong) {
-        if (dto.cnpj != null && !dto.cnpj.isBlank()) {
-            if (!DocumentoValidator.cnpjValido(dto.cnpj)) {
-                throw new RegraDeNegocioException("CNPJ inválido.");
+        if (usuario instanceof Adotante adotante) {
+            if (dto.cpf == null || dto.cpf.isBlank()) {
+                throw new RegraDeNegocioException("CPF é obrigatório.");
             }
-            if (!dto.cnpj.equals(ong.getCnpj()) && ongRepository.existsByCnpj(dto.cnpj)) {
-                throw new RegraDeNegocioException("Este CNPJ já está cadastrado para outra ONG.");
+            if (!DocumentoValidator.cpfValido(dto.cpf)) {
+                throw new RegraDeNegocioException("CPF inválido.");
             }
-            ong.setCnpj(dto.cnpj);
+            if (!dto.cpf.equals(adotante.getCpf())) {
+                if (adotanteRepository.existsByCpf(dto.cpf)) {
+                    throw new RegraDeNegocioException("Este CPF já está cadastrado para outra conta.");
+                }
+                adotante.setCpf(dto.cpf);
+                campoAlterado = "CPF";
+            }
+
+        } else if (usuario instanceof Ong ong) {
+            if (dto.cnpj != null && !dto.cnpj.isBlank() && !dto.cnpj.equals(ong.getCnpj())) {
+                if (!DocumentoValidator.cnpjValido(dto.cnpj)) {
+                    throw new RegraDeNegocioException("CNPJ inválido.");
+                }
+                if (ongRepository.existsByCnpj(dto.cnpj)) {
+                    throw new RegraDeNegocioException("Este CNPJ já está cadastrado para outra ONG.");
+                }
+                ong.setCnpj(dto.cnpj);
+                campoAlterado = "CNPJ";
+            }
+
+        } else {
+            throw new RegraDeNegocioException("Este tipo de usuário não possui campo editável nesta tela.");
         }
 
-    } else {
-        throw new RegraDeNegocioException("Este tipo de usuário não possui campo editável nesta tela.");
+        Usuario salvo = usuarioRepository.save(usuario);
+
+        if (campoAlterado != null) {
+            String justificativaTexto = (dto.justificativa != null && !dto.justificativa.isBlank())
+                    ? "\nJustificativa informada pelo administrador:\n" + dto.justificativa.trim() + "\n"
+                    : "";
+
+            emailService.enviar(
+                    salvo.getEmail(),
+                    "Dados cadastrais atualizados — L.A.R.",
+                    "Olá, " + salvo.getNome() + ".\n\n" +
+                            "Seu " + campoAlterado + " foi atualizado por um administrador do sistema L.A.R.\n"
+                            +
+                            justificativaTexto +
+                            "\nSe você não esperava essa alteração, entre em contato com nosso suporte.\n\n" +
+                            "Equipe L.A.R.");
+        }
+
+        auditoriaService.registrar(emailAdmin, "EDITAR_USUARIO",
+                "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")"
+                        + (campoAlterado != null ? " — " + campoAlterado + " alterado" : " — nenhum campo alterado")
+                        + (campoAlterado != null && dto.justificativa != null && !dto.justificativa.isBlank()
+                                ? " — justificativa: " + dto.justificativa.trim()
+                                : ""));
+
+        return toAdminDTO(salvo);
     }
 
-    Usuario salvo = usuarioRepository.save(usuario);
-
-    auditoriaService.registrar(emailAdmin, "EDITAR_USUARIO",
-            "Usuario id=" + salvo.getId() + " (" + salvo.getEmail() + ")");
-
-    return toAdminDTO(salvo);
-}
     public UsuarioAdminDTO alternarBloqueio(Long id, String mensagemAdmin, String emailAdminAutenticado) {
         Usuario usuario = buscarUsuario(id);
 
