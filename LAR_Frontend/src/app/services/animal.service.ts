@@ -31,6 +31,56 @@ export interface CadastroAnimal {
   descricao: string;
 }
 
+const RACAS_SUGERIDAS: Record<string, string[]> = {
+  Cachorro: [
+    'SRD / Vira-lata',
+    'Beagle',
+    'Border Collie',
+    'Boxer',
+    'Bulldog Francês',
+    'Bulldog Inglês',
+    'Chihuahua',
+    'Cocker Spaniel',
+    'Dachshund',
+    'Golden Retriever',
+    'Husky Siberiano',
+    'Labrador',
+    'Lhasa Apso',
+    'Maltês',
+    'Pastor Alemão',
+    'Pinscher',
+    'Pit Bull',
+    'Poodle',
+    'Pug',
+    'Rottweiler',
+    'Shih Tzu',
+    'Spitz Alemão',
+    'Yorkshire',
+  ],
+  Gato: [
+    'SRD / Vira-lata',
+    'Abissínio',
+    'Angorá',
+    'Bengal',
+    'Birmanês',
+    'British Shorthair',
+    'Himalaio',
+    'Maine Coon',
+    'Norueguês da Floresta',
+    'Persa',
+    'Ragdoll',
+    'Scottish Fold',
+    'Siamês',
+    'Sphynx',
+  ],
+};
+
+const SEM_SUGESTOES: string[] = [];
+
+export function racasPorEspecie(especie: string | null | undefined): string[] {
+  return (especie && RACAS_SUGERIDAS[especie]) || SEM_SUGESTOES;
+}
+
 @Injectable({
   providedIn: 'root',
 })
