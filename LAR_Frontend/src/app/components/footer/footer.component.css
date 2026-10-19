@@ -1,0 +1,134 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.footer-global {
+  width: 100%;
+  background: #252525;
+  color: #ffffff;
+}
+
+.footer-global__conteudo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(150px, 1fr) minmax(180px, 1fr);
+  gap: 40px;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: 38px 28px 30px;
+  box-sizing: border-box;
+}
+
+.footer-global__marca p {
+  max-width: 360px;
+  margin: 14px 0 0;
+  color: #dddddd;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer-global__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.footer-global__logo img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.footer-global__grupo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.footer-global__grupo h2 {
+  margin: 5px 0 4px;
+  color: #8ccf87;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.footer-global__grupo a {
+  color: #eeeeee;
+  font-size: 0.93rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-global__grupo a:hover,
+.footer-global__grupo a:focus-visible,
+.footer-global__logo:hover,
+.footer-global__logo:focus-visible {
+  color: #a8e2a3;
+}
+
+.footer-global__grupo a:focus-visible,
+.footer-global__logo:focus-visible {
+  outline: 2px solid #a8e2a3;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+.footer-global__base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: 16px 28px 20px;
+  border-top: 1px solid #4a4a4a;
+  box-sizing: border-box;
+  color: #cccccc;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 700px) {
+  .footer-global__conteudo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 24px;
+    padding: 30px 20px 26px;
+  }
+
+  .footer-global__marca {
+    grid-column: 1 / -1;
+  }
+
+  .footer-global__grupo {
+    min-width: 0;
+  }
+
+  .footer-global__base {
+    padding: 15px 20px 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer-global__conteudo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+
+  .footer-global__marca {
+    grid-column: auto;
+  }
+
+  .footer-global__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

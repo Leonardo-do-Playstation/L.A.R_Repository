@@ -1,8 +1,103 @@
-<div class="sobre__container">
-  <app-botao-voltar fallback="/home" />
-</div>
+<section class="sobre">
+  <div class="sobre__container">
+    <app-botao-voltar fallback="/home" />
 
-<div class="text-center">
-  <h1>Sobre</h1>
-  <p>Página de teste da navegação do L.A.R.</p>
-</div>
+    <header class="sobre__hero">
+      <span class="sobre__etiqueta">SOBRE O PROJETO</span>
+      <h1>Um novo começo pode começar por aqui.</h1>
+      <p class="sobre__subtitulo">
+        L.A.R. — <strong>Lar, Adoção e Recomeço</strong> — é uma plataforma web criada para aproximar pessoas interessadas em adotar animais e organizações de proteção animal.
+      </p>
+      <div class="sobre__acoes">
+        <a class="sobre__botao sobre__botao--principal" routerLink="/catalogo">Conhecer os animais</a>
+        <a class="sobre__botao sobre__botao--secundario" routerLink="/ongs">Conhecer as ONGs</a>
+      </div>
+    </header>
+
+    <section class="sobre__secao" aria-labelledby="sobre-proposta-titulo">
+      <div class="sobre__cabecalho-secao">
+        <span class="sobre__numero">01</span>
+        <div>
+          <h2 id="sobre-proposta-titulo">Por que o L.A.R. existe?</h2>
+          <p>
+            Encontrar informações sobre animais disponíveis para adoção pode exigir a consulta a diferentes páginas e redes sociais. O L.A.R. busca tornar essa busca mais organizada, reunindo informações em um único ambiente digital.
+          </p>
+        </div>
+      </div>
+
+      <div class="sobre__beneficios">
+        <article class="sobre__beneficio">
+          <div class="sobre__beneficio-icone" aria-hidden="true">
+            <img src="/assets/cachorro-icone.svg" alt="">
+          </div>
+          <h3>Animais em destaque</h3>
+          <p>Consulte os perfis dos animais cadastrados pelas ONGs e conheça suas características.</p>
+        </article>
+
+        <article class="sobre__beneficio">
+          <div class="sobre__beneficio-icone" aria-hidden="true">
+            <img src="/assets/filtro.svg" alt="">
+          </div>
+          <h3>Busca organizada</h3>
+          <p>Use filtros como espécie, raça, porte, idade e cor para encontrar perfis de seu interesse.</p>
+        </article>
+
+        <article class="sobre__beneficio">
+          <div class="sobre__beneficio-icone" aria-hidden="true">
+            <img src="/assets/casa-icone.svg" alt="">
+          </div>
+          <h3>Informações das ONGs</h3>
+          <p>Acesse os dados das instituições responsáveis e saiba como entrar em contato com elas.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sobre__secao sobre__secao--dupla" aria-labelledby="sobre-funciona-titulo">
+      <div class="sobre__texto-secao">
+        <span class="sobre__numero">02</span>
+        <h2 id="sobre-funciona-titulo">Como a plataforma funciona</h2>
+        <p>O L.A.R. organiza a divulgação dos animais e os dados das organizações em uma plataforma web.</p>
+      </div>
+
+      <div class="sobre__passos">
+        <article class="sobre__passo">
+          <span class="sobre__passo-numero">1</span>
+          <div>
+            <h3>Explore</h3>
+            <p>Navegue pelo catálogo e consulte os detalhes dos animais disponíveis.</p>
+          </div>
+        </article>
+        <article class="sobre__passo">
+          <span class="sobre__passo-numero">2</span>
+          <div>
+            <h3>Conheça</h3>
+            <p>Leia as informações do perfil e identifique a ONG responsável pelo animal.</p>
+          </div>
+        </article>
+        <article class="sobre__passo">
+          <span class="sobre__passo-numero">3</span>
+          <div>
+            <h3>Entre em contato</h3>
+            <p>Converse diretamente com a ONG para obter orientações sobre o processo de adoção.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sobre__aviso" aria-labelledby="sobre-responsabilidade-titulo">
+      <div class="sobre__aviso-marca" aria-hidden="true">!</div>
+      <div>
+        <h2 id="sobre-responsabilidade-titulo">Adoção é compromisso</h2>
+        <p>
+          Adotar exige planejamento, cuidado e responsabilidade ao longo de toda a vida do animal. O L.A.R. ajuda a encontrar informações, mas não realiza nem intermedeia a adoção: as orientações e as etapas do processo devem ser tratadas diretamente com a ONG responsável.
+        </p>
+      </div>
+    </section>
+
+    <footer class="sobre__final">
+      <h2>Talvez seu próximo melhor amigo esteja esperando.</h2>
+      <p>Comece conhecendo os animais e as organizações disponíveis na plataforma.</p>
+      <a class="sobre__botao sobre__botao--principal" routerLink="/catalogo">Explorar catálogo</a>
+    </footer>
+  </div>
+</section>

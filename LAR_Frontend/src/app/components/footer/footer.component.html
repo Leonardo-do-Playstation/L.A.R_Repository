@@ -1,0 +1,32 @@
+@if (mostrarFooter) {
+  <footer class="footer-global">
+    <div class="footer-global__conteudo">
+      <section class="footer-global__marca" aria-labelledby="footer-titulo">
+        <a class="footer-global__logo" routerLink="/home" aria-label="L.A.R. — página inicial">
+          <img src="/assets/LAR-logo.svg" alt="" />
+          <span id="footer-titulo">L.A.R.</span>
+        </a>
+        <p>Conectando animais que precisam de um lar a pessoas dispostas a oferecer amor e cuidado.</p>
+      </section>
+
+      <nav class="footer-global__grupo" aria-label="Navegação">
+        <h2>Navegação</h2>
+        <a routerLink="/home">Início</a>
+        <a routerLink="/catalogo">Animais para adoção</a>
+        <a routerLink="/ongs">ONGs</a>
+        <a routerLink="/sobre">Sobre</a>
+      </nav>
+
+      <nav class="footer-global__grupo" aria-label="Informações legais">
+        <h2>Informações</h2>
+        <a routerLink="/termos">Termos de Uso</a>
+        <a routerLink="/privacidade">Política de Privacidade</a>
+      </nav>
+    </div>
+
+    <div class="footer-global__base">
+      <span>© {{ anoAtual }} L.A.R.</span>
+      <span>Lar, Adoção e Recomeço</span>
+    </div>
+  </footer>
+}

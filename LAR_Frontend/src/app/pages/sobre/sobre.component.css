@@ -1,5 +1,370 @@
+:host {
+  display: block;
+}
+
+.sobre {
+  min-height: calc(100vh - 70px);
+  padding: 24px 20px 64px;
+  background: #ffffff;
+  color: #222222;
+  box-sizing: border-box;
+}
+
 .sobre__container {
-  width: min(100%, 560px);
+  width: min(100%, 1040px);
   margin: 0 auto;
-  padding: 0 20px;
+}
+
+.sobre__hero {
+  max-width: 790px;
+  margin: 30px auto 76px;
+  text-align: center;
+}
+
+.sobre__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 7px 12px;
+  border-radius: 100px;
+  background: #eaf3e9;
+  color: #326b38;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.sobre__hero h1 {
+  max-width: 720px;
+  margin: 0 auto;
+  color: #222222;
+  font-size: clamp(2.1rem, 5vw, 3.7rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.sobre__subtitulo {
+  max-width: 690px;
+  margin: 22px auto 0;
+  color: #555555;
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+.sobre__subtitulo strong {
+  color: #326b38;
+}
+
+.sobre__acoes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.sobre__botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.sobre__botao:hover {
+  transform: translateY(-1px);
+}
+
+.sobre__botao:focus-visible {
+  outline: 3px solid #a9d6a5;
+  outline-offset: 3px;
+}
+
+.sobre__botao--principal {
+  background: #438c48;
+  color: #ffffff;
+}
+
+.sobre__botao--principal:hover {
+  background: #36763b;
+  color: #ffffff;
+}
+
+.sobre__botao--secundario {
+  border-color: #438c48;
+  background: #ffffff;
+  color: #326b38;
+}
+
+.sobre__botao--secundario:hover {
+  background: #f1f7f0;
+}
+
+.sobre__secao {
+  margin-top: 70px;
+}
+
+.sobre__cabecalho-secao {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 18px;
+  max-width: 850px;
+  margin: 0 auto 32px;
+}
+
+.sobre__numero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #eaf3e9;
+  color: #326b38;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.sobre__secao h2,
+.sobre__aviso h2,
+.sobre__final h2 {
+  margin: 0;
+  color: #222222;
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.sobre__cabecalho-secao > div > p,
+.sobre__texto-secao > p {
+  margin: 13px 0 0;
+  color: #555555;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.sobre__beneficios {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.sobre__beneficio {
+  min-height: 220px;
+  padding: 25px;
+  border: 1px solid #e2e2e2;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.sobre__beneficio-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  background: #eaf3e9;
+}
+
+.sobre__beneficio-icone img {
+  width: 31px;
+  height: 31px;
+  object-fit: contain;
+}
+
+.sobre__beneficio h3,
+.sobre__passo h3 {
+  margin: 0;
+  color: #222222;
+  font-size: 1.08rem;
+  font-weight: 750;
+}
+
+.sobre__beneficio p,
+.sobre__passo p {
+  margin: 10px 0 0;
+  color: #5a5a5a;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.sobre__secao--dupla {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 56px;
+  align-items: start;
+  padding: 38px;
+  border-radius: 16px;
+  background: #f3f5f2;
+}
+
+.sobre__texto-secao .sobre__numero {
+  margin-bottom: 18px;
+}
+
+.sobre__passos {
+  display: grid;
+  gap: 26px;
+}
+
+.sobre__passo {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 15px;
+}
+
+.sobre__passo-numero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #b9d5b7;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #326b38;
+  font-weight: 800;
+}
+
+.sobre__aviso {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-top: 70px;
+  padding: 30px;
+  border: 1px solid #ead9aa;
+  border-radius: 14px;
+  background: #fff9e8;
+}
+
+.sobre__aviso-marca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f1d98d;
+  color: #4d3d12;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.sobre__aviso h2 {
+  font-size: 1.45rem;
+}
+
+.sobre__aviso p {
+  margin: 11px 0 0;
+  color: #554c34;
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+
+.sobre__final {
+  margin-top: 70px;
+  padding: 44px 24px;
+  border-top: 1px solid #e5e5e5;
+  text-align: center;
+}
+
+.sobre__final h2 {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.sobre__final p {
+  margin: 14px auto 24px;
+  color: #555555;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 760px) {
+  .sobre {
+    padding: 18px 18px 42px;
+  }
+
+  .sobre__hero {
+    margin: 24px auto 56px;
+  }
+
+  .sobre__subtitulo {
+    font-size: 1rem;
+  }
+
+  .sobre__secao {
+    margin-top: 54px;
+  }
+
+  .sobre__beneficios {
+    grid-template-columns: 1fr;
+  }
+
+  .sobre__beneficio {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .sobre__beneficio-icone {
+    margin-bottom: 16px;
+  }
+
+  .sobre__secao--dupla {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 25px 20px;
+  }
+
+  .sobre__aviso {
+    margin-top: 54px;
+    padding: 23px 19px;
+  }
+
+  .sobre__final {
+    margin-top: 54px;
+    padding: 36px 8px 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .sobre__acoes {
+    flex-direction: column;
+  }
+
+  .sobre__botao {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sobre__cabecalho-secao {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .sobre__aviso {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sobre__botao {
+    transition: none;
+  }
+
+  .sobre__botao:hover {
+    transform: none;
+  }
 }
