@@ -79,6 +79,50 @@
             </dl>
             }
         </article>
+
+        <section class="detalhe-ong__animais">
+
+            <h2 class="detalhe-ong__animais-titulo">
+                Animais desta ONG
+            </h2>
+
+            @if (erroFavorito) {
+
+            <app-mensagem-estado tipo="erro" [texto]="erroFavorito" />
+
+            }
+
+            @if (carregandoAnimais) {
+
+            <app-mensagem-estado tipo="carregando" texto="Carregando animais..." />
+
+            } @else if (erroAnimais) {
+
+            <app-mensagem-estado tipo="erro" [texto]="erroAnimais" />
+
+            } @else if (animais.length === 0) {
+
+            <app-mensagem-estado tipo="vazio" titulo="Nenhum animal disponível no momento."
+                texto="Esta ONG não tem animais disponíveis para adoção agora." />
+
+            } @else {
+
+            <div class="detalhe-ong__animais-lista">
+
+                @for (animal of animais; track animal.id) {
+
+                <app-animal-card [animal]="animal" [favoritado]="favoritosIds.has(animal.id)"
+                    (favoritoAlterado)="aoAlterarFavorito(animal.id, $event)"
+                    (erroFavorito)="erroFavorito = $event"></app-animal-card>
+
+                }
+
+            </div>
+
+            }
+
+        </section>
+
         }
     </div>
 </section>
