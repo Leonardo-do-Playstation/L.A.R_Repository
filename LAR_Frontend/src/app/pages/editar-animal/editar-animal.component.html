@@ -105,7 +105,14 @@
 
                     <label for="raca">Raça</label>
 
-                    <input id="raca" type="text" formControlName="raca" placeholder="Raça">
+                    <input id="raca" type="text" formControlName="raca" placeholder="Raça" list="racas-sugeridas"
+                        autocomplete="off">
+
+                    <datalist id="racas-sugeridas">
+                        @for (raca of racasSugeridas; track raca) {
+                        <option [value]="raca"></option>
+                        }
+                    </datalist>
 
                     @if (
                     editarForm.controls.raca.touched &&

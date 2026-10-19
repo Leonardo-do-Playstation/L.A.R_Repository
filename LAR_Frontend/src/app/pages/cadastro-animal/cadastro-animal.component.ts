@@ -3,7 +3,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AnimalService, CadastroAnimal } from '../../services/animal.service';
+import {
+  AnimalService,
+  CadastroAnimal,
+  racasPorEspecie,
+} from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 
 @Component({
@@ -37,6 +41,10 @@ export class CadastroAnimalComponent {
   carregando = false;
 
   private readonly tamanhoMaximoFoto = 5 * 1024 * 1024;
+
+  get racasSugeridas(): string[] {
+    return racasPorEspecie(this.cadastroForm.controls.especie.value);
+  }
 
   selecionarFoto(event: Event): void {
     const input = event.target as HTMLInputElement;
