@@ -37,6 +37,7 @@ export interface FiltrosCatalogo {
   sexo?: string;
   idadeMinima?: number;
   idadeMaxima?: number;
+  idOng?: number;
 }
 
 @Injectable({
@@ -80,6 +81,10 @@ export class CatalogoAnimaisService {
 
     if (filtros.idadeMaxima != null) {
       params = params.set('idadeMaxima', filtros.idadeMaxima);
+    }
+
+    if (filtros.idOng != null) {
+      params = params.set('idOng', filtros.idOng);
     }
 
     return this.http
