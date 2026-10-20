@@ -70,7 +70,31 @@
 }
 
 .ong-card__localizacao {
-  color: #999;
+  color: #666;
   font-size: 0.8rem;
   overflow-wrap: anywhere;
+}
+
+.ong-card {
+  position: relative;
+}
+
+.ong-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ong-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.ong-card__link:focus-visible {
+  outline: none;
+}
+
+.ong-card__link:focus-visible::after {
+  outline: 3px solid #1f7a1a;
+  outline-offset: -3px;
 }

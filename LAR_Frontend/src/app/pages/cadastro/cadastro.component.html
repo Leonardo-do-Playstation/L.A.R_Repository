@@ -26,7 +26,7 @@
         cadastroForm.controls.nome.touched &&
         cadastroForm.controls.nome.errors?.['required']
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe seu nome.
         </span>
         }
@@ -45,7 +45,7 @@
         cadastroForm.controls.cpf.touched &&
         !cadastroForm.controls.cpf.value
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe seu CPF.
         </span>
         }
@@ -66,7 +66,7 @@
         cadastroForm.controls.nomeInstituicao.touched &&
         !cadastroForm.controls.nomeInstituicao.value
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe o nome da instituição.
         </span>
         }
@@ -85,7 +85,7 @@
         cadastroForm.controls.cnpj.touched &&
         !cadastroForm.controls.cnpj.value
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe o CNPJ.
         </span>
         }
@@ -106,7 +106,7 @@
         cadastroForm.controls.email.touched &&
         cadastroForm.controls.email.errors?.['required']
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe seu e-mail.
         </span>
         }
@@ -115,7 +115,7 @@
         cadastroForm.controls.email.touched &&
         cadastroForm.controls.email.errors?.['email']
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe um e-mail válido.
         </span>
         }
@@ -134,7 +134,7 @@
         cadastroForm.controls.senha.touched &&
         cadastroForm.controls.senha.errors?.['required']
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Informe uma senha.
         </span>
         }
@@ -143,7 +143,7 @@
         cadastroForm.controls.senha.touched &&
         cadastroForm.controls.senha.errors?.['minlength']
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           A senha deve ter pelo menos 6 caracteres.
         </span>
         }
@@ -162,7 +162,7 @@
         cadastroForm.controls.confirmarSenha.touched &&
         !cadastroForm.controls.confirmarSenha.value
         ) {
-        <span class="cadastro__error">
+        <span class="cadastro__error" role="alert">
           Confirme sua senha.
         </span>
         }
@@ -171,7 +171,7 @@
 
       @if (erroCadastro) {
 
-      <span class="cadastro__error cadastro__error--api">
+      <span class="cadastro__error cadastro__error--api" role="alert">
         {{ erroCadastro }}
       </span>
 

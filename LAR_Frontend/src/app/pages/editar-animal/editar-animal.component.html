@@ -9,7 +9,7 @@
         </div>
 
         @if (erroEdicao) {
-        <div class="cadastro-animal__erro-api">
+        <div class="cadastro-animal__erro-api" role="alert">
             {{ erroEdicao }}
         </div>
         }
@@ -40,7 +40,7 @@
 
                 @if (erroFoto) {
 
-                <span class="cadastro-animal__erro">
+                <span class="cadastro-animal__erro" role="alert">
                     {{ erroFoto }}
                 </span>
 
@@ -72,7 +72,7 @@
                     editarForm.controls.nome.touched &&
                     editarForm.controls.nome.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe o nome do animal.
                     </span>
                     }
@@ -94,7 +94,7 @@
                     editarForm.controls.especie.touched &&
                     editarForm.controls.especie.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe a espécie.
                     </span>
                     }
@@ -118,7 +118,7 @@
                     editarForm.controls.raca.touched &&
                     editarForm.controls.raca.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe a raça.
                     </span>
                     }
@@ -135,7 +135,7 @@
                     editarForm.controls.idade.touched &&
                     editarForm.controls.idade.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe uma idade válida.
                     </span>
                     }
@@ -157,7 +157,7 @@
                     editarForm.controls.porte.touched &&
                     editarForm.controls.porte.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe o porte.
                     </span>
                     }
@@ -186,7 +186,7 @@
                     editarForm.controls.sexo.touched &&
                     editarForm.controls.sexo.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe o sexo.
                     </span>
                     }
@@ -204,7 +204,7 @@
                     editarForm.controls.descricao.touched &&
                     editarForm.controls.descricao.invalid
                     ) {
-                    <span class="cadastro-animal__erro">
+                    <span class="cadastro-animal__erro" role="alert">
                         Informe uma descrição.
                     </span>
                     }

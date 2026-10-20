@@ -107,8 +107,6 @@
   background: rgba(255, 255, 255, 0.08);
 
   color: #333;
-
-  outline: none;
 }
 
 .login__field input:focus {

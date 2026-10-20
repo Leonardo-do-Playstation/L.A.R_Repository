@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngAdminService, OngPendente } from '../../services/ong-admin.service';
@@ -9,13 +9,12 @@ import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensag
 @Component({
   selector: 'app-solicitacoes-cadastro',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent, RouterLink],
   templateUrl: './solicitacoes-cadastro.component.html',
   styleUrl: './solicitacoes-cadastro.component.css',
 })
 export class SolicitacoesCadastroComponent implements OnInit {
   private readonly ongAdminService = inject(OngAdminService);
-  private readonly router = inject(Router);
 
   solicitacoes: OngPendente[] = [];
 
@@ -48,10 +47,6 @@ export class SolicitacoesCadastroComponent implements OnInit {
         }
       },
     });
-  }
-
-  abrirSolicitacao(solicitacao: OngPendente): void {
-    this.router.navigate(['/admin/ongs-pendentes', solicitacao.id]);
   }
 
   tempoRelativo(dataIso: string): string {

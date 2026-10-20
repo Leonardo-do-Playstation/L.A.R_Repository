@@ -49,6 +49,30 @@
 }
 
 .solicitacao-card__tempo {
-  color: #999;
+  color: #666;
   font-size: 0.8rem;
+}
+
+.solicitacao-card {
+  position: relative;
+}
+
+.solicitacao-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.solicitacao-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.solicitacao-card__link:focus-visible {
+  outline: none;
+}
+
+.solicitacao-card__link:focus-visible::after {
+  outline: 3px solid #1f7a1a;
+  outline-offset: -3px;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   EMPTY,
@@ -24,13 +24,12 @@ type FiltroTipo = 'TODOS' | TipoUsuario;
 @Component({
   selector: 'app-usuarios-admin',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent, RouterLink],
   templateUrl: './usuarios-admin.component.html',
   styleUrl: './usuarios-admin.component.css',
 })
 export class UsuariosAdminComponent implements OnInit {
   private readonly usuarioAdminService = inject(UsuarioAdminService);
-  private readonly router = inject(Router);
 
   private readonly termoBusca$ = new Subject<string>();
 
@@ -106,10 +105,6 @@ export class UsuariosAdminComponent implements OnInit {
 
   selecionarFiltro(filtro: FiltroTipo): void {
     this.filtroTipo = filtro;
-  }
-
-  abrirUsuario(usuario: UsuarioAdmin): void {
-    this.router.navigate(['/admin/usuarios', usuario.id]);
   }
 
   get usuariosFiltrados(): UsuarioAdmin[] {

@@ -24,7 +24,7 @@
         loginForm.controls.email.touched &&
         loginForm.controls.email.errors?.['required']
         ) {
-        <span class="login__error">
+        <span class="login__error" role="alert">
           Informe seu e-mail.
         </span>
         }
@@ -33,7 +33,7 @@
         loginForm.controls.email.touched &&
         loginForm.controls.email.errors?.['email']
         ) {
-        <span class="login__error">
+        <span class="login__error" role="alert">
           Informe um e-mail válido.
         </span>
         }
@@ -52,7 +52,7 @@
         loginForm.controls.senha.touched &&
         loginForm.controls.senha.errors?.['required']
         ) {
-        <span class="login__error">
+        <span class="login__error" role="alert">
           Informe sua senha.
         </span>
         }
@@ -61,7 +61,7 @@
 
       @if (erroLogin) {
 
-      <span class="login__error login__error--api">
+      <span class="login__error login__error--api" role="alert">
         {{ erroLogin }}
       </span>
 

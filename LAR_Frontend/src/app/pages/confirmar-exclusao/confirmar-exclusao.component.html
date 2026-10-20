@@ -38,7 +38,7 @@
         </p>
 
         @if (erro) {
-        <div class="confirmar-exclusao__erro">{{ erro }}</div>
+        <div class="confirmar-exclusao__erro" role="alert">{{ erro }}</div>
         }
 
         <button type="button" class="confirmar-exclusao__botao confirmar-exclusao__botao--perigo" (click)="confirmar()"

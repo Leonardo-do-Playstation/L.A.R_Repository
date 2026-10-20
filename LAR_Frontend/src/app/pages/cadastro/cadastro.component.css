@@ -87,8 +87,6 @@
   background: rgba(255, 255, 255, 0.08);
 
   color: #ffffff;
-
-  outline: none;
 }
 
 .cadastro__field input:focus {

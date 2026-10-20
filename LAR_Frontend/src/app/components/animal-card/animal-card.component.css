@@ -4,6 +4,7 @@
   background: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
   cursor: pointer;
+  position: relative;
 }
 
 .animal-card__foto-wrapper {
@@ -69,8 +70,8 @@
   align-items: center;
   flex-shrink: 0;
   gap: 3px;
-  color: #888;
-  font-size: 0.68rem;
+  color: #666;
+  font-size: 0.75rem;
 }
 
 .animal-card__status-dot {
@@ -99,7 +100,7 @@
   margin: 2px 0 0;
   overflow: hidden;
   color: #777;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -133,8 +134,32 @@
 
 .animal-card__ong {
   overflow: hidden;
-  color: #999;
-  font-size: 0.68rem;
+  color: #666;
+  font-size: 0.75rem;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.animal-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.animal-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.animal-card__link:focus-visible {
+  outline: none;
+}
+
+.animal-card__link:focus-visible::after {
+  outline: 3px solid #1f7a1a;
+  outline-offset: -3px;
+}
+
+.animal-card__favorito {
+  z-index: 1;
 }

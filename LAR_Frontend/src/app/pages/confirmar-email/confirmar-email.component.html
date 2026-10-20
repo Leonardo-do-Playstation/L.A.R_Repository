@@ -37,7 +37,7 @@
         </p>
 
         @if (erro) {
-        <div class="confirmar-email__erro">{{ erro }}</div>
+        <div class="confirmar-email__erro" role="alert">{{ erro }}</div>
         }
 
         <button type="button" class="confirmar-email__botao" (click)="confirmar()" [disabled]="processando">

@@ -24,7 +24,7 @@
                 recuperarForm.controls.email.touched &&
                 recuperarForm.controls.email.errors?.['required']
                 ) {
-                <span class="recuperar__error">
+                <span class="recuperar__error" role="alert">
                     Informe seu e-mail.
                 </span>
                 }
@@ -33,7 +33,7 @@
                 recuperarForm.controls.email.touched &&
                 recuperarForm.controls.email.errors?.['email']
                 ) {
-                <span class="recuperar__error">
+                <span class="recuperar__error" role="alert">
                     Informe um e-mail válido.
                 </span>
                 }

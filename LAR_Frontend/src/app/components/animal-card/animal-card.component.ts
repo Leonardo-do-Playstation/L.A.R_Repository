@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AnimalCatalogo } from '../../services/catalogo-animais.service';
 import { FavoritoService } from '../../services/favorito.service';
@@ -9,7 +9,7 @@ import { AvisoAuthService } from '../../services/aviso-auth.service';
 @Component({
   selector: 'app-animal-card',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './animal-card.component.html',
   styleUrl: './animal-card.component.css',
 })
@@ -18,7 +18,6 @@ export class AnimalCardComponent {
   @Output() erroFavorito = new EventEmitter<string>();
   @Output() favoritoAlterado = new EventEmitter<boolean>();
 
-  private readonly router = inject(Router);
   private readonly favoritoService = inject(FavoritoService);
   private readonly authService = inject(AuthService);
   private readonly avisoAuthService = inject(AvisoAuthService);
@@ -28,10 +27,6 @@ export class AnimalCardComponent {
 
   get usuarioLogado(): boolean {
     return this.authService.estaAutenticado();
-  }
-
-  abrirDetalhes(): void {
-    this.router.navigate(['/animais', this.animal.id]);
   }
 
   alternarFavorito(evento: Event): void {
