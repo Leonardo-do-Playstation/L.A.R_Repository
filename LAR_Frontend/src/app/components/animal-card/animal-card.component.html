@@ -26,15 +26,11 @@
                 {{ animal.nome }}
             </strong>
 
-            <span class="animal-card__status">
-
-                {{ nomeStatus() }}
-
-                <span class="animal-card__status-dot" [class]="classeStatus()"></span>
-
-            </span>
-
         </div>
+
+        <p class="animal-card__detalhes" [title]="detalhesTexto()">
+            {{ detalhesTexto() }}
+        </p>
 
         <div class="animal-card__linha animal-card__linha--rodape">
 

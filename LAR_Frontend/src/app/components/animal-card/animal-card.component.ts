@@ -104,6 +104,24 @@ export class AnimalCardComponent {
     }
   }
 
+  get exibirStatus(): boolean {
+    return this.animal.status !== 'DISPONIVEL';
+  }
+
+  idadeTexto(): string {
+    const idade = this.animal.idade;
+    if (idade === 0) {
+      return 'Menos de 1 ano';
+    }
+    return idade === 1 ? '1 ano' : `${idade} anos`;
+  }
+
+  detalhesTexto(): string {
+    return [this.idadeTexto(), this.animal.porte, this.animal.raca]
+      .filter((parte) => !!parte)
+      .join(' · ');
+  }
+
   nomeStatus(): string {
     switch (this.animal.status) {
       case 'DISPONIVEL':

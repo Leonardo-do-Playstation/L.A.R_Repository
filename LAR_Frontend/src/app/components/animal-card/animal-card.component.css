@@ -95,6 +95,15 @@
   background: #999;
 }
 
+.animal-card__detalhes {
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #777;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .animal-card__linha--rodape {
   margin-top: 4px;
 }
