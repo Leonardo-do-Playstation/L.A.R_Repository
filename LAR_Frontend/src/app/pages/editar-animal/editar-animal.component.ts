@@ -28,7 +28,7 @@ export class EditarAnimalComponent implements OnInit {
     nome: ['', Validators.required],
     especie: ['', Validators.required],
     raca: ['', Validators.required],
-    idade: ['', [Validators.required, Validators.min(1)]],
+    idade: ['', [Validators.required, Validators.min(0)]],
     porte: ['', Validators.required],
     cor: [''],
     sexo: ['', Validators.required],

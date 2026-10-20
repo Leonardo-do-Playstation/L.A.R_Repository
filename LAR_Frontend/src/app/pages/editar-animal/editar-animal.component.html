@@ -127,9 +127,9 @@
 
                 <div class="cadastro-animal__campo">
 
-                    <label for="idade">Idade</label>
+                    <label for="idade">Idade (anos)</label>
 
-                    <input id="idade" type="number" min="1" formControlName="idade" placeholder="Idade">
+                    <input id="idade" type="number" min="0" formControlName="idade" placeholder="0 = menos de 1 ano">
 
                     @if (
                     editarForm.controls.idade.touched &&
