@@ -2,7 +2,7 @@ package com.lar.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class CadastroAnimalDTO {
 
@@ -13,7 +13,7 @@ public class CadastroAnimalDTO {
     public String especie;
 
     @NotNull(message = "Idade é obrigatória")
-    @Positive(message = "Idade deve ser maior que zero")
+    @PositiveOrZero(message = "Idade não pode ser negativa")
     public Integer idade;
 
     public String raca;
