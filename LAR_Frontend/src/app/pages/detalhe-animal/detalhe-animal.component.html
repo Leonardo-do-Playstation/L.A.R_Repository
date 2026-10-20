@@ -76,7 +76,7 @@
 
                 <div class="detalhe-animal__info">
                     <span class="detalhe-animal__rotulo">Idade</span>
-                    <span class="detalhe-animal__valor">{{ animal.idade }} ano(s)</span>
+                    <span class="detalhe-animal__valor">{{ animal.idade === 0 ? 'Menos de 1 ano' : animal.idade === 1 ? '1 ano' : animal.idade + ' anos' }}</span>
                 </div>
 
                 <div class="detalhe-animal__info">
@@ -103,31 +103,17 @@
                 <p>{{ animal.descricao }}</p>
             </div>
 
-            <div class="detalhe-animal__ong">
+            <a class="detalhe-animal__ong" [routerLink]="['/ongs', animal.ong.id]"
+                [attr.aria-label]="'Ver detalhes da ONG ' + animal.ong.nome">
 
-                <span class="detalhe-animal__rotulo">ONG responsável</span>
-
-                <strong>{{ animal.ong.nome }}</strong>
-
-                <div class="detalhe-animal__ong-contato">
-
-                    @if (animal.ong.telefone) {
-                    <div class="detalhe-animal__info">
-                        <span class="detalhe-animal__rotulo">Telefone</span>
-                        <span class="detalhe-animal__valor">{{ animal.ong.telefone }}</span>
-                    </div>
-                    }
-
-                    @if (animal.ong.endereco) {
-                    <div class="detalhe-animal__info">
-                        <span class="detalhe-animal__rotulo">Endereço</span>
-                        <span class="detalhe-animal__valor">{{ animal.ong.endereco }}</span>
-                    </div>
-                    }
-
+                <div class="detalhe-animal__ong-texto">
+                    <span class="detalhe-animal__rotulo">ONG responsável</span>
+                    <strong>{{ animal.ong.nome }}</strong>
                 </div>
 
-            </div>
+                <span class="detalhe-animal__ong-link" aria-hidden="true">Ver ONG &rarr;</span>
+
+            </a>
 
         </div>
 
