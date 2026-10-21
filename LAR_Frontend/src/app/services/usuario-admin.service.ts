@@ -19,11 +19,9 @@ export interface UsuarioAdmin {
 }
 
 export interface AtualizarUsuarioAdmin {
-  nome: string;
-  email: string;
-  telefone: string;
-  endereco: string;
+  cpf?: string;
   cnpj?: string;
+  justificativa: string;
 }
 
 @Injectable({

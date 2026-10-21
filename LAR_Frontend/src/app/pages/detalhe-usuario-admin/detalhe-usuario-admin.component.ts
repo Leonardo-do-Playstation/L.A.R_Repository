@@ -41,13 +41,14 @@ export class DetalheUsuarioAdminComponent implements OnInit {
   alternando = false;
   erroConfirmacao = '';
 
+  mostrarJustificativa = false;
+  erroJustificativa = '';
+
   readonly formulario = this.fb.nonNullable.group({
-    nome: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    telefone: [''],
-    endereco: [''],
-    cnpj: [''],
+    documento: ['', Validators.required],
   });
+
+  readonly justificativa = this.fb.nonNullable.control('', Validators.required);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -91,17 +92,31 @@ export class DetalheUsuarioAdminComponent implements OnInit {
     return perfil.email.toLowerCase() === this.usuario.email.toLowerCase();
   }
 
+  get podeEditarDocumento(): boolean {
+    return this.usuario?.tipo === 'ADOTANTE' || this.usuario?.tipo === 'ONG';
+  }
+
+  get rotuloDocumento(): string {
+    return this.usuario?.tipo === 'ONG' ? 'CNPJ' : 'CPF';
+  }
+
+  private get documentoAtual(): string {
+    const usuario = this.usuario;
+
+    if (!usuario) {
+      return '';
+    }
+
+    return (usuario.tipo === 'ONG' ? usuario.cnpj : usuario.cpf) ?? '';
+  }
+
   abrirEdicao(): void {
-    if (!this.usuario) {
+    if (!this.usuario || !this.podeEditarDocumento) {
       return;
     }
 
     this.formulario.reset({
-      nome: this.usuario.nome,
-      email: this.usuario.email,
-      telefone: this.usuario.telefone ?? '',
-      endereco: this.usuario.endereco ?? '',
-      cnpj: this.usuario.cnpj ?? '',
+      documento: this.documentoAtual,
     });
 
     this.erroEdicao = '';
@@ -124,35 +139,68 @@ export class DetalheUsuarioAdminComponent implements OnInit {
       return;
     }
 
-    const valores = this.formulario.getRawValue();
+    const documento = this.formulario.getRawValue().documento.trim();
 
-    const dados: AtualizarUsuarioAdmin = {
-      nome: valores.nome.trim(),
-      email: valores.email.trim(),
-      telefone: valores.telefone.trim(),
-      endereco: valores.endereco.trim(),
-    };
+    if (!documento || documento === this.documentoAtual) {
+      this.erroEdicao = `Informe um ${this.rotuloDocumento} diferente do atual.`;
+      return;
+    }
+
+    this.erroEdicao = '';
+    this.erroJustificativa = '';
+    this.justificativa.reset('');
+    this.mostrarJustificativa = true;
+  }
+
+  cancelarJustificativa(): void {
+    if (this.salvando) {
+      return;
+    }
+
+    this.mostrarJustificativa = false;
+    this.erroJustificativa = '';
+  }
+
+  confirmarTroca(): void {
+    if (!this.usuario) {
+      return;
+    }
+
+    const motivo = this.justificativa.value.trim();
+
+    if (!motivo) {
+      this.justificativa.markAsTouched();
+      return;
+    }
+
+    const documento = this.formulario.getRawValue().documento.trim();
+    const rotulo = this.rotuloDocumento;
+
+    const dados: AtualizarUsuarioAdmin = { justificativa: motivo };
 
     if (this.usuario.tipo === 'ONG') {
-      dados.cnpj = valores.cnpj.trim();
+      dados.cnpj = documento;
+    } else {
+      dados.cpf = documento;
     }
 
     this.salvando = true;
-    this.erroEdicao = '';
+    this.erroJustificativa = '';
 
     this.usuarioAdminService.editar(this.usuario.id, dados).subscribe({
       next: (usuario) => {
         this.usuario = usuario;
         this.salvando = false;
         this.editando = false;
-        this.mensagemSucesso = 'Dados atualizados com sucesso.';
+        this.mostrarJustificativa = false;
+        this.mensagemSucesso = `${rotulo} atualizado com sucesso.`;
       },
 
       error: (erro: HttpErrorResponse) => {
         this.salvando = false;
-        this.erroEdicao = this.mensagemDoErro(
+        this.erroJustificativa = this.mensagemDoErro(
           erro,
-          'Não foi possível salvar as alterações.',
+          `Não foi possível atualizar o ${rotulo}.`,
         );
       },
     });

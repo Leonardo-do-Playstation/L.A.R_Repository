@@ -4,8 +4,8 @@
 
     <div class="navbar-global__conteudo">
 
-        <button type="button" class="navbar-global__botao-menu" aria-label="Abrir menu" aria-controls="menu-lateral" aria-haspopup="dialog"
-            [attr.aria-expanded]="menuAberto" (click)="alternarMenu()">
+        <button type="button" class="navbar-global__botao-menu" aria-label="Abrir menu" aria-controls="menu-lateral"
+            aria-haspopup="dialog" [attr.aria-expanded]="menuAberto" (click)="alternarMenu()">
 
             <img src="/assets/menu.svg" alt="">
 
@@ -90,6 +90,16 @@
 
     <nav class="menu-lateral__opcoes" aria-label="Opções do menu">
 
+        @if (!estaAutenticado()) {
+
+        <a class="menu-lateral__item" routerLink="/" (click)="fecharMenu()">
+
+            Tela de entrada
+
+        </a>
+
+        }
+
         <a class="menu-lateral__item" routerLink="/home" (click)="fecharMenu()">
 
             Tela inicial
@@ -110,11 +120,7 @@
 
         </a>
 
-        <a class="menu-lateral__item" routerLink="/" (click)="fecharMenu()">
 
-            Entrada
-
-        </a>
 
         <a class="menu-lateral__item" routerLink="/login" (click)="fecharMenu()">
 
@@ -200,7 +206,7 @@
 
         </a>
 
-                <a class="menu-lateral__item" routerLink="/admin/auditoria" (click)="fecharMenu()">
+        <a class="menu-lateral__item" routerLink="/admin/auditoria" (click)="fecharMenu()">
 
             Registro de ações
 

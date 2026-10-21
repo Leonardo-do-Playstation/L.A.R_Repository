@@ -198,3 +198,9 @@
   text-align: center;
   overflow-wrap: anywhere;
 }
+
+.detalhe-usuario__campo input:disabled {
+  background: #f0f0f0;
+  color: #666;
+  cursor: not-allowed;
+}
