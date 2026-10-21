@@ -52,23 +52,6 @@
             </div>
             }
 
-            @if (tokenTeste) {
-            <div class="recuperar__token">
-
-                <strong>Token de teste:</strong>
-
-                <span>
-                    {{ tokenTeste }}
-                </span>
-
-                <small>
-                    Esse token é exibido apenas durante o desenvolvimento,
-                    enquanto o envio de e-mail não estiver configurado.
-                </small>
-
-            </div>
-            }
-
             <button type="submit" class="recuperar__button" [disabled]="carregando">
 
                 @if (carregando) {

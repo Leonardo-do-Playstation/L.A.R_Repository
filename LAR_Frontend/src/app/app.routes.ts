@@ -81,6 +81,15 @@ export const routes: Routes = [
   },
 
   {
+    path: 'redefinir-senha',
+    title: 'Redefinir senha | L.A.R.',
+    loadComponent: () =>
+      import('./pages/redefinir-senha/redefinir-senha.component').then(
+        (m) => m.RedefinirSenhaComponent,
+      ),
+  },
+
+  {
     path: 'home',
     title: 'Início | L.A.R.',
     component: HomeComponent,

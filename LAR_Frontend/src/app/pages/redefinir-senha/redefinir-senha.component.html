@@ -1,0 +1,82 @@
+<section class="redefinir">
+
+    <div class="redefinir__container">
+
+        <div class="redefinir__icone">
+            <img src="/assets/cadeado.svg" alt="Redefinição de senha">
+        </div>
+
+        @if (concluido) {
+
+        <h1>Senha redefinida!</h1>
+
+        <div class="redefinir__feedback redefinir__feedback--sucesso">
+            Sua senha foi alterada com sucesso. Já é possível entrar com a nova senha.
+        </div>
+
+        <a class="redefinir__button" routerLink="/login">
+            Ir para o login
+        </a>
+
+        } @else {
+
+        <h1>Criar nova senha</h1>
+
+        <form [formGroup]="redefinirForm" (ngSubmit)="redefinirSenha()">
+
+            <div class="redefinir__field">
+                <label for="novaSenha">Nova senha</label>
+
+                <input id="novaSenha" type="password" formControlName="novaSenha" autocomplete="new-password">
+
+                @if (
+                redefinirForm.controls.novaSenha.touched &&
+                redefinirForm.controls.novaSenha.invalid
+                ) {
+                <span class="redefinir__error" role="alert">
+                    A senha deve ter no mínimo 6 caracteres.
+                </span>
+                }
+            </div>
+
+            <div class="redefinir__field">
+                <label for="confirmarSenha">Confirmar nova senha</label>
+
+                <input id="confirmarSenha" type="password" formControlName="confirmarSenha"
+                    autocomplete="new-password">
+
+                @if (
+                redefinirForm.controls.confirmarSenha.touched &&
+                redefinirForm.errors?.['senhasDiferentes']
+                ) {
+                <span class="redefinir__error" role="alert">
+                    As senhas não coincidem.
+                </span>
+                }
+            </div>
+
+            @if (mensagemErro) {
+            <div class="redefinir__feedback redefinir__feedback--erro">
+                {{ mensagemErro }}
+            </div>
+            }
+
+            <button type="submit" class="redefinir__button" [disabled]="carregando || !token">
+                @if (carregando) {
+                Salvando...
+                } @else {
+                Redefinir senha
+                }
+            </button>
+
+        </form>
+
+        <a class="redefinir__voltar" routerLink="/recuperar-senha">
+            Solicitar novo link
+        </a>
+
+        }
+
+    </div>
+
+</section>
