@@ -8,7 +8,7 @@
 
         @if (mensagemSucesso) {
 
-        <div class="analise-ong__sucesso">
+        <div class="analise-ong__sucesso" role="status">
             {{ mensagemSucesso }}
         </div>
 
@@ -67,18 +67,18 @@
 
     <div class="analise-ong__overlay">
 
-        <div class="analise-ong__modal">
+        <div class="analise-ong__modal" role="dialog" aria-modal="true" aria-labelledby="recusa-titulo">
 
             <div class="analise-ong__modal-cabecalho">
                 <button type="button" class="analise-ong__voltar" aria-label="Fechar" (click)="cancelarRecusa()">
-                    <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                    <img src="/assets/seta-esquerda.svg" alt="">
                 </button>
 
-                <h2>Atenção</h2>
+                <h2 id="recusa-titulo">Atenção</h2>
             </div>
 
             @if (erroRecusa) {
-            <div class="analise-ong__erro-modal">
+            <div class="analise-ong__erro-modal" role="alert">
                 {{ erroRecusa }}
             </div>
             }
@@ -107,18 +107,18 @@
 
     <div class="analise-ong__overlay">
 
-        <div class="analise-ong__modal">
+        <div class="analise-ong__modal" role="dialog" aria-modal="true" aria-labelledby="validacao-titulo">
 
             <div class="analise-ong__modal-cabecalho">
                 <button type="button" class="analise-ong__voltar" aria-label="Fechar" (click)="cancelarValidacao()">
-                    <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                    <img src="/assets/seta-esquerda.svg" alt="">
                 </button>
 
-                <h2>Atenção</h2>
+                <h2 id="validacao-titulo">Atenção</h2>
             </div>
 
             @if (erroValidacao) {
-            <div class="analise-ong__erro-modal">
+            <div class="analise-ong__erro-modal" role="alert">
                 {{ erroValidacao }}
             </div>
             }

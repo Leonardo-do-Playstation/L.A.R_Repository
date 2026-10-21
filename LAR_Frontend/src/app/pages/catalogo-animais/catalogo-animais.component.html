@@ -10,9 +10,9 @@
 
         <div class="catalogo__filtros">
 
-            <button type="button" class="catalogo__filtros-button" (click)="abrirFiltros()">
+            <button type="button" class="catalogo__filtros-button" (click)="abrirFiltros()" aria-haspopup="dialog">
                 <span>
-                    <img src="/assets/filtro.svg" alt="Filtro">
+                    <img src="/assets/filtro.svg" alt="">
                 </span>
 
                 Filtros
@@ -24,17 +24,17 @@
 
         </div>
 
-        <div class="catalogo__ordenacao">
+        <div class="catalogo__ordenacao" role="group" aria-label="Ordenar animais">
 
             <button type="button" [class.catalogo__ordenacao--ativa]="
                     ordem === 'recentes'
-                " (click)="ordenar('recentes')">
+                " [attr.aria-pressed]="ordem === 'recentes'" (click)="ordenar('recentes')">
                 Mais recentes
             </button>
 
             <button type="button" [class.catalogo__ordenacao--ativa]="
                     ordem === 'antigos'
-                " (click)="ordenar('antigos')">
+                " [attr.aria-pressed]="ordem === 'antigos'" (click)="ordenar('antigos')">
                 Mais antigos
             </button>
 
@@ -77,31 +77,31 @@
 
 <div class="filtros-overlay">
 
-    <div class="filtros-modal">
+    <div class="filtros-modal" role="dialog" aria-modal="true" aria-labelledby="filtros-titulo">
 
         <div class="filtros-modal__cabecalho">
 
             <button type="button" class="filtros-modal__voltar" aria-label="Fechar" (click)="fecharFiltros()">
-                <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                <img src="/assets/seta-esquerda.svg" alt="">
             </button>
 
-            <h2>Filtros</h2>
+            <h2 id="filtros-titulo">Filtros</h2>
 
         </div>
 
         <div class="filtros-modal__categorias">
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('especie')">
+                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'especie'" (click)="alternarCategoria('especie')">
                     Espécies
-                    <span class="filtros-categoria__seta" [class.filtros-categoria__seta--aberta]="
+                    <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'especie'
                         ">›</span>
                 </button>
 
                 @if (categoriaExpandida === 'especie') {
                 <div class="filtros-categoria__opcoes">
-                    <select [(ngModel)]="filtros.especie">
+                    <select aria-label="Espécie" [(ngModel)]="filtros.especie">
                         <option [ngValue]="undefined">Todas</option>
                         <option value="Cachorro">Cachorro</option>
                         <option value="Gato">Gato</option>
@@ -112,16 +112,16 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('raca')">
+                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'raca'" (click)="alternarCategoria('raca')">
                     Raças
-                    <span class="filtros-categoria__seta" [class.filtros-categoria__seta--aberta]="
+                    <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'raca'
                         ">›</span>
                 </button>
 
                 @if (categoriaExpandida === 'raca') {
                 <div class="filtros-categoria__opcoes">
-                    <select [(ngModel)]="filtros.raca">
+                    <select aria-label="Raça" [(ngModel)]="filtros.raca">
                         <option [ngValue]="undefined">Todas</option>
                         @for (raca of racasDisponiveis; track $index) {
                         <option [value]="raca">{{ raca }}</option>
@@ -132,16 +132,16 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('porte')">
+                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'porte'" (click)="alternarCategoria('porte')">
                     Portes
-                    <span class="filtros-categoria__seta" [class.filtros-categoria__seta--aberta]="
+                    <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'porte'
                         ">›</span>
                 </button>
 
                 @if (categoriaExpandida === 'porte') {
                 <div class="filtros-categoria__opcoes">
-                    <select [(ngModel)]="filtros.porte">
+                    <select aria-label="Porte" [(ngModel)]="filtros.porte">
                         <option [ngValue]="undefined">Todos</option>
                         <option value="Pequeno">Pequeno</option>
                         <option value="Médio">Médio</option>
@@ -152,9 +152,9 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('idade')">
+                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'idade'" (click)="alternarCategoria('idade')">
                     Idades
-                    <span class="filtros-categoria__seta" [class.filtros-categoria__seta--aberta]="
+                    <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'idade'
                         ">›</span>
                 </button>
@@ -174,16 +174,16 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('sexo')">
+                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'sexo'" (click)="alternarCategoria('sexo')">
                     Sexos
-                    <span class="filtros-categoria__seta" [class.filtros-categoria__seta--aberta]="
+                    <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'sexo'
                         ">›</span>
                 </button>
 
                 @if (categoriaExpandida === 'sexo') {
                 <div class="filtros-categoria__opcoes">
-                    <select [(ngModel)]="filtros.sexo">
+                    <select aria-label="Sexo" [(ngModel)]="filtros.sexo">
                         <option [ngValue]="undefined">Todos</option>
                         <option value="MACHO">Macho</option>
                         <option value="FEMEA">Fêmea</option>
@@ -193,16 +193,16 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('cor')">
+                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'cor'" (click)="alternarCategoria('cor')">
                     Cores
-                    <span class="filtros-categoria__seta" [class.filtros-categoria__seta--aberta]="
+                    <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'cor'
                         ">›</span>
                 </button>
 
                 @if (categoriaExpandida === 'cor') {
                 <div class="filtros-categoria__opcoes">
-                    <select [(ngModel)]="filtros.cor">
+                    <select aria-label="Cor" [(ngModel)]="filtros.cor">
                         <option [ngValue]="undefined">Todas</option>
                         @for (cor of coresDisponiveis; track $index) {
                         <option [value]="cor">{{ cor }}</option>

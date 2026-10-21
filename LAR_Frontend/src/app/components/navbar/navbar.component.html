@@ -1,10 +1,11 @@
 @if (mostrarNavbar) {
 
-<nav class="navbar-global">
+<nav class="navbar-global" aria-label="Principal">
 
     <div class="navbar-global__conteudo">
 
-        <button type="button" class="navbar-global__botao-menu" aria-label="Abrir menu" (click)="alternarMenu()">
+        <button type="button" class="navbar-global__botao-menu" aria-label="Abrir menu" aria-controls="menu-lateral" aria-haspopup="dialog"
+            [attr.aria-expanded]="menuAberto" (click)="alternarMenu()">
 
             <img src="/assets/menu.svg" alt="">
 
@@ -44,7 +45,7 @@
 
 @if (mensagemFavoritos) {
 
-<div class="navbar-global__aviso">
+<div class="navbar-global__aviso" role="alert">
 
     <span>{{ mensagemFavoritos }}</span>
 
@@ -70,10 +71,10 @@
 
 @if (menuAberto) {
 
-<div class="menu-overlay" (click)="fecharMenu()">
+<div class="menu-overlay" aria-hidden="true" (click)="fecharMenu()">
 </div>
 
-<aside class="menu-lateral">
+<aside id="menu-lateral" class="menu-lateral" role="dialog" aria-modal="true" aria-label="Menu">
 
     <div class="menu-lateral__cabecalho">
 
@@ -87,7 +88,7 @@
 
     </div>
 
-    <nav class="menu-lateral__opcoes">
+    <nav class="menu-lateral__opcoes" aria-label="Opções do menu">
 
         <a class="menu-lateral__item" routerLink="/home" (click)="fecharMenu()">
 

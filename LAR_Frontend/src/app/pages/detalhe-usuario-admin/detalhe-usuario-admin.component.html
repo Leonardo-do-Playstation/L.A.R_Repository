@@ -6,7 +6,7 @@
 
         @if (mensagemSucesso) {
 
-        <div class="detalhe-usuario__sucesso">
+        <div class="detalhe-usuario__sucesso" role="status">
             {{ mensagemSucesso }}
         </div>
 
@@ -50,7 +50,7 @@
 
                 @if (erroEdicao) {
 
-                <div class="detalhe-usuario__erro-form">
+                <div class="detalhe-usuario__erro-form" role="alert">
                     {{ erroEdicao }}
                 </div>
 
@@ -202,13 +202,13 @@
 
     <div class="detalhe-usuario__overlay">
 
-        <div class="detalhe-usuario__modal">
+        <div class="detalhe-usuario__modal" role="dialog" aria-modal="true" aria-labelledby="confirmacao-titulo">
 
-            <h2 class="detalhe-usuario__modal-titulo">Atenção</h2>
+            <h2 id="confirmacao-titulo" class="detalhe-usuario__modal-titulo">Atenção</h2>
 
             @if (erroConfirmacao) {
 
-            <div class="detalhe-usuario__erro-form">
+            <div class="detalhe-usuario__erro-form" role="alert">
                 {{ erroConfirmacao }}
             </div>
 

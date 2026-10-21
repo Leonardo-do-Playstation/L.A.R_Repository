@@ -10,9 +10,9 @@
 
         <div class="painel-animais__filtros">
 
-            <button type="button" class="painel-animais__filtros-button" (click)="abrirFiltros()">
+            <button type="button" class="painel-animais__filtros-button" (click)="abrirFiltros()" aria-haspopup="dialog">
                 <span>
-                    <img src="/assets/filtro.svg" alt="Filtro">
+                    <img src="/assets/filtro.svg" alt="">
                 </span>
 
                 Filtros
@@ -24,17 +24,17 @@
 
         </div>
 
-        <div class="painel-animais__ordenacao">
+        <div class="painel-animais__ordenacao" role="group" aria-label="Ordenar animais">
 
             <button type="button" [class.painel-animais__ordenacao--ativa]="
                     ordem === 'recentes'
-                " (click)="ordenar('recentes')">
+                " [attr.aria-pressed]="ordem === 'recentes'" (click)="ordenar('recentes')">
                 Mais recentes
             </button>
 
             <button type="button" [class.painel-animais__ordenacao--ativa]="
                     ordem === 'antigos'
-                " (click)="ordenar('antigos')">
+                " [attr.aria-pressed]="ordem === 'antigos'" (click)="ordenar('antigos')">
                 Mais antigos
             </button>
 
@@ -137,7 +137,7 @@
 
                         <button type="button" class="animal-card__excluir" [attr.aria-label]="'Excluir ' + animal.nome"
                             (click)="abrirConfirmacaoExclusao(animal)">
-                            <img src="/assets/lixeira.svg" alt="Excluir">
+                            <img src="/assets/lixeira.svg" alt="">
                         </button>
                     </div>
                 </div>
@@ -151,26 +151,26 @@
 
     <div class="filtros-overlay">
 
-        <div class="filtros-modal">
+        <div class="filtros-modal" role="dialog" aria-modal="true" aria-labelledby="filtros-titulo">
 
             <div class="filtros-modal__cabecalho">
                 <button type="button" class="filtros-modal__voltar" aria-label="Fechar" (click)="fecharFiltros()">
-                    <img src="/assets/seta-esquerda.svg" alt="Fechar">
+                    <img src="/assets/seta-esquerda.svg" alt="">
                 </button>
-                <h2>Filtros</h2>
+                <h2 id="filtros-titulo">Filtros</h2>
             </div>
 
             <div class="filtros-modal__categorias">
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('especie')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'especie'" (click)="alternarCategoria('especie')">
                         Espécies
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'especie'">›</span>
                     </button>
                     @if (categoriaExpandida === 'especie') {
                     <div class="filtros-categoria__opcoes">
-                        <select [(ngModel)]="filtros.especie">
+                        <select aria-label="Espécie" [(ngModel)]="filtros.especie">
                             <option [ngValue]="undefined">Todas</option>
                             <option value="Cachorro">Cachorro</option>
                             <option value="Gato">Gato</option>
@@ -181,27 +181,27 @@
                 </div>
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('raca')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'raca'" (click)="alternarCategoria('raca')">
                         Raças
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'raca'">›</span>
                     </button>
                     @if (categoriaExpandida === 'raca') {
                     <div class="filtros-categoria__opcoes">
-                        <input type="text" placeholder="Ex.: Labrador" [(ngModel)]="filtros.raca">
+                        <input type="text" placeholder="Ex.: Labrador" aria-label="Raça" [(ngModel)]="filtros.raca">
                     </div>
                     }
                 </div>
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('porte')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'porte'" (click)="alternarCategoria('porte')">
                         Portes
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'porte'">›</span>
                     </button>
                     @if (categoriaExpandida === 'porte') {
                     <div class="filtros-categoria__opcoes">
-                        <select [(ngModel)]="filtros.porte">
+                        <select aria-label="Porte" [(ngModel)]="filtros.porte">
                             <option [ngValue]="undefined">Todos</option>
                             <option value="Pequeno">Pequeno</option>
                             <option value="Médio">Médio</option>
@@ -212,9 +212,9 @@
                 </div>
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('idade')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'idade'" (click)="alternarCategoria('idade')">
                         Idades
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'idade'">›</span>
                     </button>
                     @if (categoriaExpandida === 'idade') {
@@ -232,14 +232,14 @@
                 </div>
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('sexo')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'sexo'" (click)="alternarCategoria('sexo')">
                         Sexos
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'sexo'">›</span>
                     </button>
                     @if (categoriaExpandida === 'sexo') {
                     <div class="filtros-categoria__opcoes">
-                        <select [(ngModel)]="filtros.sexo">
+                        <select aria-label="Sexo" [(ngModel)]="filtros.sexo">
                             <option [ngValue]="undefined">Todos</option>
                             <option value="MACHO">Macho</option>
                             <option value="FEMEA">Fêmea</option>
@@ -249,27 +249,27 @@
                 </div>
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('cor')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'cor'" (click)="alternarCategoria('cor')">
                         Cores
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'cor'">›</span>
                     </button>
                     @if (categoriaExpandida === 'cor') {
                     <div class="filtros-categoria__opcoes">
-                        <input type="text" placeholder="Ex.: Marrom" [(ngModel)]="filtros.cor">
+                        <input type="text" placeholder="Ex.: Marrom" aria-label="Cor" [(ngModel)]="filtros.cor">
                     </div>
                     }
                 </div>
 
                 <div class="filtros-categoria">
-                    <button type="button" class="filtros-categoria__cabecalho" (click)="alternarCategoria('status')">
+                    <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'status'" (click)="alternarCategoria('status')">
                         Status
-                        <span class="filtros-categoria__seta"
+                        <span class="filtros-categoria__seta" aria-hidden="true"
                             [class.filtros-categoria__seta--aberta]="categoriaExpandida === 'status'">›</span>
                     </button>
                     @if (categoriaExpandida === 'status') {
                     <div class="filtros-categoria__opcoes">
-                        <select [(ngModel)]="filtros.status">
+                        <select aria-label="Status" [(ngModel)]="filtros.status">
                             <option [ngValue]="undefined">Todos</option>
                             @for (status of statusDisponiveis; track status.valor) {
                             <option [ngValue]="status.valor">{{ status.nome }}</option>
@@ -294,9 +294,10 @@
 
     <div class="painel-animais__confirmacao">
 
-        <div class="painel-animais__confirmacao-conteudo">
+        <div class="painel-animais__confirmacao-conteudo" role="dialog" aria-modal="true"
+            aria-labelledby="exclusao-titulo">
 
-            <h2>Excluir animal</h2>
+            <h2 id="exclusao-titulo">Excluir animal</h2>
 
             <p>
                 Tem certeza que deseja excluir

@@ -77,7 +77,7 @@
   border: 0;
   background: transparent;
   color: #777;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
@@ -130,8 +130,8 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  color: #888;
-  font-size: 0.68rem;
+  color: #666;
+  font-size: 0.75rem;
 }
 
 .animal-card__status-dot {
@@ -165,7 +165,7 @@
 
 .animal-card__status-controle label {
   color: #777;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -178,7 +178,7 @@
   border-radius: 4px;
   background: #fff;
   color: #666;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
@@ -189,8 +189,8 @@
 }
 
 .animal-card__status-carregando {
-  color: #999;
-  font-size: 0.62rem;
+  color: #666;
+  font-size: 0.75rem;
   white-space: nowrap;
 }
 
@@ -228,8 +228,8 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #999;
-  font-size: 0.7rem;
+  color: #666;
+  font-size: 0.75rem;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -319,7 +319,7 @@
   border-radius: 999px;
   background: #2b9e25;
   color: #fff;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -414,7 +414,7 @@
 
 .filtros-categoria__seta {
   display: inline-block;
-  color: #999;
+  color: #666;
   font-size: 1.3rem;
   transform: rotate(90deg);
   transition: transform 0.15s ease;

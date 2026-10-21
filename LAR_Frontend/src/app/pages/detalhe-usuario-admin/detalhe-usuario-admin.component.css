@@ -58,7 +58,7 @@
 }
 
 .detalhe-usuario__dado dt {
-  color: #999;
+  color: #666;
   font-size: 0.8rem;
 }
 
@@ -80,7 +80,7 @@
 
 .detalhe-usuario__aviso {
   margin: 20px 0 0;
-  color: #999;
+  color: #666;
   font-size: 0.85rem;
   text-align: center;
 }
