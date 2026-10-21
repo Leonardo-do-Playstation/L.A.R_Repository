@@ -1,0 +1,85 @@
+<section class="auditoria">
+
+    <div class="auditoria__container">
+
+        <app-botao-voltar fallback="/home" />
+
+        <h1 class="auditoria__titulo">
+            Registro de ações
+        </h1>
+
+        <p class="auditoria__descricao">
+            Histórico das ações realizadas pelos administradores. Os registros são somente para consulta.
+        </p>
+
+        <div class="auditoria__filtros">
+
+            <div class="auditoria__campo">
+                <label for="filtro-responsavel">Responsável</label>
+
+                <input id="filtro-responsavel" type="search" placeholder="Buscar por e-mail do administrador"
+                    [value]="responsavel" (input)="aoDigitarResponsavel($any($event.target).value)">
+            </div>
+
+            <div class="auditoria__campo">
+                <label for="filtro-data">Data</label>
+
+                <input id="filtro-data" type="date" [value]="data"
+                    (change)="aoSelecionarData($any($event.target).value)">
+            </div>
+
+            @if (temFiltro) {
+            <button type="button" class="auditoria__limpar" (click)="limparFiltros()">
+                Limpar filtros
+            </button>
+            }
+
+        </div>
+
+        @if (erro) {
+
+        <app-mensagem-estado tipo="erro" [texto]="erro" />
+
+        }
+
+        @if (carregando) {
+
+        <app-mensagem-estado tipo="carregando" texto="Carregando registros..." />
+
+        } @else if (!erro && registros.length === 0) {
+
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum registro encontrado."
+            texto="Ajuste os filtros para ver outros resultados." />
+
+        } @else {
+
+        <div class="auditoria__lista">
+
+            @for (registro of registros; track registro.id) {
+
+            <article class="registro">
+
+                <div class="registro__topo">
+                    <span class="registro__acao">{{ rotuloAcao(registro.acao) }}</span>
+                    <time class="registro__data">{{ formatarDataHora(registro.dataHora) }}</time>
+                </div>
+
+                <span class="registro__linha">
+                    <strong>Responsável:</strong> {{ registro.usuarioResponsavel }}
+                </span>
+
+                <span class="registro__linha">
+                    <strong>Registro afetado:</strong> {{ registro.registroAfetado }}
+                </span>
+
+            </article>
+
+            }
+
+        </div>
+
+        }
+
+    </div>
+
+</section>

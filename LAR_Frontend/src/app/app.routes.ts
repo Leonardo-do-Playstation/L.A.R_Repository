@@ -33,6 +33,16 @@ export const routes: Routes = [
     },
   },
 
+    {
+    path: 'admin/auditoria',
+    title: 'Registro de ações | L.A.R.',
+    loadComponent: () =>
+      import('./pages/auditoria-admin/auditoria-admin.component').then(
+        (m) => m.AuditoriaAdminComponent,
+      ),
+    canActivate: [perfilGuard(['ADMINISTRADOR'])],
+  },
+
   {
     path: 'ong',
     title: 'Acesso da ONG | L.A.R.',
