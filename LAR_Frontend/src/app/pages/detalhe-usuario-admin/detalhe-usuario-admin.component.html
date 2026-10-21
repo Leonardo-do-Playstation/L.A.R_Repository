@@ -58,49 +58,41 @@
 
                 <label class="detalhe-usuario__campo">
                     Nome
-                    <input type="text" formControlName="nome">
-                    @if (formulario.controls.nome.touched && formulario.controls.nome.invalid) {
-                    <small class="detalhe-usuario__campo-erro">Informe o nome.</small>
-                    }
+                    <input type="text" [value]="usuario.nome" disabled>
                 </label>
 
                 <label class="detalhe-usuario__campo">
                     E-mail
-                    <input type="email" formControlName="email">
-                    @if (formulario.controls.email.touched && formulario.controls.email.invalid) {
-                    <small class="detalhe-usuario__campo-erro">Informe um e-mail válido.</small>
-                    }
+                    <input type="email" [value]="usuario.email" disabled>
                 </label>
 
                 <label class="detalhe-usuario__campo">
                     Telefone
-                    <input type="text" formControlName="telefone">
+                    <input type="text" [value]="usuario.telefone ?? ''" disabled>
                 </label>
 
                 <label class="detalhe-usuario__campo">
                     Endereço
-                    <input type="text" formControlName="endereco">
+                    <input type="text" [value]="usuario.endereco ?? ''" disabled>
                 </label>
-
-                @if (usuario.tipo === 'ONG') {
 
                 <label class="detalhe-usuario__campo">
-                    CNPJ
-                    <input type="text" formControlName="cnpj">
+                    {{ rotuloDocumento }}
+                    <input type="text" formControlName="documento">
+                    @if (formulario.controls.documento.touched && formulario.controls.documento.invalid) {
+                    <small class="detalhe-usuario__campo-erro">Informe o {{ rotuloDocumento }}.</small>
+                    }
                 </label>
-
-                }
 
                 <div class="detalhe-usuario__acoes">
 
                     <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--neutro"
-                        [disabled]="salvando" (click)="cancelarEdicao()">
+                        (click)="cancelarEdicao()">
                         Cancelar
                     </button>
 
-                    <button type="submit" class="detalhe-usuario__botao detalhe-usuario__botao--principal"
-                        [disabled]="salvando">
-                        {{ salvando ? 'Salvando...' : 'Salvar' }}
+                    <button type="submit" class="detalhe-usuario__botao detalhe-usuario__botao--principal">
+                        Salvar
                     </button>
 
                 </div>
@@ -175,10 +167,15 @@
 
             <div class="detalhe-usuario__acoes detalhe-usuario__acoes--coluna">
 
+                @if (podeEditarDocumento) {
+
                 <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--neutro"
                     (click)="abrirEdicao()">
-                    Editar dados
+                    Editar {{ rotuloDocumento }}
                 </button>
+
+                }
+
 
                 <button type="button" class="detalhe-usuario__botao"
                     [class.detalhe-usuario__botao--perigo]="!usuario.bloqueado"
@@ -232,6 +229,54 @@
                     [class.detalhe-usuario__botao--principal]="usuario.bloqueado" [disabled]="alternando"
                     (click)="confirmarBloqueio()">
                     {{ alternando ? 'Aguarde...' : 'Confirmar' }}
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+    @if (mostrarJustificativa && usuario) {
+
+    <div class="detalhe-usuario__overlay">
+
+        <div class="detalhe-usuario__modal" role="dialog" aria-modal="true" aria-labelledby="justificativa-titulo">
+
+            <h2 id="justificativa-titulo" class="detalhe-usuario__modal-titulo">Atenção</h2>
+
+            @if (erroJustificativa) {
+
+            <div class="detalhe-usuario__erro-form" role="alert">
+                {{ erroJustificativa }}
+            </div>
+
+            }
+
+            <p class="detalhe-usuario__pergunta">
+                Você tem certeza que deseja trocar o {{ rotuloDocumento }} de {{ usuario.nome }}?
+            </p>
+
+            <label class="detalhe-usuario__campo">
+                Informe o motivo da troca
+                <input type="text" [formControl]="justificativa" maxlength="255">
+                @if (justificativa.touched && justificativa.invalid) {
+                <small class="detalhe-usuario__campo-erro">Informe o motivo da troca.</small>
+                }
+            </label>
+
+            <div class="detalhe-usuario__acoes">
+
+                <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--neutro"
+                    [disabled]="salvando" (click)="cancelarJustificativa()">
+                    Cancelar
+                </button>
+
+                <button type="button" class="detalhe-usuario__botao detalhe-usuario__botao--principal"
+                    [disabled]="salvando" (click)="confirmarTroca()">
+                    {{ salvando ? 'Salvando...' : 'Confirmar' }}
                 </button>
 
             </div>
