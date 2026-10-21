@@ -21,7 +21,6 @@ export class RecuperarSenhaComponent implements OnInit {
   carregando = false;
   mensagemSucesso = '';
   mensagemErro = '';
-  tokenTeste = '';
   rotaCadastro = '/cadastro';
 
   constructor(
@@ -40,7 +39,6 @@ export class RecuperarSenhaComponent implements OnInit {
   recuperarSenha(): void {
     this.mensagemSucesso = '';
     this.mensagemErro = '';
-    this.tokenTeste = '';
 
     if (this.recuperarForm.invalid) {
       this.recuperarForm.markAllAsTouched();
@@ -58,10 +56,6 @@ export class RecuperarSenhaComponent implements OnInit {
         this.mensagemSucesso =
           resposta.mensagem ||
           'Se este e-mail estiver cadastrado, um link de recuperação será enviado.';
-
-        if (resposta.token_teste) {
-          this.tokenTeste = resposta.token_teste;
-        }
 
         this.recuperarForm.reset();
       },

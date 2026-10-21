@@ -63,7 +63,7 @@ export class NavbarComponent implements OnDestroy {
     this.tipoUsuario = perfil?.tipo ?? null;
   }
 
-  private ehTelaInicial(url: string): boolean {
+    private ehTelaInicial(url: string): boolean {
     return (
       url === '/' ||
       url === '/entrada' ||
@@ -72,7 +72,8 @@ export class NavbarComponent implements OnDestroy {
       url === '/login' ||
       url === '/cadastro' ||
       url === '/cadastro-ong' ||
-      url === '/recuperar-senha'
+      url === '/recuperar-senha' ||
+      url === '/redefinir-senha'
     );
   }
 

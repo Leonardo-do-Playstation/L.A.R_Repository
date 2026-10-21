@@ -22,6 +22,7 @@ export class FooterComponent implements OnDestroy {
     '/cadastro',
     '/cadastro-ong',
     '/recuperar-senha',
+    '/redefinir-senha',
   ];
 
   private readonly destroy$ = new Subject<void>();
