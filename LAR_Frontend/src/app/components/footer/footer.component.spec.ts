@@ -1,25 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { FooterComponent } from './footer.component';
-import { AuthService } from '../../services/auth.service';
 
 describe('FooterComponent', () => {
   let fixture: ComponentFixture<FooterComponent>;
   let router: Router;
-  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
-    authService = jasmine.createSpyObj<AuthService>('AuthService', [
-      'obterPerfil',
-    ]);
-    authService.obterPerfil.and.returnValue(null);
-
     await TestBed.configureTestingModule({
       imports: [FooterComponent],
-      providers: [
-        provideRouter([]),
-        { provide: AuthService, useValue: authService },
-      ],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -54,11 +44,8 @@ describe('FooterComponent', () => {
     ).toBeNull();
   });
 
-  it('should hide the footer on the NGO home', () => {
-    spyOnProperty(router, 'url', 'get').and.returnValue('/home');
-    authService.obterPerfil.and.returnValue({ tipo: 'ONG' } as ReturnType<
-      AuthService['obterPerfil']
-    >);
+  it('should hide on the login page', () => {
+    spyOnProperty(router, 'url', 'get').and.returnValue('/login');
 
     fixture.componentInstance['atualizarVisibilidade']();
     fixture.detectChanges();
@@ -66,5 +53,23 @@ describe('FooterComponent', () => {
     expect(
       (fixture.nativeElement as HTMLElement).querySelector('footer'),
     ).toBeNull();
+  });
+
+  it('should show the footer on the home and profile pages for any profile', () => {
+    const url = spyOnProperty(router, 'url', 'get');
+    const element = fixture.nativeElement as HTMLElement;
+
+    for (const rota of [
+      '/home',
+      '/perfil',
+      '/painel-animais',
+      '/admin/usuarios',
+    ]) {
+      url.and.returnValue(rota);
+      fixture.componentInstance['atualizarVisibilidade']();
+      fixture.detectChanges();
+
+      expect(element.querySelector('footer')).withContext(rota).toBeTruthy();
+    }
   });
 });

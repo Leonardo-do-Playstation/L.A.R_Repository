@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subject, filter, takeUntil } from 'rxjs';
-import { AuthService, TipoUsuario } from '../../services/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -14,12 +13,20 @@ export class FooterComponent implements OnDestroy {
   mostrarFooter = false;
   readonly anoAtual = new Date().getFullYear();
 
+  private readonly rotasSemFooter = [
+    '/',
+    '/entrada',
+    '/adotante',
+    '/ong',
+    '/login',
+    '/cadastro',
+    '/cadastro-ong',
+    '/recuperar-senha',
+  ];
+
   private readonly destroy$ = new Subject<void>();
 
-  constructor(
-    private readonly router: Router,
-    private readonly authService: AuthService,
-  ) {
+  constructor(private readonly router: Router) {
     this.atualizarVisibilidade();
 
     this.router.events
@@ -33,24 +40,8 @@ export class FooterComponent implements OnDestroy {
   private atualizarVisibilidade(): void {
     const rota =
       this.router.url.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
-    const tipoUsuario: TipoUsuario | null =
-      this.authService.obterPerfil()?.tipo ?? null;
 
-    const rotasPublicas = [
-      '/sobre',
-      '/catalogo',
-      '/ongs',
-      '/termos',
-      '/privacidade',
-    ];
-    const rotaDeDetalhePublico = /^\/(ongs|animais)\/[^/]+$/.test(rota);
-
-    this.mostrarFooter =
-      rotasPublicas.includes(rota) ||
-      rotaDeDetalhePublico ||
-      (rota === '/home' &&
-        tipoUsuario !== 'ONG' &&
-        tipoUsuario !== 'ADMINISTRADOR');
+    this.mostrarFooter = !this.rotasSemFooter.includes(rota);
   }
 
   ngOnDestroy(): void {
