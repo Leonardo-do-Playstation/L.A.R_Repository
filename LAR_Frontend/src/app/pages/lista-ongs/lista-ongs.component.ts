@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { OngPublica, OngService } from '../../services/ong.service';
@@ -9,13 +9,12 @@ import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensag
 @Component({
   selector: 'app-lista-ongs',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent, RouterLink],
   templateUrl: './lista-ongs.component.html',
   styleUrl: './lista-ongs.component.css',
 })
 export class ListaOngsComponent implements OnInit {
   private readonly ongService = inject(OngService);
-  private readonly router = inject(Router);
 
   ongs: OngPublica[] = [];
 
@@ -41,10 +40,6 @@ export class ListaOngsComponent implements OnInit {
         this.erro = 'Não foi possível carregar as ONGs.';
       },
     });
-  }
-
-  abrirOng(ong: OngPublica): void {
-    this.router.navigate(['/ongs', ong.id]);
   }
 
   inicial(nome: string): string {

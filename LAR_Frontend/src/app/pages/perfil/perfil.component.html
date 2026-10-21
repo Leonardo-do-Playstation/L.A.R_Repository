@@ -74,7 +74,7 @@
                     <input id="nome" type="text" formControlName="nome" autocomplete="name">
 
                     @if (formPerfil.controls.nome.touched && formPerfil.controls.nome.errors?.['required']) {
-                    <span class="perfil__erro">Informe o nome.</span>
+                    <span class="perfil__erro" role="alert">Informe o nome.</span>
                     }
                 </div>
 
@@ -150,11 +150,11 @@
                     <input id="novoEmail" type="email" formControlName="novoEmail" autocomplete="email">
 
                     @if (formEmail.controls.novoEmail.touched && formEmail.controls.novoEmail.errors?.['required']) {
-                    <span class="perfil__erro">Informe o novo e-mail.</span>
+                    <span class="perfil__erro" role="alert">Informe o novo e-mail.</span>
                     }
 
                     @if (formEmail.controls.novoEmail.touched && formEmail.controls.novoEmail.errors?.['email']) {
-                    <span class="perfil__erro">Informe um e-mail válido.</span>
+                    <span class="perfil__erro" role="alert">Informe um e-mail válido.</span>
                     }
                 </div>
 
@@ -163,7 +163,7 @@
                     <input id="senhaEmail" type="password" formControlName="senha" autocomplete="current-password">
 
                     @if (formEmail.controls.senha.touched && formEmail.controls.senha.errors?.['required']) {
-                    <span class="perfil__erro">Informe sua senha atual.</span>
+                    <span class="perfil__erro" role="alert">Informe sua senha atual.</span>
                     }
                 </div>
 
@@ -213,7 +213,7 @@
                     <input id="senhaAtual" type="password" formControlName="senhaAtual" autocomplete="current-password">
 
                     @if (formSenha.controls.senhaAtual.touched && formSenha.controls.senhaAtual.errors?.['required']) {
-                    <span class="perfil__erro">Informe sua senha atual.</span>
+                    <span class="perfil__erro" role="alert">Informe sua senha atual.</span>
                     }
                 </div>
 
@@ -222,11 +222,11 @@
                     <input id="novaSenha" type="password" formControlName="novaSenha" autocomplete="new-password">
 
                     @if (formSenha.controls.novaSenha.touched && formSenha.controls.novaSenha.errors?.['required']) {
-                    <span class="perfil__erro">Informe a nova senha.</span>
+                    <span class="perfil__erro" role="alert">Informe a nova senha.</span>
                     }
 
                     @if (formSenha.controls.novaSenha.touched && formSenha.controls.novaSenha.errors?.['minlength']) {
-                    <span class="perfil__erro">A nova senha deve ter pelo menos 6 caracteres.</span>
+                    <span class="perfil__erro" role="alert">A nova senha deve ter pelo menos 6 caracteres.</span>
                     }
                 </div>
 
@@ -236,7 +236,7 @@
                         autocomplete="new-password">
 
                     @if (formSenha.controls.confirmarNovaSenha.touched && formSenha.errors?.['senhasDiferentes']) {
-                    <span class="perfil__erro">As senhas não conferem.</span>
+                    <span class="perfil__erro" role="alert">As senhas não conferem.</span>
                     }
                 </div>
 
@@ -300,7 +300,7 @@
                     <input id="senhaExclusao" type="password" formControlName="senha" autocomplete="current-password">
 
                     @if (formExclusao.controls.senha.touched && formExclusao.controls.senha.errors?.['required']) {
-                    <span class="perfil__erro">Informe sua senha.</span>
+                    <span class="perfil__erro" role="alert">Informe sua senha.</span>
                     }
                 </div>
 

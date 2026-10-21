@@ -1,11 +1,12 @@
-<article class="animal-card" (click)="abrirDetalhes()">
+<article class="animal-card">
 
     <div class="animal-card__foto-wrapper">
 
         <img [src]="imagemAnimal()" [alt]="animal.nome" class="animal-card__imagem" (error)="erroImagem($event)">
 
         <button type="button" class="animal-card__favorito" [disabled]="usuarioLogado && processandoFavorito"
-            [attr.aria-label]="usuarioLogado ? (favoritado ? 'Remover dos favoritos' : 'Favoritar') : 'Entrar para favoritar'"
+            [attr.aria-label]="(usuarioLogado ? 'Favoritar ' : 'Entrar para favoritar ') + animal.nome"
+            [attr.aria-pressed]="usuarioLogado ? favoritado : null"
             (click)="alternarFavorito($event)">
 
             @if (usuarioLogado && favoritado) {
@@ -23,7 +24,7 @@
         <div class="animal-card__linha">
 
             <strong>
-                {{ animal.nome }}
+                <a class="animal-card__link" [routerLink]="['/animais', animal.id]">{{ animal.nome }}</a>
             </strong>
 
         </div>

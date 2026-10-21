@@ -28,11 +28,11 @@
 
             @for (solicitacao of solicitacoes; track solicitacao.id) {
 
-            <article class="solicitacao-card" (click)="abrirSolicitacao(solicitacao)">
+            <article class="solicitacao-card">
 
                 <strong class="solicitacao-card__nome">
-                    {{ solicitacao.nome }}
-                </strong>
+                <a class="solicitacao-card__link" [routerLink]="['/admin/ongs-pendentes', solicitacao.id]">{{ solicitacao.nome }}</a>
+            </strong>
 
                 <span class="solicitacao-card__tempo">
                     {{ tempoRelativo(solicitacao.data_cadastro) }}

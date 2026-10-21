@@ -45,15 +45,15 @@
             Lista de usuários
         </h2>
 
-        <input class="usuarios__busca" type="search" placeholder="Buscar por nome ou e-mail" [value]="termo"
+        <input class="usuarios__busca" type="search" aria-label="Buscar usuários por nome ou e-mail" placeholder="Buscar por nome ou e-mail" [value]="termo"
             (input)="aoDigitarBusca($any($event.target).value)">
 
-        <div class="usuarios__filtros">
+        <div class="usuarios__filtros" role="group" aria-label="Filtrar por tipo de usuário">
 
             @for (filtro of filtros; track filtro.valor) {
 
             <button type="button" class="usuarios__filtro" [class.usuarios__filtro--ativo]="filtroTipo === filtro.valor"
-                (click)="selecionarFiltro(filtro.valor)">
+                [attr.aria-pressed]="filtroTipo === filtro.valor" (click)="selecionarFiltro(filtro.valor)">
                 {{ filtro.rotulo }}
             </button>
 
@@ -81,13 +81,13 @@
 
             @for (usuario of usuariosFiltrados; track usuario.id) {
 
-            <article class="usuario-card" (click)="abrirUsuario(usuario)">
+            <article class="usuario-card">
 
                 <div class="usuario-card__info">
 
                     <strong class="usuario-card__nome">
-                        {{ usuario.nome }}
-                    </strong>
+                <a class="usuario-card__link" [routerLink]="['/admin/usuarios', usuario.id]">{{ usuario.nome }}</a>
+            </strong>
 
                     <span class="usuario-card__email">
                         {{ usuario.email }}

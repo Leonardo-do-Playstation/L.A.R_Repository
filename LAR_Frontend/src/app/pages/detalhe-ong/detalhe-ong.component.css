@@ -50,7 +50,7 @@
 
 .detalhe-ong__vazio {
   margin: 0;
-  color: #999;
+  color: #666;
   font-size: 0.9rem;
   text-align: center;
 }
@@ -63,7 +63,7 @@
 }
 
 .detalhe-ong__dado dt {
-  color: #999;
+  color: #666;
   font-size: 0.8rem;
 }
 

@@ -132,7 +132,6 @@
 .cadastro-animal__campo input:focus,
 .cadastro-animal__campo select:focus,
 .cadastro-animal__campo textarea:focus {
-  outline: none;
   border-color: #2b9e25;
 }
 

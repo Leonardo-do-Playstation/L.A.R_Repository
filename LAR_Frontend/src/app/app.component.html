@@ -1,7 +1,9 @@
 <div class="app-shell">
+  <a class="app-shell__pular" href="/" (click)="irParaConteudo($event)">Pular para o conteúdo</a>
+
   <app-navbar />
 
-  <main class="app-shell__main">
+  <main id="conteudo-principal" class="app-shell__main" tabindex="-1">
     <router-outlet></router-outlet>
   </main>
 

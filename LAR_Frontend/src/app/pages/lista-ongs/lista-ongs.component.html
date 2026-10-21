@@ -26,7 +26,7 @@
 
             @for (ong of ongs; track ong.id) {
 
-            <article class="ong-card" (click)="abrirOng(ong)">
+            <article class="ong-card">
 
                 <div class="ong-card__foto" aria-hidden="true">
                     {{ inicial(ong.nome) }}
@@ -35,8 +35,8 @@
                 <div class="ong-card__info">
 
                     <strong class="ong-card__nome">
-                        {{ ong.nome }}
-                    </strong>
+                <a class="ong-card__link" [routerLink]="['/ongs', ong.id]">{{ ong.nome }}</a>
+            </strong>
 
                     <span class="ong-card__localizacao">
                         {{ ong.endereco || 'Localização não informada' }}

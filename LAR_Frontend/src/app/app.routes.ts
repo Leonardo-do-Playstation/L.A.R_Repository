@@ -15,12 +15,14 @@ import { ongPendenteGuard } from './services/ong-pendente.guard';
 export const routes: Routes = [
   {
     path: '',
+    title: 'L.A.R.',
     component: EntradaComponent,
     canActivate: [guestGuard],
   },
 
   {
     path: 'adotante',
+    title: 'Acesso do adotante | L.A.R.',
     loadComponent: () =>
       import('./pages/opcoes-acesso/opcoes-acesso.component').then(
         (m) => m.OpcoesAcessoComponent,
@@ -33,6 +35,7 @@ export const routes: Routes = [
 
   {
     path: 'ong',
+    title: 'Acesso da ONG | L.A.R.',
     loadComponent: () =>
       import('./pages/opcoes-acesso/opcoes-acesso.component').then(
         (m) => m.OpcoesAcessoComponent,
@@ -45,6 +48,7 @@ export const routes: Routes = [
 
   {
     path: 'cadastro',
+    title: 'Cadastro de adotante | L.A.R.',
     component: CadastroComponent,
     canActivate: [guestGuard],
     data: {
@@ -54,6 +58,7 @@ export const routes: Routes = [
 
   {
     path: 'cadastro-ong',
+    title: 'Cadastro de ONG | L.A.R.',
     component: CadastroComponent,
     canActivate: [guestGuard],
     data: {
@@ -63,28 +68,33 @@ export const routes: Routes = [
 
   {
     path: 'login',
+    title: 'Entrar | L.A.R.',
     component: LoginComponent,
     canActivate: [guestGuard],
   },
 
   {
     path: 'recuperar-senha',
+    title: 'Recuperar senha | L.A.R.',
     component: RecuperarSenhaComponent,
     canActivate: [guestGuard],
   },
 
   {
     path: 'home',
+    title: 'Início | L.A.R.',
     component: HomeComponent,
   },
 
   {
     path: 'sobre',
+    title: 'Sobre | L.A.R.',
     component: SobreComponent,
   },
 
   {
     path: 'painel-animais',
+    title: 'Meus animais | L.A.R.',
     loadComponent: () =>
       import('./pages/painel-animais/painel-animais.component').then(
         (m) => m.PainelAnimaisComponent,
@@ -94,6 +104,7 @@ export const routes: Routes = [
 
   {
     path: 'cadastro-animal',
+    title: 'Cadastrar animal | L.A.R.',
     loadComponent: () =>
       import('./pages/cadastro-animal/cadastro-animal.component').then(
         (m) => m.CadastroAnimalComponent,
@@ -103,6 +114,7 @@ export const routes: Routes = [
 
   {
     path: 'editar-animal/:id',
+    title: 'Editar animal | L.A.R.',
     loadComponent: () =>
       import('./pages/editar-animal/editar-animal.component').then(
         (m) => m.EditarAnimalComponent,
@@ -112,6 +124,7 @@ export const routes: Routes = [
 
   {
     path: 'admin/ongs-pendentes',
+    title: 'Solicitações de cadastro | L.A.R.',
     loadComponent: () =>
       import('./pages/solicitacoes-cadastro/solicitacoes-cadastro.component').then(
         (m) => m.SolicitacoesCadastroComponent,
@@ -121,6 +134,7 @@ export const routes: Routes = [
 
   {
     path: 'admin/ongs-pendentes/:id',
+    title: 'Análise de ONG | L.A.R.',
     loadComponent: () =>
       import('./pages/analise-ong/analise-ong.component').then(
         (m) => m.AnaliseOngComponent,
@@ -130,6 +144,7 @@ export const routes: Routes = [
 
   {
     path: 'admin/usuarios',
+    title: 'Gestão de usuários | L.A.R.',
     loadComponent: () =>
       import('./pages/usuarios-admin/usuarios-admin.component').then(
         (m) => m.UsuariosAdminComponent,
@@ -139,6 +154,7 @@ export const routes: Routes = [
 
   {
     path: 'admin/usuarios/:id',
+    title: 'Detalhes do usuário | L.A.R.',
     loadComponent: () =>
       import('./pages/detalhe-usuario-admin/detalhe-usuario-admin.component').then(
         (m) => m.DetalheUsuarioAdminComponent,
@@ -148,6 +164,7 @@ export const routes: Routes = [
 
   {
     path: 'ongs',
+    title: 'ONGs parceiras | L.A.R.',
     loadComponent: () =>
       import('./pages/lista-ongs/lista-ongs.component').then(
         (m) => m.ListaOngsComponent,
@@ -156,6 +173,7 @@ export const routes: Routes = [
 
   {
     path: 'ongs/:id',
+    title: 'Detalhes da ONG | L.A.R.',
     loadComponent: () =>
       import('./pages/detalhe-ong/detalhe-ong.component').then(
         (m) => m.DetalheOngComponent,
@@ -164,6 +182,7 @@ export const routes: Routes = [
 
   {
     path: 'catalogo',
+    title: 'Animais para adoção | L.A.R.',
     loadComponent: () =>
       import('./pages/catalogo-animais/catalogo-animais.component').then(
         (m) => m.CatalogoAnimaisComponent,
@@ -172,6 +191,7 @@ export const routes: Routes = [
 
   {
     path: 'animais/:id',
+    title: 'Detalhes do animal | L.A.R.',
     loadComponent: () =>
       import('./pages/detalhe-animal/detalhe-animal.component').then(
         (m) => m.DetalheAnimalComponent,
@@ -180,6 +200,7 @@ export const routes: Routes = [
 
   {
     path: 'favoritos',
+    title: 'Favoritos | L.A.R.',
     loadComponent: () =>
       import('./pages/favoritos/favoritos.component').then(
         (m) => m.FavoritosComponent,
@@ -189,6 +210,7 @@ export const routes: Routes = [
 
   {
     path: 'perfil',
+    title: 'Meu perfil | L.A.R.',
     loadComponent: () =>
       import('./pages/perfil/perfil.component').then((m) => m.PerfilComponent),
     canActivate: [authGuard],
@@ -196,6 +218,7 @@ export const routes: Routes = [
 
   {
     path: 'confirmar-exclusao',
+    title: 'Confirmar exclusão da conta | L.A.R.',
     loadComponent: () =>
       import('./pages/confirmar-exclusao/confirmar-exclusao.component').then(
         (m) => m.ConfirmarExclusaoComponent,
@@ -204,6 +227,7 @@ export const routes: Routes = [
 
   {
     path: 'confirmar-email',
+    title: 'Confirmar e-mail | L.A.R.',
     loadComponent: () =>
       import('./pages/confirmar-email/confirmar-email.component').then(
         (m) => m.ConfirmarEmailComponent,
@@ -212,6 +236,7 @@ export const routes: Routes = [
 
   {
     path: 'aguardando-aprovacao',
+    title: 'Aguardando aprovação | L.A.R.',
     loadComponent: () =>
       import('./pages/aguardando-aprovacao/aguardando-aprovacao.component').then(
         (m) => m.AguardandoAprovacaoComponent,
@@ -221,6 +246,7 @@ export const routes: Routes = [
 
   {
     path: 'acesso-negado',
+    title: 'Acesso negado | L.A.R.',
     loadComponent: () =>
       import('./pages/acesso-negado/acesso-negado.component').then(
         (m) => m.AcessoNegadoComponent,

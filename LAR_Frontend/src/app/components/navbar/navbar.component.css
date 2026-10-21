@@ -164,7 +164,7 @@
 
   z-index: 1000;
 
-  width: 300px;
+  width: min(300px, 85vw);
 
   background: #9b9b9b;
 
