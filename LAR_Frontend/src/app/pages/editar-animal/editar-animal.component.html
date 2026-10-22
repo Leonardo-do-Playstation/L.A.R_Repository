@@ -168,7 +168,14 @@
 
                     <label for="cor">Cor</label>
 
-                    <input id="cor" type="text" formControlName="cor" placeholder="Cor">
+                    <input id="cor" type="text" formControlName="cor" placeholder="Cor" list="cores-sugeridas"
+                        autocomplete="off">
+
+                    <datalist id="cores-sugeridas">
+                        @for (cor of coresSugeridas; track cor) {
+                        <option [value]="cor"></option>
+                        }
+                    </datalist>
 
                 </div>
 

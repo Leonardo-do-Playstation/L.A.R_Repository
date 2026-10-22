@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   AnimalService,
   CadastroAnimal,
+  coresPadrao,
   racasPorEspecie,
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
@@ -41,6 +42,8 @@ export class CadastroAnimalComponent {
   carregando = false;
 
   private readonly tamanhoMaximoFoto = 5 * 1024 * 1024;
+
+  readonly coresSugeridas = coresPadrao();
 
   get racasSugeridas(): string[] {
     return racasPorEspecie(this.cadastroForm.controls.especie.value);
