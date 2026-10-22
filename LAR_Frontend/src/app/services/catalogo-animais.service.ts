@@ -53,7 +53,10 @@ export class CatalogoAnimaisService {
   }
 
   listar(filtros: FiltrosCatalogo = {}): Observable<AnimalCatalogo[]> {
-    let params = new HttpParams().set('page', 0).set('size', 100);
+    let params = new HttpParams()
+      .set('page', 0)
+      .set('size', 100)
+      .set('sort', 'id,desc');
 
     if (filtros.especie) {
       params = params.set('especie', filtros.especie);

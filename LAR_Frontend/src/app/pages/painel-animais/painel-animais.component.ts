@@ -34,7 +34,12 @@ interface FiltrosPainelAnimais {
 @Component({
   selector: 'app-painel-animais',
   standalone: true,
-  imports: [RouterLink, FormsModule, BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [
+    RouterLink,
+    FormsModule,
+    BotaoVoltarComponent,
+    MensagemEstadoComponent,
+  ],
   templateUrl: './painel-animais.component.html',
   styleUrl: './painel-animais.component.css',
 })
@@ -166,9 +171,9 @@ export class PainelAnimaisComponent implements OnInit {
       );
     });
 
-    if (this.ordem === 'antigos') {
-      resultado = resultado.reverse();
-    }
+    resultado = [...resultado].sort((a, b) =>
+      this.ordem === 'recentes' ? b.id - a.id : a.id - b.id,
+    );
 
     this.animais = resultado;
   }
