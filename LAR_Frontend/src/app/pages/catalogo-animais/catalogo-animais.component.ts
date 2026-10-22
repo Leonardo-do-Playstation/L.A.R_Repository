@@ -6,6 +6,7 @@ import {
   AnimalCatalogo,
   FiltrosCatalogo,
 } from '../../services/catalogo-animais.service';
+import { coresPadrao } from '../../services/animal.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
 import { AuthService } from '../../services/auth.service';
 import { FavoritoService } from '../../services/favorito.service';
@@ -17,7 +18,12 @@ type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
 @Component({
   selector: 'app-catalogo-animais',
   standalone: true,
-  imports: [AnimalCardComponent, FormsModule, BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [
+    AnimalCardComponent,
+    FormsModule,
+    BotaoVoltarComponent,
+    MensagemEstadoComponent,
+  ],
   templateUrl: './catalogo-animais.component.html',
   styleUrl: './catalogo-animais.component.css',
 })
@@ -52,18 +58,45 @@ export class CatalogoAnimaisComponent implements OnInit {
   private carregarOpcoesFiltros(): void {
     this.catalogoAnimaisService.listar({}).subscribe({
       next: (animais) => {
-        this.racasDisponiveis = animais
-          .map((animal) => animal.raca?.trim())
-          .filter((raca): raca is string => Boolean(raca));
-        this.coresDisponiveis = animais
-          .map((animal) => animal.cor?.trim())
-          .filter((cor): cor is string => Boolean(cor));
+        this.racasDisponiveis = this.valoresUnicos(
+          animais.map((animal) => animal.raca),
+        );
+        this.coresDisponiveis = this.valoresUnicos(
+          animais.map((animal) => animal.cor),
+          coresPadrao(),
+        );
       },
       error: () => {
         this.racasDisponiveis = [];
         this.coresDisponiveis = [];
       },
     });
+  }
+
+  private valoresUnicos(
+    valores: (string | null | undefined)[],
+    padroes: string[] = [],
+  ): string[] {
+    const grafiaPadrao = new Map(
+      padroes.map((padrao) => [padrao.toLowerCase(), padrao]),
+    );
+    const unicos = new Map<string, string>();
+
+    for (const valor of valores) {
+      const texto = valor?.trim();
+
+      if (!texto) {
+        continue;
+      }
+
+      const chave = texto.toLowerCase();
+
+      if (!unicos.has(chave)) {
+        unicos.set(chave, grafiaPadrao.get(chave) ?? texto);
+      }
+    }
+
+    return [...unicos.values()].sort((a, b) => a.localeCompare(b, 'pt-BR'));
   }
 
   carregarFavoritos(): void {
