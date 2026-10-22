@@ -28,6 +28,9 @@ public class Ong extends Usuario {
 
     public String observacoes;
 
+    @Column(length = 500)
+    private String foto;
+
     public Ong() {
     }
 
@@ -55,6 +58,14 @@ public class Ong extends Usuario {
 
     public void setStatus(StatusOng status) {
         this.status = status;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public String getObservacoes() {

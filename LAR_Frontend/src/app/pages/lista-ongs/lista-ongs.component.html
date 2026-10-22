@@ -18,7 +18,8 @@
 
         } @else if (ongs.length === 0) {
 
-        <app-mensagem-estado tipo="vazio" titulo="Nenhuma ONG disponível no momento." texto="Volte mais tarde para conhecer as instituições parceiras." />
+        <app-mensagem-estado tipo="vazio" titulo="Nenhuma ONG disponível no momento."
+            texto="Volte mais tarde para conhecer as instituições parceiras." />
 
         } @else {
 
@@ -28,15 +29,13 @@
 
             <article class="ong-card">
 
-                <div class="ong-card__foto" aria-hidden="true">
-                    {{ inicial(ong.nome) }}
-                </div>
+                <app-ong-avatar [foto]="ong.foto" [nome]="ong.nome" [tamanho]="52" />
 
                 <div class="ong-card__info">
 
                     <strong class="ong-card__nome">
-                <a class="ong-card__link" [routerLink]="['/ongs', ong.id]">{{ ong.nome }}</a>
-            </strong>
+                        <a class="ong-card__link" [routerLink]="['/ongs', ong.id]">{{ ong.nome }}</a>
+                    </strong>
 
                     <span class="ong-card__localizacao">
                         {{ ong.endereco || 'Localização não informada' }}

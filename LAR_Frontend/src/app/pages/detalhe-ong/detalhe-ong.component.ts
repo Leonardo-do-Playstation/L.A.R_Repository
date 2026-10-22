@@ -12,11 +12,13 @@ import { AuthService } from '../../services/auth.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { OngAvatarComponent } from '../../components/ong-avatar/ong-avatar.component';
+import { OngBannerComponent } from '../../components/ong-banner/ong-banner.component';
 
 @Component({
   selector: 'app-detalhe-ong',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent, AnimalCardComponent],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent, AnimalCardComponent, OngBannerComponent],
   templateUrl: './detalhe-ong.component.html',
   styleUrl: './detalhe-ong.component.css',
 })

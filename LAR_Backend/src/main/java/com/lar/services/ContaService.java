@@ -167,9 +167,11 @@ public class ContaService {
         exclusaoTokenRepository.delete(exclusaoToken);
     }
 
-    private void excluirDadosDoUsuario(Usuario usuario) {
+        private void excluirDadosDoUsuario(Usuario usuario) {
          validarExclusaoPermitida(usuario);
         if (usuario instanceof Ong ong) {
+            storageService.delete(ong.getFoto());
+
             for (Animal animal : animalRepository.findByOngId(ong.getId())) {
                 if (animal.foto != null && !animal.foto.isBlank()) {
                     storageService.delete(animal.foto);

@@ -65,6 +65,11 @@ public class PasswordResetService {
 
         public void redefinirSenha(String token, String novaSenha) {
 
+                if (novaSenha == null || novaSenha.length() < 6) {
+                        throw new RegraDeNegocioException(
+                                        "A nova senha deve ter ao menos 6 caracteres.");
+                }
+
                 PasswordResetToken resetToken = tokenRepository.findByToken(token)
                                 .orElseThrow(() -> new RecursoNaoEncontradoException(
                                                 "Token de recuperação inválido."));

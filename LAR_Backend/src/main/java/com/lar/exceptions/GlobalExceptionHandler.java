@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +53,12 @@ public class GlobalExceptionHandler {
                 campos,
                 request.getRequestURI());
         return ResponseEntity.badRequest().body(corpo);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErroResponseDTO> handleArquivoGrande(MaxUploadSizeExceededException ex,
+            HttpServletRequest request) {
+        return construirResposta(HttpStatus.PAYLOAD_TOO_LARGE, "A imagem deve ter no máximo 5 MB.", request);
     }
 
     @ExceptionHandler(RuntimeException.class)
