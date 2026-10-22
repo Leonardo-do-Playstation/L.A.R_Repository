@@ -75,10 +75,33 @@ const RACAS_SUGERIDAS: Record<string, string[]> = {
   ],
 };
 
+const CORES_PADRAO: string[] = [
+  'Preto',
+  'Branco',
+  'Caramelo',
+  'Marrom',
+  'Cinza',
+  'Dourado',
+  'Bege',
+  'Amarelo',
+  'Laranja',
+  'Rajado',
+  'Tigrado',
+  'Malhado',
+  'Tricolor',
+  'Preto e branco',
+  'Branco e caramelo',
+  'Cinza e branco',
+];
+
 const SEM_SUGESTOES: string[] = [];
 
 export function racasPorEspecie(especie: string | null | undefined): string[] {
   return (especie && RACAS_SUGERIDAS[especie]) || SEM_SUGESTOES;
+}
+
+export function coresPadrao(): string[] {
+  return CORES_PADRAO;
 }
 
 @Injectable({

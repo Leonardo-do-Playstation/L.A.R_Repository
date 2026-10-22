@@ -7,6 +7,7 @@ import {
   Animal,
   AnimalService,
   CadastroAnimal,
+  coresPadrao,
   racasPorEspecie,
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
@@ -47,6 +48,8 @@ export class EditarAnimalComponent implements OnInit {
   salvando = false;
 
   private readonly tamanhoMaximoFoto = 5 * 1024 * 1024;
+
+  readonly coresSugeridas = coresPadrao();
 
   get racasSugeridas(): string[] {
     return racasPorEspecie(this.editarForm.controls.especie.value);
