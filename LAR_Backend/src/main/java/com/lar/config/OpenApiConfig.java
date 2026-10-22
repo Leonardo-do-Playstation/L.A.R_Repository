@@ -18,7 +18,7 @@ public class OpenApiConfig {
                 return new OpenAPI()
                                 .info(new Info()
                                                 .title("L.A.R. — API")
-                                                .description("API do sistema L.A.R. (Lista de adoção e resgate) — " +
+                                                .description("API do sistema L.A.R. (Lar, Adoção e Recomeço) — " +
                                                                 "plataforma de divulgação de animais, com cadastro de ONGs, "
                                                                 +
                                                                 "gestão de animais e favoritos para adotantes.")
