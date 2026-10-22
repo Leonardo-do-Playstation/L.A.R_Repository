@@ -13,6 +13,7 @@ export interface PerfilDetalhe {
   cpf?: string | null;
   cnpj?: string | null;
   observacoes?: string | null;
+  foto?: string | null;
   status?: string | null;
   codigoAdmin?: string | null;
 }

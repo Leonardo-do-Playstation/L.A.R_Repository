@@ -29,6 +29,10 @@
                 <span class="perfil__tipo">{{ rotuloTipo }}</span>
             </div>
 
+            @if (ehOng) {
+            <app-foto-ong [foto]="perfil.foto" [nome]="perfil.nome" (fotoAlterada)="aoAlterarFoto($event)" />
+            }
+
             @if (sucessoPerfil) {
             <div class="perfil__aviso perfil__aviso--sucesso">{{ sucessoPerfil }}</div>
             }

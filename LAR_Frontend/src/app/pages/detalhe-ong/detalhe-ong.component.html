@@ -20,11 +20,9 @@
 
         <article class="detalhe-ong__card">
 
-            <div class="detalhe-ong__cabecalho">
+            <app-ong-banner class="detalhe-ong__banner" [foto]="ong.foto" [nome]="ong.nome" />
 
-                <div class="detalhe-ong__foto" aria-hidden="true">
-                    {{ inicial(ong.nome) }}
-                </div>
+            <div class="detalhe-ong__cabecalho">
 
                 <h1 class="detalhe-ong__nome">
                     {{ ong.nome }}

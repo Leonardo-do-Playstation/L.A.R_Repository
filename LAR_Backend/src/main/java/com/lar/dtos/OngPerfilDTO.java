@@ -10,6 +10,7 @@ public class OngPerfilDTO {
     public String endereco;
     public String observacoes;
     public String cnpj;
+    public String foto;
     public String status;
     public LocalDateTime dataCadastro;
 

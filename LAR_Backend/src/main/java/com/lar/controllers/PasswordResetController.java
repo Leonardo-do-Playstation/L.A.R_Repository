@@ -25,15 +25,17 @@ public class PasswordResetController {
     @Operation(summary = "Solicita recuperação de senha", description = "Envia um link de recuperação caso o e-mail esteja cadastrado, sem revelar a existência da conta.")
     @SecurityRequirements
     @PostMapping("/recuperar-senha")
-    public ResponseEntity<String> solicitarRecuperacao(
+    public ResponseEntity<?> solicitarRecuperacao(
             @RequestBody RecuperarSenhaDTO dto) {
 
         passwordResetService.solicitarRecuperacao(
                 dto.email);
 
         return ResponseEntity.ok(
-                "Se este e-mail estiver cadastrado, " +
-                        "um link de recuperação será enviado.");
+                Map.of(
+                        "mensagem",
+                        "Se este e-mail estiver cadastrado, " +
+                                "um link de recuperação será enviado."));
     }
 
     @Operation(summary = "Redefine a senha", description = "Altera a senha usando um token de recuperação válido.")

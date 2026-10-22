@@ -17,6 +17,11 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #fff;
+  overflow: hidden;
+}
+
+.detalhe-ong__banner {
+  margin: -20px -16px 18px;
 }
 
 .detalhe-ong__cabecalho {
