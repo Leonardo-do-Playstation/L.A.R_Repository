@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { PerfilDetalhe } from './conta.service';
@@ -24,8 +24,18 @@ export class OngService {
 
   private readonly fotoUrl = 'http://localhost:8080/ong/perfil/foto';
 
-  listar(): Observable<OngPublica[]> {
-    return this.http.get<OngPublica[]>(this.apiUrl);
+  listar(nome = '', cidade = ''): Observable<OngPublica[]> {
+    let params = new HttpParams();
+
+    if (nome.trim()) {
+      params = params.set('nome', nome.trim());
+    }
+
+    if (cidade.trim()) {
+      params = params.set('cidade', cidade.trim());
+    }
+
+    return this.http.get<OngPublica[]>(this.apiUrl, { params });
   }
 
   buscarPorId(id: number): Observable<OngPublica> {

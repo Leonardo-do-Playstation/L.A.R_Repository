@@ -8,6 +8,28 @@
             ONGs parceiras
         </h1>
 
+        <div class="lista-ongs__filtros">
+
+            <div class="lista-ongs__campo">
+                <label for="filtro-nome">Nome</label>
+                <input id="filtro-nome" type="search" placeholder="Buscar por nome da ONG" [value]="nome"
+                    (input)="aoDigitarNome($any($event.target).value)">
+            </div>
+
+            <div class="lista-ongs__campo">
+                <label for="filtro-cidade">Cidade</label>
+                <input id="filtro-cidade" type="search" placeholder="Buscar por cidade" [value]="cidade"
+                    (input)="aoDigitarCidade($any($event.target).value)">
+            </div>
+
+            @if (temFiltro) {
+            <button type="button" class="lista-ongs__limpar" (click)="limparFiltros()">
+                Limpar filtros
+            </button>
+            }
+
+        </div>
+
         @if (carregando) {
 
         <app-mensagem-estado tipo="carregando" texto="Carregando ONGs..." />
@@ -18,8 +40,17 @@
 
         } @else if (ongs.length === 0) {
 
+        @if (temFiltro) {
+
+        <app-mensagem-estado tipo="vazio" titulo="Nenhuma ONG encontrada."
+            texto="Ajuste os filtros para ver outros resultados." />
+
+        } @else {
+
         <app-mensagem-estado tipo="vazio" titulo="Nenhuma ONG disponível no momento."
             texto="Volte mais tarde para conhecer as instituições parceiras." />
+
+        }
 
         } @else {
 
