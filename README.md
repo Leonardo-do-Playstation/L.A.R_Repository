@@ -1,4 +1,4 @@
-# L.A.R. — Lista de Adoção e Resgate
+# L.A.R. — Lar, Adoção e Recomeço
 
 Plataforma web que conecta **ONGs e protetores de animais** a **pessoas interessadas em adotar**, reunindo em um só lugar um catálogo filtrável de animais disponíveis, o perfil de cada instituição e as ferramentas de gestão para quem cadastra e para quem modera.
 
@@ -21,7 +21,7 @@ Plataforma web que conecta **ONGs e protetores de animais** a **pessoas interess
 - [Modelo de dados](#modelo-de-dados)
 - [Segurança](#segurança)
 - [Equipe e contexto acadêmico](#equipe-e-contexto-acadêmico)
-a
+
 ---
 
 ## Sobre o projeto
@@ -56,7 +56,7 @@ A pergunta que norteia o trabalho é:
 | --- | --- |
 | **Visitante** | Consultar o catálogo público de animais (com filtros e paginação), ver detalhes de animais e ONGs, cadastrar-se como adotante ou ONG, recuperar senha. |
 | **Adotante** | Tudo do visitante, mais: favoritar e desfavoritar animais, listar seus favoritos, gerenciar o próprio perfil. |
-| **ONG / protetor** | Cadastrar, editar, alterar o status e excluir seus animais (com foto), gerenciar o perfil institucional. Só opera após aprovação de um administrador. |
+| **ONG / protetor** | Cadastrar, editar, alterar o status e excluir seus animais (com foto), gerenciar o perfil institucional, incluindo a foto da ONG. Só opera após aprovação de um administrador. |
 | **Administrador** | Aprovar ou recusar cadastros de ONGs (com motivo), listar ONGs por status, gerenciar usuários (buscar, bloquear/desbloquear, corrigir CPF/CNPJ), consultar o registro de auditoria. |
 | **Superadministrador** | Tudo do administrador, mais: convidar novos administradores e bloquear outros administradores. |
 
@@ -113,7 +113,7 @@ A pergunta que norteia o trabalho é:
 
 ## Arquitetura
 
-O frontend é uma SPA que conversa com uma API REST **stateless**: cada requisição autenticada carrega um token JWT no cabeçalho `Authorization`. As fotos dos animais ficam no MinIO, fora do banco relacional; o banco guarda apenas a URL.
+O frontend é uma SPA que conversa com uma API REST **stateless**: cada requisição autenticada carrega um token JWT no cabeçalho `Authorization`. As fotos dos animais e das ONGs ficam no MinIO, fora do banco relacional; o banco guarda apenas a URL.
 
 ```mermaid
 flowchart LR
@@ -310,7 +310,7 @@ A documentação interativa (Swagger UI) fica em **`/swagger-ui.html`** com o ba
 | Conta | `/conta/senha`, `/conta/email/*`, `/conta/excluir/*` | Autenticado (rotas de confirmação são públicas, por token) |
 | Perfil do adotante | `/adotante/perfil` | Autenticado |
 | Favoritos | `/favoritos` | `ADOTANTE` |
-| Perfil da ONG | `/ong/perfil` | `ONG` |
+| Perfil da ONG | `/ong/perfil`, `/ong/perfil/foto` | `ONG` |
 | Animais da ONG | `/ong/animais` | `ONG` |
 | Administração | `/admin/ongs`, `/admin/usuarios`, `/admin/administradores`, `/admin/auditoria`, `/admin/perfil` | `ADMINISTRADOR` (ativação de convite é pública, por token) |
 
@@ -340,7 +340,7 @@ erDiagram
 | --- | --- |
 | `Usuario` | Dados comuns: nome, e-mail, senha (hash), telefone, endereço, data de cadastro e flag de bloqueio. |
 | `Adotante` | Usuário com CPF. |
-| `Ong` | Usuário com CNPJ opcional, status de aprovação (`PENDENTE`, `APROVADA`, `RECUSADA`) e observações. |
+| `Ong` | Usuário com CNPJ opcional, status de aprovação (`PENDENTE`, `APROVADA`, `RECUSADA`), observações e foto. |
 | `Administrador` | Usuário com código de administrador e indicador de superadministrador. |
 | `Animal` | Nome, espécie, raça, sexo, porte, cor, idade, descrição, foto e status (`DISPONIVEL`, `ADOTADO`, `EM_TRATAMENTO`); pertence a uma ONG. |
 | `Favorito` | Relação entre adotante e animal, com a data em que foi favoritado. |
@@ -360,6 +360,17 @@ erDiagram
 - **Tokens de uso único e de curta duração** (15 minutos) para recuperação de senha, troca de e-mail, exclusão de ONG e convite de administrador.
 - **Auditoria** de todas as ações administrativas.
 - **CORS** restrito à origem do frontend.
+
+---
+
+## Equipe e contexto acadêmico
+
+O L.A.R. é o Trabalho de Graduação do curso de **Análise e Desenvolvimento de Sistemas** da **Fatec Itu – Dom Amaury Castanho**, desenvolvido em dupla:
+
+| Integrante | Responsabilidade |
+| --- | --- |
+| **Leonardo** | Backend: API REST em Spring Boot |
+| **Lucas** | Frontend: aplicação Angular |
 
 ---
 

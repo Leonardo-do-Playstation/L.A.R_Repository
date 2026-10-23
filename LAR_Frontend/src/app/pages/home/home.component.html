@@ -104,7 +104,7 @@
 
       </a>
 
-            <a class="home__card" routerLink="/admin/auditoria">
+      <a class="home__card" routerLink="/admin/auditoria">
 
         <img class="home__icone" src="/assets/auditoria-icone.svg" alt="">
 
@@ -112,6 +112,13 @@
           Registro de ações
         </span>
 
+      </a>
+      }
+
+      @if (ehSuperAdmin()) {
+      <a class="home__card" routerLink="/admin/administradores/novo">
+        <img class="home__icone" src="/assets/pessoa-icone.svg" alt="">
+        <span>Cadastrar Administrador</span>
       </a>
       }
 

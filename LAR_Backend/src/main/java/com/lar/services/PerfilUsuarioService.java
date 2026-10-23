@@ -1,6 +1,7 @@
 package com.lar.services;
 
 import com.lar.dtos.PerfilLogadoDTO;
+import com.lar.entities.Administrador;
 import com.lar.entities.Ong;
 import com.lar.entities.Usuario;
 import com.lar.exceptions.RecursoNaoEncontradoException;
@@ -27,7 +28,9 @@ public class PerfilUsuarioService {
         if (usuario instanceof Ong ong) {
             dto.statusOng = ong.getStatus().name();
         }
-
+        if (usuario instanceof Administrador admin) {
+            dto.superAdmin = Boolean.TRUE.equals(admin.getSuperAdmin());
+        }
         return dto;
     }
 }

@@ -11,8 +11,28 @@ import { guestGuard } from './services/guest.guard';
 import { authGuard } from './services/auth.guard';
 import { perfilGuard } from './services/perfil.guard';
 import { ongPendenteGuard } from './services/ong-pendente.guard';
+import { superAdminGuard } from './services/superadmin.guard';
 
 export const routes: Routes = [
+  {
+    path: 'admin/administradores/novo',
+    title: 'Cadastrar administrador | L.A.R.',
+    loadComponent: () =>
+      import('./pages/cadastro-administrador/cadastro-administrador.component').then(
+        (m) => m.CadastroAdministradorComponent,
+      ),
+    canActivate: [superAdminGuard],
+  },
+
+  {
+    path: 'ativar-administrador',
+    title: 'Ativar conta de administrador | L.A.R.',
+    loadComponent: () =>
+      import('./pages/ativar-administrador/ativar-administrador.component').then(
+        (m) => m.AtivarAdministradorComponent,
+      ),
+  },
+
   {
     path: '',
     title: 'L.A.R.',
@@ -33,7 +53,7 @@ export const routes: Routes = [
     },
   },
 
-    {
+  {
     path: 'admin/auditoria',
     title: 'Registro de ações | L.A.R.',
     loadComponent: () =>

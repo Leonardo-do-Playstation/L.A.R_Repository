@@ -6,6 +6,7 @@ public class PerfilLogadoDTO {
     public String email;
     public String tipo;
     public String statusOng; 
+    public Boolean superAdmin;
 
     public PerfilLogadoDTO() {
     }
