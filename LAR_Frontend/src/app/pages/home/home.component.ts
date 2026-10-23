@@ -12,8 +12,16 @@ import { AuthService, TipoUsuario } from '../../services/auth.service';
 export class HomeComponent {
   tipoUsuario: TipoUsuario | null = null;
 
+  superAdmin = false;
+
   constructor(private authService: AuthService) {
-    this.tipoUsuario = this.authService.obterPerfil()?.tipo ?? null;
+    const perfil = this.authService.obterPerfil();
+    this.tipoUsuario = perfil?.tipo ?? null;
+    this.superAdmin = perfil?.superAdmin === true;
+  }
+
+  ehSuperAdmin(): boolean {
+    return this.ehAdministrador() && this.superAdmin;
   }
 
   ehVisitante(): boolean {

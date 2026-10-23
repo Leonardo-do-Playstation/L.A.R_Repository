@@ -10,6 +10,7 @@ export interface Perfil {
   email: string;
   tipo: TipoUsuario;
   statusOng: 'PENDENTE' | 'APROVADA' | 'RECUSADA' | null;
+  superAdmin?: boolean | null;
 }
 
 export interface LoginResponse {

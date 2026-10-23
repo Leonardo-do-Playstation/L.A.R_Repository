@@ -1,0 +1,68 @@
+<section class="ativar">
+    <div class="ativar__container">
+
+        <div class="ativar__icone">
+            <img src="/assets/cadeado.svg" alt="Ativação de conta">
+        </div>
+
+        @if (concluido) {
+
+        <h1>Conta ativada!</h1>
+
+        <div class="ativar__feedback ativar__feedback--sucesso">
+            Sua conta de administrador foi ativada. Já é possível entrar com e-mail e senha.
+        </div>
+
+        <a class="ativar__button" routerLink="/login">Ir para o login</a>
+
+        } @else {
+
+        <h1>Ativar conta de administrador</h1>
+
+        <form [formGroup]="ativarForm" (ngSubmit)="ativarConta()">
+
+            <div class="ativar__field">
+                <label for="senha">Crie sua senha</label>
+                <div class="ativar__senha">
+                    <input id="senha" [type]="mostrarSenha ? 'text' : 'password'" formControlName="senha"
+                        autocomplete="new-password">
+                    <button type="button" class="ativar__olho" (click)="alternarSenha()"
+                        [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'">
+                        <img [src]="mostrarSenha ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+                    </button>
+                </div>
+                @if (ativarForm.controls.senha.touched && ativarForm.controls.senha.invalid) {
+                <span class="ativar__error" role="alert">A senha deve ter no mínimo 8 caracteres.</span>
+                }
+            </div>
+
+            <div class="ativar__field">
+                <label for="confirmarSenha">Confirmar senha</label>
+                <div class="ativar__senha">
+                    <input id="confirmarSenha" [type]="mostrarConfirmacao ? 'text' : 'password'"
+                        formControlName="confirmarSenha" autocomplete="new-password">
+                    <button type="button" class="ativar__olho" (click)="alternarConfirmacao()"
+                        [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'">
+                        <img [src]="mostrarConfirmacao ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+                    </button>
+                </div>
+                @if (ativarForm.controls.confirmarSenha.touched && ativarForm.errors?.['senhasDiferentes']) {
+                <span class="ativar__error" role="alert">As senhas não coincidem.</span>
+                }
+            </div>
+
+            @if (mensagemErro) {
+            <div class="ativar__feedback ativar__feedback--erro">{{ mensagemErro }}</div>
+            }
+
+            <button type="submit" class="ativar__button" [disabled]="carregando || !token">
+                @if (carregando) { Salvando... } @else { Ativar conta }
+            </button>
+
+        </form>
+
+        <a class="ativar__voltar" routerLink="/login">Voltar ao login</a>
+
+        }
+    </div>
+</section>

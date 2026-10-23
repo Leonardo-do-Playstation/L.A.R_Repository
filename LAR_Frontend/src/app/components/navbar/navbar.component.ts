@@ -14,6 +14,7 @@ import { AvisoAuthService } from '../../services/aviso-auth.service';
 export class NavbarComponent implements OnDestroy {
   menuAberto = false;
   tipoUsuario: TipoUsuario | null = null;
+  superAdmin = false;
   carregandoLogout = false;
   mostrarNavbar = false;
   mensagemFavoritos = '';
@@ -61,6 +62,7 @@ export class NavbarComponent implements OnDestroy {
   private atualizarPerfil(): void {
     const perfil = this.authService.obterPerfil();
     this.tipoUsuario = perfil?.tipo ?? null;
+    this.superAdmin = perfil?.superAdmin === true;
   }
 
     private ehTelaInicial(url: string): boolean {
@@ -73,7 +75,8 @@ export class NavbarComponent implements OnDestroy {
       url === '/cadastro' ||
       url === '/cadastro-ong' ||
       url === '/recuperar-senha' ||
-      url === '/redefinir-senha'
+      url === '/redefinir-senha' ||
+      url === '/ativar-administrador'
     );
   }
 
@@ -92,6 +95,10 @@ export class NavbarComponent implements OnDestroy {
   ehAdministrador(): boolean {
     return this.tipoUsuario === 'ADMINISTRADOR';
   }
+
+  ehSuperAdmin(): boolean {
+  return this.ehAdministrador() && this.superAdmin;
+}
 
   alternarMenu(): void {
     this.menuAberto = !this.menuAberto;
@@ -146,6 +153,7 @@ export class NavbarComponent implements OnDestroy {
   private finalizarLogout(): void {
     this.authService.limparToken();
     this.tipoUsuario = null;
+    this.superAdmin = false;
     this.menuAberto = false;
     this.carregandoLogout = false;
     this.avisoAuthService.fechar();

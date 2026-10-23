@@ -212,6 +212,12 @@
 
         </a>
 
+        @if (ehSuperAdmin()) {
+        <a class="menu-lateral__item" routerLink="/admin/administradores/novo" (click)="fecharMenu()">
+            Cadastrar Administrador
+        </a>
+        }
+
         <a class="menu-lateral__item" routerLink="/perfil" (click)="fecharMenu()">
 
             Meu Perfil

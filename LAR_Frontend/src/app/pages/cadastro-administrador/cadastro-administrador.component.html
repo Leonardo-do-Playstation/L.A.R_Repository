@@ -1,0 +1,60 @@
+<section class="cad-adm">
+    <div class="cad-adm__container">
+
+        <app-botao-voltar fallback="/home" />
+
+        <h1 class="cad-adm__titulo">Cadastrar Administrador</h1>
+
+        <p class="cad-adm__descricao">
+            Informe os dados do novo administrador. Ele receberá um convite por e-mail (válido por 15 minutos) para
+            definir a própria senha. O novo administrador não terá privilégios de superadministrador.
+        </p>
+
+        <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+
+            <div class="cad-adm__campo">
+                <label for="nome">Nome completo</label>
+                <input id="nome" type="text" formControlName="nome" autocomplete="off">
+                @if (campoInvalido('nome')) {
+                <span class="cad-adm__erro" role="alert">Informe o nome (mínimo de 3 caracteres).</span>
+                }
+            </div>
+
+            <div class="cad-adm__campo">
+                <label for="email">E-mail</label>
+                <input id="email" type="email" formControlName="email" autocomplete="off">
+                @if (campoInvalido('email')) {
+                <span class="cad-adm__erro" role="alert">
+                    @if (form.controls.email.hasError('required')) {
+                    O e-mail é obrigatório.
+                    } @else {
+                    Informe um e-mail válido.
+                    }
+                </span>
+                }
+            </div>
+
+            <div class="cad-adm__campo">
+                <label for="codigoAdmin">Código de administrador</label>
+                <input id="codigoAdmin" type="text" formControlName="codigoAdmin" placeholder="Ex.: ADM-0002"
+                    autocomplete="off">
+                @if (campoInvalido('codigoAdmin')) {
+                <span class="cad-adm__erro" role="alert">Informe o código (mínimo de 3 caracteres).</span>
+                }
+            </div>
+
+            @if (mensagemSucesso) {
+            <div class="cad-adm__feedback cad-adm__feedback--sucesso" role="status">{{ mensagemSucesso }}</div>
+            }
+
+            @if (mensagemErro) {
+            <div class="cad-adm__feedback cad-adm__feedback--erro" role="alert">{{ mensagemErro }}</div>
+            }
+
+            <button type="submit" class="cad-adm__botao" [disabled]="carregando">
+                @if (carregando) { Enviando convite... } @else { Enviar convite }
+            </button>
+
+        </form>
+    </div>
+</section>
