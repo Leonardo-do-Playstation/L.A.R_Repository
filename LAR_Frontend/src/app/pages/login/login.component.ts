@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   erroLogin = '';
   carregando = false;
   rotaCadastro = '/cadastro';
+  mostrarSenha = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,4 +82,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  alternarSenha(): void {
+    this.mostrarSenha = !this.mostrarSenha;
+  }
 }

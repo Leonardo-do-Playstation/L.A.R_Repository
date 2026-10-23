@@ -46,7 +46,14 @@
           Senha
         </label>
 
-        <input id="senha" type="password" formControlName="senha" autocomplete="current-password">
+        <div class="login__senha">
+          <input id="senha" [type]="mostrarSenha ? 'text' : 'password'" formControlName="senha"
+            autocomplete="current-password">
+          <button type="button" class="login__olho" (click)="alternarSenha()"
+              [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
+              <img [src]="mostrarSenha ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+          </button>
+        </div>
 
         @if (
         loginForm.controls.senha.touched &&

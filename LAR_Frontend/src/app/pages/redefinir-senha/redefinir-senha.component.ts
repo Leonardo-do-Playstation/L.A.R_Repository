@@ -37,6 +37,8 @@ export class RedefinirSenhaComponent implements OnInit {
   carregando = false;
   concluido = false;
   mensagemErro = '';
+  mostrarSenha = false;
+  mostrarConfirmacao = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,5 +85,13 @@ export class RedefinirSenhaComponent implements OnInit {
             'Não foi possível redefinir a senha. Solicite um novo link.';
         },
       });
+  }
+
+  alternarSenha(): void {
+    this.mostrarSenha = !this.mostrarSenha;
+  }
+
+  alternarConfirmacao(): void {
+    this.mostrarConfirmacao = !this.mostrarConfirmacao;
   }
 }

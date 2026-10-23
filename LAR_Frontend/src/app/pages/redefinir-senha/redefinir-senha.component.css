@@ -171,3 +171,31 @@
 .redefinir__voltar:hover {
   color: #4d9748;
 }
+
+.redefinir__field .redefinir__senha {
+  position: relative;
+}
+
+.redefinir__field .redefinir__senha input {
+  padding-right: 46px;
+}
+
+.redefinir__olho {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.redefinir__olho img {
+  width: 20px;
+  height: 20px;
+}

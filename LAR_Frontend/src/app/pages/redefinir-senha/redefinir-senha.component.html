@@ -27,7 +27,14 @@
             <div class="redefinir__field">
                 <label for="novaSenha">Nova senha</label>
 
-                <input id="novaSenha" type="password" formControlName="novaSenha" autocomplete="new-password">
+                <div class="redefinir__senha">
+                    <input id="novaSenha" [type]="mostrarSenha ? 'text' : 'password'" formControlName="novaSenha"
+                        autocomplete="new-password">
+                    <button type="button" class="redefinir__olho" (click)="alternarSenha()"
+                        [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
+                        <img [src]="mostrarSenha ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+                    </button>
+                </div>
 
                 @if (
                 redefinirForm.controls.novaSenha.touched &&
@@ -42,8 +49,14 @@
             <div class="redefinir__field">
                 <label for="confirmarSenha">Confirmar nova senha</label>
 
-                <input id="confirmarSenha" type="password" formControlName="confirmarSenha"
-                    autocomplete="new-password">
+                <div class="redefinir__senha">
+                    <input id="confirmarSenha" [type]="mostrarConfirmacao ? 'text' : 'password'" formControlName="confirmarSenha"
+                        autocomplete="new-password">
+                    <button type="button" class="redefinir__olho" (click)="alternarConfirmacao()"
+                        [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarConfirmacao">
+                        <img [src]="mostrarConfirmacao ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+                    </button>
+                </div>
 
                 @if (
                 redefinirForm.controls.confirmarSenha.touched &&

@@ -23,6 +23,8 @@ export class CadastroComponent {
   erroCadastro = '';
   cadastroRealizado = false;
   carregando = false;
+  mostrarSenha = false;
+  mostrarConfirmacao = false;
 
   private readonly apiUrl = 'http://localhost:8080';
 
@@ -191,5 +193,13 @@ export class CadastroComponent {
       this.erroCadastro =
         'Não foi possível realizar o cadastro. Tente novamente.';
     }
+  }
+
+  alternarSenha(): void {
+    this.mostrarSenha = !this.mostrarSenha;
+  }
+
+  alternarConfirmacao(): void {
+    this.mostrarConfirmacao = !this.mostrarConfirmacao;
   }
 }
