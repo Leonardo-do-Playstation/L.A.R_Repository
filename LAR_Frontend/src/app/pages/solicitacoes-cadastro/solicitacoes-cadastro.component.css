@@ -63,7 +63,7 @@
 }
 
 .solicitacao-card__link::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
 }
@@ -75,4 +75,31 @@
 .solicitacao-card__link:focus-visible::after {
   outline: 3px solid #1f7a1a;
   outline-offset: -3px;
+}
+
+.solicitacoes__abas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.solicitacoes__aba {
+  flex: 1;
+  height: 38px;
+  padding: 0 8px;
+  border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  background: #fff;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.solicitacoes__aba:hover {
+  border-color: #24851f;
+}
+.solicitacoes__aba--ativa {
+  border-color: #24851f;
+  background: #24851f;
+  color: #fff;
 }

@@ -201,3 +201,30 @@
   font-size: 0.95rem;
   text-align: center;
 }
+
+.analise-ong__status {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.analise-ong__status--pendente {
+  background: #fff4d6;
+  color: #7a5b00;
+}
+.analise-ong__status--aprovada {
+  background: #edf8ec;
+  color: #24631f;
+}
+.analise-ong__status--recusada {
+  background: #fff1f1;
+  color: #9b1c1c;
+}
+.analise-ong__aviso {
+  margin: 4px 0 14px;
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}

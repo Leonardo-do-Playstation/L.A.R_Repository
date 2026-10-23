@@ -23,8 +23,9 @@ export class AnaliseOngComponent implements OnInit {
 
   carregando = true;
   erro = '';
-
   mensagemSucesso = '';
+
+  abaOrigem = 'pendentes';
 
   mostrarRecusa = false;
   motivoRecusa = '';
@@ -37,6 +38,7 @@ export class AnaliseOngComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.abaOrigem = this.route.snapshot.queryParamMap.get('aba') ?? '';
     this.carregarOng(id);
   }
 
@@ -44,16 +46,20 @@ export class AnaliseOngComponent implements OnInit {
     this.carregando = true;
     this.erro = '';
 
-    this.ongAdminService.listarPendentes().subscribe({
-      next: (solicitacoes) => {
-        this.ong = solicitacoes.find((item) => item.id === id) ?? null;
+    this.ongAdminService.listar().subscribe({
+      next: (ongs) => {
+        this.ong = ongs.find((item) => item.id === id) ?? null;
         this.carregando = false;
 
         if (!this.ong) {
-          this.erro = 'Esta solicitação não está mais disponível.';
+          this.erro = 'Este cadastro não está mais disponível.';
+          return;
+        }
+
+        if (!this.abaOrigem) {
+          this.abaOrigem = this.abaDoStatus(this.ong.status);
         }
       },
-
       error: (erro: HttpErrorResponse) => {
         this.carregando = false;
 
@@ -79,24 +85,26 @@ export class AnaliseOngComponent implements OnInit {
   }
 
   confirmarRecusa(): void {
-    if (!this.ong) {
+    if (!this.ong) return;
+
+    if (!this.motivoRecusa.trim()) {
+      this.erroRecusa = 'Informe o motivo da recusa.';
       return;
     }
 
     this.enviandoRecusa = true;
     this.erroRecusa = '';
 
-    this.ongAdminService.recusar(this.ong.id, this.motivoRecusa).subscribe({
+    this.ongAdminService.recusar(this.ong.id, this.motivoRecusa.trim()).subscribe({
       next: () => {
         this.enviandoRecusa = false;
         this.mostrarRecusa = false;
-        this.exibirFeedbackERedirecionar('Solicitação recusada com sucesso.');
+        this.exibirFeedbackERedirecionar('Cadastro recusado. A ONG foi avisada por e-mail.');
       },
-
-      error: () => {
+      error: (erro: HttpErrorResponse) => {
         this.enviandoRecusa = false;
         this.erroRecusa =
-          'Não foi possível recusar esta solicitação. Tente novamente.';
+          erro.error?.mensagem || 'Não foi possível recusar este cadastro. Tente novamente.';
       },
     });
   }
@@ -111,9 +119,7 @@ export class AnaliseOngComponent implements OnInit {
   }
 
   confirmarValidacao(): void {
-    if (!this.ong) {
-      return;
-    }
+    if (!this.ong) return;
 
     this.validando = true;
     this.erroValidacao = '';
@@ -122,13 +128,12 @@ export class AnaliseOngComponent implements OnInit {
       next: () => {
         this.validando = false;
         this.mostrarValidacao = false;
-        this.exibirFeedbackERedirecionar('ONG validada com sucesso.');
+        this.exibirFeedbackERedirecionar('ONG validada. Ela foi avisada por e-mail.');
       },
-
-      error: () => {
+      error: (erro: HttpErrorResponse) => {
         this.validando = false;
         this.erroValidacao =
-          'Não foi possível validar esta ONG. Tente novamente.';
+          erro.error?.mensagem || 'Não foi possível validar esta ONG. Tente novamente.';
       },
     });
   }
@@ -137,7 +142,37 @@ export class AnaliseOngComponent implements OnInit {
     this.mensagemSucesso = mensagem;
 
     setTimeout(() => {
-      this.router.navigate(['/admin/ongs-pendentes']);
+      this.router.navigate(['/admin/ongs-pendentes'], {
+        queryParams: { aba: this.abaOrigem || 'pendentes' },
+      });
     }, 1400);
+  }
+
+  get podeAprovar(): boolean {
+    return this.ong?.status !== 'APROVADA';
+  }
+
+  get podeRecusar(): boolean {
+    return this.ong?.status !== 'RECUSADA';
+  }
+
+  get ehReanalise(): boolean {
+    return !!this.ong && this.ong.status !== 'PENDENTE';
+  }
+
+  get rotuloStatus(): string {
+    switch (this.ong?.status) {
+      case 'APROVADA': return 'Aprovada';
+      case 'RECUSADA': return 'Recusada';
+      default: return 'Pendente';
+    }
+  }
+
+  private abaDoStatus(status: string): string {
+    switch (status) {
+      case 'APROVADA': return 'aprovadas';
+      case 'RECUSADA': return 'recusadas';
+      default: return 'pendentes';
+    }
   }
 }

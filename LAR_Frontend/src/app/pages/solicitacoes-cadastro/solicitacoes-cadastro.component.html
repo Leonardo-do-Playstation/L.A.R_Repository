@@ -1,43 +1,37 @@
 <section class="solicitacoes">
-
     <div class="solicitacoes__container">
 
         <app-botao-voltar fallback="/home" />
 
-        <h1 class="solicitacoes__titulo">
-            Solicitações de Cadastro
-        </h1>
+        <h1 class="solicitacoes__titulo">Cadastros de ONGs</h1>
+
+        <div class="solicitacoes__abas" role="tablist" aria-label="Situação do cadastro">
+            @for (aba of abas; track aba.id) {
+            <button type="button" role="tab" class="solicitacoes__aba"
+                [class.solicitacoes__aba--ativa]="aba.id === abaAtiva.id"
+                [attr.aria-selected]="aba.id === abaAtiva.id" (click)="selecionarAba(aba)">
+                {{ aba.rotulo }}
+            </button>
+            }
+        </div>
 
         @if (erro) {
-
         <app-mensagem-estado tipo="erro" [texto]="erro" />
-
         }
 
         @if (carregando) {
-
-        <app-mensagem-estado tipo="carregando" texto="Carregando solicitações..." />
-
-        } @else if (solicitacoes.length === 0) {
-
-        <app-mensagem-estado tipo="vazio" titulo="Nenhuma solicitação pendente." texto="Novos cadastros de ONGs aparecerão aqui." />
-
+        <app-mensagem-estado tipo="carregando" texto="Carregando cadastros..." />
+        } @else if (!erro && solicitacoes.length === 0) {
+        <app-mensagem-estado tipo="vazio" [titulo]="abaAtiva.vazioTitulo" [texto]="abaAtiva.vazioTexto" />
         } @else {
-
         <div class="solicitacoes__lista">
-
             @for (solicitacao of solicitacoes; track solicitacao.id) {
-
             <article class="solicitacao-card">
-
                 <strong class="solicitacao-card__nome">
-                <a class="solicitacao-card__link" [routerLink]="['/admin/ongs-pendentes', solicitacao.id]">{{ solicitacao.nome }}</a>
-            </strong>
-
-                <span class="solicitacao-card__tempo">
-                    {{ tempoRelativo(solicitacao.data_cadastro) }}
-                </span>
-
+                    <a class="solicitacao-card__link" [routerLink]="['/admin/ongs-pendentes', solicitacao.id]"
+                        [queryParams]="{ aba: abaAtiva.id }">{{ solicitacao.nome }}</a>
+                </strong>
+                <span class="solicitacao-card__tempo">{{ tempoRelativo(solicitacao.dataCadastro) }}</span>
             </article>
             }
         </div>

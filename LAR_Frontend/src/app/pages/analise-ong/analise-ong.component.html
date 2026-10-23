@@ -3,7 +3,7 @@
     <div class="analise-ong__container">
 
         <h1 class="analise-ong__titulo">
-            Solicitações de Cadastro
+            Cadastros de ONGs
         </h1>
 
         @if (mensagemSucesso) {
@@ -34,6 +34,10 @@
                 {{ ong.nome }}
             </h2>
 
+            <span class="analise-ong__status analise-ong__status--{{ ong.status.toLowerCase() }}">
+                {{ rotuloStatus }}
+            </span>
+
             <div class="analise-ong__campo">
                 <span class="analise-ong__rotulo">E-mail</span>
                 <span class="analise-ong__valor">{{ ong.email }}</span>
@@ -41,7 +45,7 @@
 
             <div class="analise-ong__campo">
                 <span class="analise-ong__rotulo">CNPJ</span>
-                <span class="analise-ong__valor">{{ ong.cnpj }}</span>
+                <span class="analise-ong__valor">{{ ong.cnpj || 'Não informado.' }}</span>
             </div>
 
             <div class="analise-ong__campo">
@@ -49,13 +53,23 @@
                 <span class="analise-ong__valor">{{ ong.endereco || 'Não divulgada.' }}</span>
             </div>
 
-            <button type="button" class="analise-ong__botao analise-ong__botao--recusar" (click)="abrirRecusa()">
-                Recusar Solicitação
-            </button>
+            @if (ehReanalise) {
+            <p class="analise-ong__aviso">
+                Este cadastro já foi analisado. Se alterar a decisão, a ONG será avisada por e-mail.
+            </p>
+            }
 
-            <button type="button" class="analise-ong__botao analise-ong__botao--validar" (click)="abrirValidacao()">
-                Validar Cadastro
+            @if (podeRecusar) {
+            <button type="button" class="analise-ong__botao analise-ong__botao--recusar" (click)="abrirRecusa()">
+                {{ ehReanalise ? 'Reprovar Cadastro' : 'Recusar Solicitação' }}
             </button>
+            }
+
+            @if (podeAprovar) {
+            <button type="button" class="analise-ong__botao analise-ong__botao--validar" (click)="abrirValidacao()">
+                {{ ehReanalise ? 'Aprovar Cadastro' : 'Validar Cadastro' }}
+            </button>
+            }
 
         </div>
 
@@ -83,13 +97,17 @@
             </div>
             }
 
+            <p class="analise-ong__pergunta">
+                O motivo será enviado por e-mail para a ONG.
+            </p>
+
             <label class="analise-ong__campo-modal">
                 Motivo da recusa:
-                <input type="text" [(ngModel)]="motivoRecusa" [disabled]="enviandoRecusa" />
+                <input type="text" [(ngModel)]="motivoRecusa" [disabled]="enviandoRecusa" maxlength="500" />
             </label>
 
-            <button type="button" class="analise-ong__botao analise-ong__botao--validar" [disabled]="enviandoRecusa"
-                (click)="confirmarRecusa()">
+            <button type="button" class="analise-ong__botao analise-ong__botao--validar"
+                [disabled]="enviandoRecusa || !motivoRecusa.trim()" (click)="confirmarRecusa()">
                 @if (enviandoRecusa) {
                 Enviando...
                 } @else {
@@ -124,7 +142,7 @@
             }
 
             <p class="analise-ong__pergunta">
-                Você tem certeza que deseja validar a ONG?
+                Você tem certeza que deseja validar a ONG? Ela será avisada por e-mail.
             </p>
 
             <button type="button" class="analise-ong__botao analise-ong__botao--validar" [disabled]="validando"
