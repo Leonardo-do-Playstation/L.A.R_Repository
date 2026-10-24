@@ -73,9 +73,14 @@
 
   background-color: #ffffff;
 
-  color: #333333;
+  color: #000000;
 
   box-sizing: border-box;
+}
+
+.redefinir__field input::placeholder {
+  color: #595959;
+  opacity: 1;
 }
 
 .redefinir__field input:focus {
