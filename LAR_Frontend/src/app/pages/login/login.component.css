@@ -99,11 +99,17 @@
 
   padding: 6px 10px;
 
-  border: 1px solid #fff;
+  border: 1px solid #bdbdbd;
   border-radius: 8px;
 
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  color: #000000;
+}
+
+.login__field input::placeholder {
+  color: #262626;
+  opacity: 1;
 }
 
 .login__field input:focus {
@@ -172,10 +178,10 @@
 }
 
 .login__register a {
-  color: #24851f;
+  color: #fff;
   font-weight: 600;
 
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .login__register a:hover {
