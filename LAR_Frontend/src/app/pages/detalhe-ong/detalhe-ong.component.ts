@@ -13,12 +13,18 @@ import { AnimalCardComponent } from '../../components/animal-card/animal-card.co
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 import { OngAvatarComponent } from '../../components/ong-avatar/ong-avatar.component';
+import { linkMaps, linkWhatsapp } from '../../services/contato-ong.service';
 import { OngBannerComponent } from '../../components/ong-banner/ong-banner.component';
 
 @Component({
   selector: 'app-detalhe-ong',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent, AnimalCardComponent, OngBannerComponent],
+  imports: [
+    BotaoVoltarComponent,
+    MensagemEstadoComponent,
+    AnimalCardComponent,
+    OngBannerComponent,
+  ],
   templateUrl: './detalhe-ong.component.html',
   styleUrl: './detalhe-ong.component.css',
 })
@@ -158,6 +164,21 @@ export class DetalheOngComponent implements OnInit {
       !this.ong.telefone &&
       !this.ong.observacoes
     );
+  }
+
+  get urlWhatsapp(): string | null {
+    if (!this.ong) {
+      return null;
+    }
+
+    return linkWhatsapp(
+      this.ong.telefone,
+      `Olá! Encontrei a ONG ${this.ong.nome} no L.A.R. e gostaria de mais informações.`,
+    );
+  }
+
+  get urlMaps(): string | null {
+    return linkMaps(this.ong?.endereco);
   }
 
   inicial(nome: string): string {

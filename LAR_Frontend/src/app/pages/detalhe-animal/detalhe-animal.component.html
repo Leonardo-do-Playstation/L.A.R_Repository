@@ -10,7 +10,8 @@
 
         } @else if (naoEncontrado) {
 
-        <app-mensagem-estado tipo="erro" titulo="Animal não encontrado." texto="Ele pode ter sido removido ou já ter sido adotado.">
+        <app-mensagem-estado tipo="erro" titulo="Animal não encontrado."
+            texto="Ele pode ter sido removido ou já ter sido adotado.">
             <a routerLink="/catalogo" class="detalhe-animal__link">Voltar ao catálogo</a>
         </app-mensagem-estado>
 
@@ -30,8 +31,7 @@
                 @if (usuarioLogado) {
 
                 <button type="button" class="detalhe-animal__favorito" [disabled]="processandoFavorito"
-                    [attr.aria-label]="favoritado ? 'Remover dos favoritos' : 'Favoritar'"
-                    (click)="alternarFavorito()">
+                    [attr.aria-label]="favoritado ? 'Remover dos favoritos' : 'Favoritar'" (click)="alternarFavorito()">
 
                     @if (favoritado) {
                     <img src="/assets/coracao-preenchido.svg" alt="">
@@ -76,7 +76,8 @@
 
                 <div class="detalhe-animal__info">
                     <span class="detalhe-animal__rotulo">Idade</span>
-                    <span class="detalhe-animal__valor">{{ animal.idade === 0 ? 'Menos de 1 ano' : animal.idade === 1 ? '1 ano' : animal.idade + ' anos' }}</span>
+                    <span class="detalhe-animal__valor">{{ animal.idade === 0 ? 'Menos de 1 ano' : animal.idade === 1 ?
+                        '1 ano' : animal.idade + ' anos' }}</span>
                 </div>
 
                 <div class="detalhe-animal__info">
@@ -115,10 +116,29 @@
 
             </a>
 
+            @if (urlWhatsapp || urlMaps) {
+
+            <div class="detalhe-animal__contato">
+
+                @if (urlWhatsapp) {
+
+                <a class="detalhe-animal__acao" [href]="urlWhatsapp" target="_blank" rel="noopener noreferrer"
+                    [attr.aria-label]="'Falar no WhatsApp com a ONG ' + animal.ong.nome + ' (abre em nova aba)'">
+                    Falar no WhatsApp
+                </a>
+
+                }
+
+                @if (urlMaps) {
+
+                <a class="detalhe-animal__acao" [href]="urlMaps" target="_blank" rel="noopener noreferrer"
+                    [attr.aria-label]="'Ver o endereço da ONG ' + animal.ong.nome + ' no Google Maps (abre em nova aba)'">
+                    Ver no mapa
+                </a>
+                }
+            </div>
+            }
         </div>
-
         }
-
     </div>
-
 </section>

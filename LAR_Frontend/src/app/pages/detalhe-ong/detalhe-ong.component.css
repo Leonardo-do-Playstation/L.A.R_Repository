@@ -96,3 +96,46 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
+
+.detalhe-ong__dado--acao {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.detalhe-ong__dado--acao dt,
+.detalhe-ong__dado--acao dd {
+  grid-column: 1;
+}
+
+.detalhe-ong__dado dd.detalhe-ong__acoes {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin: 0;
+}
+
+.detalhe-ong__acao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 2px solid #24851f;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #24851f;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.detalhe-ong__acao:hover {
+  background: #e8f6e7;
+}
+
+.detalhe-ong__acao:focus-visible {
+  outline: 2px solid #36a536;
+  outline-offset: 2px;
+}
