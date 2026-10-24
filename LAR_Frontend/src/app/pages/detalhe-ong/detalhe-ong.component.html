@@ -51,18 +51,40 @@
 
                 @if (ong.endereco) {
 
-                <div class="detalhe-ong__dado">
+                <div class="detalhe-ong__dado detalhe-ong__dado--acao">
                     <dt>Localização</dt>
                     <dd>{{ ong.endereco }}</dd>
+
+                    @if (urlMaps) {
+
+                    <dd class="detalhe-ong__acoes">
+                        <a class="detalhe-ong__acao" [href]="urlMaps" target="_blank" rel="noopener noreferrer"
+                            [attr.aria-label]="'Ver o endereço da ONG ' + ong.nome + ' no Google Maps (abre em nova aba)'">
+                            Ver no mapa
+                        </a>
+                    </dd>
+
+                    }
                 </div>
 
                 }
 
                 @if (ong.telefone) {
 
-                <div class="detalhe-ong__dado">
+                <div class="detalhe-ong__dado detalhe-ong__dado--acao">
                     <dt>Telefone</dt>
                     <dd>{{ ong.telefone }}</dd>
+
+                    @if (urlWhatsapp) {
+
+                    <dd class="detalhe-ong__acoes">
+                        <a class="detalhe-ong__acao" [href]="urlWhatsapp" target="_blank" rel="noopener noreferrer"
+                            [attr.aria-label]="'Falar no WhatsApp com a ONG ' + ong.nome + ' (abre em nova aba)'">
+                            Falar no WhatsApp
+                        </a>
+                    </dd>
+
+                    }
                 </div>
 
                 }
@@ -112,15 +134,10 @@
                 <app-animal-card [animal]="animal" [favoritado]="favoritosIds.has(animal.id)"
                     (favoritoAlterado)="aoAlterarFavorito(animal.id, $event)"
                     (erroFavorito)="erroFavorito = $event"></app-animal-card>
-
                 }
-
             </div>
-
             }
-
         </section>
-
         }
     </div>
 </section>

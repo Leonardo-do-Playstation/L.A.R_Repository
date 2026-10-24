@@ -10,7 +10,7 @@ import { FavoritoService } from '../../services/favorito.service';
 import { AuthService } from '../../services/auth.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
-
+import { linkMaps, linkWhatsapp } from '../../services/contato-ong.service';
 @Component({
   selector: 'app-detalhe-animal',
   standalone: true,
@@ -36,6 +36,21 @@ export class DetalheAnimalComponent implements OnInit {
 
   get usuarioLogado(): boolean {
     return this.authService.estaAutenticado();
+  }
+
+  get urlWhatsapp(): string | null {
+    if (!this.animal) {
+      return null;
+    }
+
+    return linkWhatsapp(
+      this.animal.ong.telefone,
+      `Olá! Vi ${this.animal.nome} no L.A.R. e tenho interesse em adotar.`,
+    );
+  }
+
+  get urlMaps(): string | null {
+    return linkMaps(this.animal?.ong.endereco);
   }
 
   ngOnInit(): void {
