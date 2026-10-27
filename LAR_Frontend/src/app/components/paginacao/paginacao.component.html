@@ -1,0 +1,33 @@
+@if (totalPaginas > 1) {
+
+<nav class="paginacao" aria-label="Paginação">
+
+    <button type="button" class="paginacao__seta" aria-label="Página anterior" [disabled]="paginaAtual <= 1"
+        (click)="irPara(paginaAtual - 1)">
+        ‹
+    </button>
+
+    @for (item of itens; track $index) {
+
+    @if (item === null) {
+
+    <span class="paginacao__reticencias" aria-hidden="true">…</span>
+
+    } @else {
+
+    <button type="button" class="paginacao__pagina" [class.paginacao__pagina--ativa]="item === paginaAtual"
+        [attr.aria-current]="item === paginaAtual ? 'page' : null" [attr.aria-label]="'Página ' + item"
+        (click)="irPara(item)">
+        {{ item }}
+    </button>
+
+    }
+
+    }
+
+    <button type="button" class="paginacao__seta" aria-label="Próxima página" [disabled]="paginaAtual >= totalPaginas"
+        (click)="irPara(paginaAtual + 1)">
+        ›
+    </button>
+</nav>
+}

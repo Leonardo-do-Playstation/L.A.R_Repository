@@ -27,6 +27,8 @@ export interface AnimalCatalogo {
 
 interface PaginaAnimais {
   content: AnimalCatalogo[];
+  totalElements: number;
+  totalPages: number;
 }
 
 export interface FiltrosCatalogo {
@@ -39,6 +41,16 @@ export interface FiltrosCatalogo {
   idadeMaxima?: number;
   idOng?: number;
 }
+
+export type OrdemCatalogo = 'recentes' | 'antigos';
+
+export interface PaginaCatalogo {
+  animais: AnimalCatalogo[];
+  totalElementos: number;
+  totalPaginas: number;
+}
+
+export const ANIMAIS_POR_PAGINA = 40;
 
 @Injectable({
   providedIn: 'root',
@@ -53,10 +65,44 @@ export class CatalogoAnimaisService {
   }
 
   listar(filtros: FiltrosCatalogo = {}): Observable<AnimalCatalogo[]> {
+    const params = this.montarParametros(filtros, 0, 100, 'id,desc');
+
+    return this.http
+      .get<PaginaAnimais>(this.apiUrl, { params })
+      .pipe(map((resultado) => resultado.content));
+  }
+
+  listarPagina(
+    filtros: FiltrosCatalogo,
+    pagina: number,
+    ordem: OrdemCatalogo,
+  ): Observable<PaginaCatalogo> {
+    const params = this.montarParametros(
+      filtros,
+      pagina - 1,
+      ANIMAIS_POR_PAGINA,
+      ordem === 'recentes' ? 'id,desc' : 'id,asc',
+    );
+
+    return this.http.get<PaginaAnimais>(this.apiUrl, { params }).pipe(
+      map((resultado) => ({
+        animais: resultado.content,
+        totalElementos: resultado.totalElements,
+        totalPaginas: resultado.totalPages,
+      })),
+    );
+  }
+
+  private montarParametros(
+    filtros: FiltrosCatalogo,
+    pagina: number,
+    tamanho: number,
+    ordenacao: string,
+  ): HttpParams {
     let params = new HttpParams()
-      .set('page', 0)
-      .set('size', 100)
-      .set('sort', 'id,desc');
+      .set('page', pagina)
+      .set('size', tamanho)
+      .set('sort', ordenacao);
 
     if (filtros.especie) {
       params = params.set('especie', filtros.especie);
@@ -90,8 +136,6 @@ export class CatalogoAnimaisService {
       params = params.set('idOng', filtros.idOng);
     }
 
-    return this.http
-      .get<PaginaAnimais>(this.apiUrl, { params })
-      .pipe(map((resultado) => resultado.content));
+    return params;
   }
 }
