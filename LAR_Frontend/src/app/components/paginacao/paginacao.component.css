@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.paginacao__pagina,
+.paginacao__seta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid #c8c8c8;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.paginacao__seta {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.paginacao__pagina:hover,
+.paginacao__seta:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.paginacao__pagina--ativa,
+.paginacao__pagina--ativa:hover {
+  border-color: #2b9e25;
+  background: #2b9e25;
+  color: #fff;
+  cursor: default;
+}
+
+.paginacao__seta:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.paginacao__reticencias {
+  min-width: 20px;
+  color: #777;
+  text-align: center;
+}
