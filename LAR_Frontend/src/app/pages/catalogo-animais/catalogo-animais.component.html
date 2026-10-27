@@ -52,7 +52,8 @@
 
         } @else if (animais.length === 0) {
 
-        <app-mensagem-estado tipo="vazio" titulo="Nenhum animal disponível no momento." texto="Volte mais tarde para conferir novos animais para adoção." />
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum animal disponível no momento."
+            texto="Volte mais tarde para conferir novos animais para adoção." />
 
         } @else {
 
@@ -66,6 +67,8 @@
             }
 
         </div>
+
+        <app-paginacao [paginaAtual]="pagina" [totalPaginas]="totalPaginas" (paginaAlterada)="aoMudarPagina($event)" />
 
         }
 
@@ -92,7 +95,8 @@
         <div class="filtros-modal__categorias">
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'especie'" (click)="alternarCategoria('especie')">
+                <button type="button" class="filtros-categoria__cabecalho"
+                    [attr.aria-expanded]="categoriaExpandida === 'especie'" (click)="alternarCategoria('especie')">
                     Espécies
                     <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'especie'
@@ -112,7 +116,8 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'raca'" (click)="alternarCategoria('raca')">
+                <button type="button" class="filtros-categoria__cabecalho"
+                    [attr.aria-expanded]="categoriaExpandida === 'raca'" (click)="alternarCategoria('raca')">
                     Raças
                     <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'raca'
@@ -132,7 +137,8 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'porte'" (click)="alternarCategoria('porte')">
+                <button type="button" class="filtros-categoria__cabecalho"
+                    [attr.aria-expanded]="categoriaExpandida === 'porte'" (click)="alternarCategoria('porte')">
                     Portes
                     <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'porte'
@@ -152,7 +158,8 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'idade'" (click)="alternarCategoria('idade')">
+                <button type="button" class="filtros-categoria__cabecalho"
+                    [attr.aria-expanded]="categoriaExpandida === 'idade'" (click)="alternarCategoria('idade')">
                     Idades
                     <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'idade'
@@ -174,7 +181,8 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'sexo'" (click)="alternarCategoria('sexo')">
+                <button type="button" class="filtros-categoria__cabecalho"
+                    [attr.aria-expanded]="categoriaExpandida === 'sexo'" (click)="alternarCategoria('sexo')">
                     Sexos
                     <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'sexo'
@@ -193,7 +201,8 @@
             </div>
 
             <div class="filtros-categoria">
-                <button type="button" class="filtros-categoria__cabecalho" [attr.aria-expanded]="categoriaExpandida === 'cor'" (click)="alternarCategoria('cor')">
+                <button type="button" class="filtros-categoria__cabecalho"
+                    [attr.aria-expanded]="categoriaExpandida === 'cor'" (click)="alternarCategoria('cor')">
                     Cores
                     <span class="filtros-categoria__seta" aria-hidden="true" [class.filtros-categoria__seta--aberta]="
                             categoriaExpandida === 'cor'
@@ -221,9 +230,6 @@
         <button type="button" class="filtros-modal__aplicar" (click)="aplicarFiltros()">
             Aplicar filtros
         </button>
-
     </div>
-
 </div>
-
 }
