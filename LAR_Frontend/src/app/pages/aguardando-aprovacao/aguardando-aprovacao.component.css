@@ -63,3 +63,143 @@
   margin: -12px 0 8px -8px;
   text-align: left;
 }
+
+.boas-vindas__fundo {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+  z-index: 1500;
+}
+
+.boas-vindas {
+  width: 100%;
+  max-width: 420px;
+  padding: 22px 22px 20px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.boas-vindas:focus {
+  outline: none;
+}
+
+.boas-vindas__titulo {
+  margin: 0 0 10px;
+  color: #2b9e25;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.boas-vindas__texto {
+  margin: 0 0 14px;
+  color: #555;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.boas-vindas__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.boas-vindas__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #333;
+  font-size: 0.92rem;
+}
+
+.boas-vindas__item--feito {
+  border-color: #b9dfb7;
+  background: #f1faf0;
+}
+
+.boas-vindas__marca {
+  width: 18px;
+  color: #777;
+  font-weight: 800;
+  text-align: center;
+}
+
+.boas-vindas__item--feito .boas-vindas__marca {
+  color: #2b9e25;
+}
+
+.boas-vindas__rotulo {
+  flex: 1;
+  font-weight: 600;
+}
+
+.boas-vindas__situacao {
+  color: #666;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.boas-vindas__item--feito .boas-vindas__situacao {
+  color: #1f6f1b;
+}
+
+.boas-vindas__acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.boas-vindas__completar,
+.boas-vindas__depois {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.boas-vindas__completar {
+  border: 0;
+  background: #2b9e25;
+  color: #fff;
+}
+
+.boas-vindas__completar:hover {
+  background: #24851f;
+}
+
+.boas-vindas__depois {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #555;
+}
+
+.boas-vindas__depois:hover {
+  background: #f0f0f0;
+}
+
+.boas-vindas__completar:focus-visible,
+.boas-vindas__depois:focus-visible {
+  outline: 3px solid #1b5fbf;
+  outline-offset: 2px;
+}
