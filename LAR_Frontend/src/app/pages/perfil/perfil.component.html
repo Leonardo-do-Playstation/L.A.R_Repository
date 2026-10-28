@@ -8,6 +8,13 @@
             Meu Perfil
         </h1>
 
+        @if (ongPendente) {
+        <div class="perfil__aviso perfil__aviso--analise" role="status">
+            Seu cadastro está em análise. Você já pode completar os dados da ONG enquanto isso.
+            <a routerLink="/aguardando-aprovacao" class="perfil__aviso-link">Ver situação do cadastro</a>
+        </div>
+        }
+
         @if (carregando) {
 
         <app-mensagem-estado tipo="carregando" texto="Carregando perfil..." />

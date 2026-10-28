@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   AbstractControl,
@@ -26,6 +26,7 @@ function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
   selector: 'app-perfil',
   standalone: true,
   imports: [
+    RouterLink,
     ReactiveFormsModule,
     BotaoVoltarComponent,
     MensagemEstadoComponent,
@@ -94,6 +95,12 @@ export class PerfilComponent implements OnInit {
 
   get ehOng(): boolean {
     return this.tipo === 'ONG';
+  }
+
+  get ongPendente(): boolean {
+    return (
+      this.ehOng && this.authService.obterPerfil()?.statusOng === 'PENDENTE'
+    );
   }
 
   get podeExcluirConta(): boolean {
