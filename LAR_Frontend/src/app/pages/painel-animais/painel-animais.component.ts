@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -45,6 +45,7 @@ interface FiltrosPainelAnimais {
 })
 export class PainelAnimaisComponent implements OnInit {
   private readonly animalService = inject(AnimalService);
+  private readonly route = inject(ActivatedRoute);
 
   animais: Animal[] = [];
   private animaisOriginais: Animal[] = [];
@@ -72,7 +73,28 @@ export class PainelAnimaisComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      this.aplicarStatusDaUrl(params.get('status'));
+    });
+
     this.carregarAnimais();
+  }
+
+  private aplicarStatusDaUrl(valor: string | null): void {
+    const status = this.statusDisponiveis.find(
+      (item) => item.valor === valor,
+    )?.valor;
+    const restantes = { ...this.filtrosAplicados };
+
+    if (status) {
+      restantes.status = status;
+    } else {
+      delete restantes.status;
+    }
+
+    this.filtrosAplicados = restantes;
+    this.filtros = { ...restantes };
+    this.atualizarLista();
   }
 
   carregarAnimais(): void {

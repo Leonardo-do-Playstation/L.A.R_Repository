@@ -148,6 +148,60 @@
 
     </div>
 
-  </div>
+    @if (exibirResumo()) {
 
+    <section class="home__resumo" aria-labelledby="home-resumo-titulo">
+
+      <h2 id="home-resumo-titulo" class="home__resumo-titulo">
+        Resumo dos animais
+      </h2>
+
+      @if (resumoCarregando) {
+
+      <app-mensagem-estado tipo="carregando" texto="Carregando resumo..." />
+
+      } @else if (resumoErro) {
+
+      <app-mensagem-estado tipo="erro" texto="Não foi possível carregar o resumo dos animais." />
+
+      } @else if (resumo.total === 0) {
+
+      <app-mensagem-estado tipo="vazio" titulo="Nenhum animal cadastrado."
+        texto="Cadastre seu primeiro animal para acompanhar o resumo aqui." />
+
+      <a class="home__resumo-cadastrar" routerLink="/cadastro-animal">
+        Cadastrar animal
+      </a>
+
+      } @else {
+
+      <div class="home__resumo-cards">
+
+        <a class="home__resumo-card" routerLink="/painel-animais">
+          <strong>{{ resumo.total }}</strong>
+          <span>Total</span>
+        </a>
+
+        <a class="home__resumo-card home__resumo-card--disponivel" routerLink="/painel-animais"
+          [queryParams]="{ status: 'DISPONIVEL' }">
+          <strong>{{ resumo.disponiveis }}</strong>
+          <span>Disponíveis</span>
+        </a>
+
+        <a class="home__resumo-card home__resumo-card--tratamento" routerLink="/painel-animais"
+          [queryParams]="{ status: 'EM_TRATAMENTO' }">
+          <strong>{{ resumo.emTratamento }}</strong>
+          <span>Em tratamento</span>
+        </a>
+
+        <a class="home__resumo-card home__resumo-card--adotado" routerLink="/painel-animais"
+          [queryParams]="{ status: 'ADOTADO' }">
+          <strong>{{ resumo.adotados }}</strong>
+          <span>Adotados</span>
+        </a>
+      </div>
+      }
+    </section>
+    }
+  </div>
 </section>
