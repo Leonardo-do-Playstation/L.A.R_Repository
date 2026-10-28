@@ -27,3 +27,51 @@
     </div>
 
 </section>
+
+@if (mostrarBoasVindas) {
+
+<div class="boas-vindas__fundo">
+
+    <div #dialogo class="boas-vindas" role="dialog" aria-modal="true" aria-labelledby="boas-vindas-titulo"
+        aria-describedby="boas-vindas-descricao" tabindex="-1">
+
+        <h2 id="boas-vindas-titulo" class="boas-vindas__titulo">
+            Sua ONG já pode completar o perfil
+        </h2>
+
+        <p id="boas-vindas-descricao" class="boas-vindas__texto">
+            Enquanto o administrador analisa o cadastro, você já pode preencher as informações da ONG. Assim, o perfil
+            estará pronto quando for aprovado.
+        </p>
+
+        <ul class="boas-vindas__lista">
+
+            @for (item of itensPerfil; track item.rotulo) {
+
+            <li class="boas-vindas__item" [class.boas-vindas__item--feito]="item.preenchido">
+
+                <span class="boas-vindas__marca" aria-hidden="true">{{ item.preenchido ? '✓' : '○' }}</span>
+
+                <span class="boas-vindas__rotulo">{{ item.rotulo }}</span>
+
+                <span class="boas-vindas__situacao">{{ item.preenchido ? 'Preenchido' : 'Pendente' }}</span>
+
+            </li>
+
+            }
+
+        </ul>
+
+        <div class="boas-vindas__acoes">
+
+            <a routerLink="/perfil" class="boas-vindas__completar">
+                Completar perfil
+            </a>
+
+            <button type="button" class="boas-vindas__depois" (click)="fechar()">
+                Agora não
+            </button>
+        </div>
+    </div>
+</div>
+}

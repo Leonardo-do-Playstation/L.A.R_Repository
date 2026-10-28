@@ -145,6 +145,20 @@
   color: #b42323;
 }
 
+.perfil__aviso--analise {
+  background: #fff6e0;
+  color: #7a5200;
+  line-height: 1.4;
+}
+
+.perfil__aviso-link {
+  display: block;
+  margin-top: 4px;
+  color: #7a5200;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .perfil__acoes {
   display: flex;
   gap: 10px;
