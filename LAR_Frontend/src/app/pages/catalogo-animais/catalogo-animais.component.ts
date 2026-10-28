@@ -19,6 +19,11 @@ import { PaginacaoComponent } from '../../components/paginacao/paginacao.compone
 
 type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
 
+interface ChipFiltro {
+  chave: keyof FiltrosCatalogo;
+  rotulo: string;
+}
+
 @Component({
   selector: 'app-catalogo-animais',
   standalone: true,
@@ -56,6 +61,7 @@ export class CatalogoAnimaisComponent implements OnInit {
   ordem: OrdemCatalogo = 'recentes';
 
   filtros: FiltrosCatalogo = {};
+  filtrosAplicados: FiltrosCatalogo = {};
 
   mostrarFiltros = false;
   categoriaExpandida: CategoriaFiltro | null = null;
@@ -150,7 +156,7 @@ export class CatalogoAnimaisComponent implements OnInit {
     this.requisicaoAnimais?.unsubscribe();
 
     this.requisicaoAnimais = this.catalogoAnimaisService
-      .listarPagina(this.filtros, this.pagina, this.ordem)
+      .listarPagina(this.filtrosAplicados, this.pagina, this.ordem)
       .subscribe({
         next: (resultado) => {
           if (
@@ -207,6 +213,7 @@ export class CatalogoAnimaisComponent implements OnInit {
   }
 
   abrirFiltros(): void {
+    this.filtros = { ...this.filtrosAplicados };
     this.mostrarFiltros = true;
   }
 
@@ -221,19 +228,116 @@ export class CatalogoAnimaisComponent implements OnInit {
   }
 
   aplicarFiltros(): void {
+    const atuais = this.filtros;
+    const aplicados: FiltrosCatalogo = {};
+
+    if (atuais.especie) {
+      aplicados.especie = atuais.especie;
+    }
+
+    if (atuais.raca) {
+      aplicados.raca = atuais.raca;
+    }
+
+    if (atuais.porte) {
+      aplicados.porte = atuais.porte;
+    }
+
+    if (atuais.sexo) {
+      aplicados.sexo = atuais.sexo;
+    }
+
+    if (atuais.cor) {
+      aplicados.cor = atuais.cor;
+    }
+
+    if (atuais.idadeMinima != null) {
+      aplicados.idadeMinima = atuais.idadeMinima;
+    }
+
+    if (atuais.idadeMaxima != null) {
+      aplicados.idadeMaxima = atuais.idadeMaxima;
+    }
+
+    this.filtrosAplicados = aplicados;
+    this.filtros = { ...aplicados };
     this.fecharFiltros();
     this.irParaPagina(1);
   }
 
   limparFiltros(): void {
     this.filtros = {};
+    this.filtrosAplicados = {};
     this.fecharFiltros();
     this.irParaPagina(1);
   }
 
+  removerFiltro(chave: keyof FiltrosCatalogo): void {
+    const restantes = { ...this.filtrosAplicados };
+    delete restantes[chave];
+
+    this.filtrosAplicados = restantes;
+    this.filtros = { ...restantes };
+    this.irParaPagina(1);
+  }
+
+  get chipsFiltros(): ChipFiltro[] {
+    const filtros = this.filtrosAplicados;
+    const chips: ChipFiltro[] = [];
+
+    if (filtros.especie) {
+      chips.push({ chave: 'especie', rotulo: `Espécie: ${filtros.especie}` });
+    }
+
+    if (filtros.raca) {
+      chips.push({ chave: 'raca', rotulo: `Raça: ${filtros.raca}` });
+    }
+
+    if (filtros.porte) {
+      chips.push({ chave: 'porte', rotulo: `Porte: ${filtros.porte}` });
+    }
+
+    if (filtros.sexo) {
+      chips.push({
+        chave: 'sexo',
+        rotulo: `Sexo: ${filtros.sexo === 'MACHO' ? 'Macho' : 'Fêmea'}`,
+      });
+    }
+
+    if (filtros.cor) {
+      chips.push({ chave: 'cor', rotulo: `Cor: ${filtros.cor}` });
+    }
+
+    if (filtros.idadeMinima != null) {
+      chips.push({
+        chave: 'idadeMinima',
+        rotulo: `Idade mínima: ${this.formatarIdade(filtros.idadeMinima)}`,
+      });
+    }
+
+    if (filtros.idadeMaxima != null) {
+      chips.push({
+        chave: 'idadeMaxima',
+        rotulo: `Idade máxima: ${this.formatarIdade(filtros.idadeMaxima)}`,
+      });
+    }
+
+    return chips;
+  }
+
+  private formatarIdade(idade: number): string {
+    return idade === 1 ? '1 ano' : `${idade} anos`;
+  }
+
   get quantidadeFiltrosAtivos(): number {
-    return Object.values(this.filtros).filter(
-      (valor) => valor !== undefined && valor !== null && valor !== '',
-    ).length;
+    return this.chipsFiltros.length;
+  }
+
+  get textoContador(): string {
+    const total = this.totalElementos.toLocaleString('pt-BR');
+
+    return this.totalElementos === 1
+      ? 'Foi encontrado 1 resultado'
+      : `Foram encontrados ${total} resultados`;
   }
 }

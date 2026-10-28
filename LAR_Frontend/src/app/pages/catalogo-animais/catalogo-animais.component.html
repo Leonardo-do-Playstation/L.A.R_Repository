@@ -24,19 +24,51 @@
 
         </div>
 
-        <div class="catalogo__ordenacao" role="group" aria-label="Ordenar animais">
+        @if (chipsFiltros.length > 0) {
 
-            <button type="button" [class.catalogo__ordenacao--ativa]="
-                    ordem === 'recentes'
-                " [attr.aria-pressed]="ordem === 'recentes'" (click)="ordenar('recentes')">
-                Mais recentes
+        <div class="catalogo__chips" role="group" aria-label="Filtros aplicados">
+
+            @for (chip of chipsFiltros; track chip.chave) {
+
+            <button type="button" class="catalogo__chip" [attr.aria-label]="'Remover filtro ' + chip.rotulo"
+                (click)="removerFiltro(chip.chave)">
+                {{ chip.rotulo }}
+                <span class="catalogo__chip-remover" aria-hidden="true">×</span>
             </button>
 
-            <button type="button" [class.catalogo__ordenacao--ativa]="
-                    ordem === 'antigos'
-                " [attr.aria-pressed]="ordem === 'antigos'" (click)="ordenar('antigos')">
-                Mais antigos
+            }
+
+            <button type="button" class="catalogo__chips-limpar" (click)="limparFiltros()">
+                Limpar filtros
             </button>
+
+        </div>
+
+        }
+
+        <div class="catalogo__barra">
+
+            @if (!carregando && !erro && totalElementos > 0) {
+
+            <p class="catalogo__contador" aria-live="polite">{{ textoContador }}</p>
+
+            }
+
+            <div class="catalogo__ordenacao" role="group" aria-label="Ordenar animais">
+
+                <button type="button" [class.catalogo__ordenacao--ativa]="
+                        ordem === 'recentes'
+                    " [attr.aria-pressed]="ordem === 'recentes'" (click)="ordenar('recentes')">
+                    Mais recentes
+                </button>
+
+                <button type="button" [class.catalogo__ordenacao--ativa]="
+                        ordem === 'antigos'
+                    " [attr.aria-pressed]="ordem === 'antigos'" (click)="ordenar('antigos')">
+                    Mais antigos
+                </button>
+
+            </div>
 
         </div>
 
@@ -52,8 +84,17 @@
 
         } @else if (animais.length === 0) {
 
+        @if (quantidadeFiltrosAtivos > 0) {
+
+        <app-mensagem-estado tipo="vazio" titulo="Nenhum animal encontrado."
+            texto="Tente remover algum filtro ou limpar todos para ver mais animais." />
+
+        } @else {
+
         <app-mensagem-estado tipo="vazio" titulo="Nenhum animal disponível no momento."
             texto="Volte mais tarde para conferir novos animais para adoção." />
+
+        }
 
         } @else {
 

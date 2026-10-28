@@ -57,11 +57,71 @@
   height: 16px;
 }
 
+.catalogo__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.catalogo__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #2b9e25;
+  border-radius: 999px;
+  background: #fff;
+  color: #1f6f1b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.catalogo__chip:hover {
+  background: #eaf6e9;
+}
+
+.catalogo__chip-remover {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.catalogo__chips-limpar {
+  min-height: 30px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.catalogo__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 10px;
+  margin: 8px 2px;
+}
+
+.catalogo__contador {
+  margin: 0;
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 .catalogo__ordenacao {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin: 8px 2px;
+  margin-left: auto;
 }
 
 .catalogo__ordenacao button {
