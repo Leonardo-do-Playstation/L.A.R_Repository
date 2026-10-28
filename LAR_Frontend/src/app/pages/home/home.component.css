@@ -58,7 +58,95 @@
   line-height: 1.15;
 }
 
+.home__resumo {
+  width: min(100%, 304px);
+  margin: 32px auto 0;
+}
+
+.home__resumo-titulo {
+  margin: 0 0 12px;
+  color: #333333;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.home__resumo-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.home__resumo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 84px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+  border: 1px solid #555555;
+  border-left-width: 6px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  color: #111111;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.home__resumo-card:hover {
+  transform: translateY(-2px);
+  background: #eaeaea;
+}
+
+.home__resumo-card strong {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.home__resumo-card span {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.home__resumo-card--disponivel {
+  border-left-color: #36a536;
+}
+
+.home__resumo-card--tratamento {
+  border-left-color: #e59f24;
+}
+
+.home__resumo-card--adotado {
+  border-left-color: #777777;
+}
+
+.home__resumo-cadastrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border-radius: 8px;
+  background: #2b9e25;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home__resumo-cadastrar:hover {
+  background: #24851f;
+}
+
 @media (min-width: 768px) {
+  .home__resumo {
+    width: min(100%, 480px);
+  }
+
   .home__cards {
     grid-template-columns: 1fr;
     justify-items: center;
