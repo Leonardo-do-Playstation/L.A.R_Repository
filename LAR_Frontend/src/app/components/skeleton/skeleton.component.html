@@ -1,0 +1,50 @@
+<span class="sr-only" role="status">{{ texto }}</span>
+
+@for (item of itens; track item) {
+
+@switch (variante) {
+
+@case ('ong-card') {
+
+<div class="skeleton-ong" aria-hidden="true">
+  <div class="skeleton__bloco skeleton-ong__avatar"></div>
+  <div class="skeleton-ong__info">
+    <div class="skeleton__bloco skeleton-ong__nome"></div>
+    <div class="skeleton__bloco skeleton-ong__localizacao"></div>
+  </div>
+</div>
+
+}
+
+@case ('animal-painel') {
+
+<div class="skeleton-card" aria-hidden="true">
+  <div class="skeleton__bloco skeleton-card__foto"></div>
+  <div class="skeleton-card__conteudo">
+    <div class="skeleton__bloco skeleton-card__nome"></div>
+    <div class="skeleton__bloco skeleton-card__controle"></div>
+    <div class="skeleton__bloco skeleton-card__acoes"></div>
+  </div>
+</div>
+
+}
+
+@default {
+
+<div class="skeleton-card" aria-hidden="true">
+  <div class="skeleton__bloco skeleton-card__foto"></div>
+  <div class="skeleton-card__conteudo">
+    <div class="skeleton__bloco skeleton-card__nome"></div>
+    <div class="skeleton__bloco skeleton-card__detalhes"></div>
+    <div class="skeleton-card__rodape">
+      <div class="skeleton__bloco skeleton-card__sexo"></div>
+      <div class="skeleton__bloco skeleton-card__ong"></div>
+    </div>
+  </div>
+</div>
+
+}
+
+}
+
+}
