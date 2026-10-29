@@ -6,11 +6,12 @@ import { FavoritoService } from '../../services/favorito.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-favoritos',
   standalone: true,
-  imports: [AnimalCardComponent, RouterLink, BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [AnimalCardComponent, RouterLink, BotaoVoltarComponent, MensagemEstadoComponent, SkeletonComponent],
   templateUrl: './favoritos.component.html',
   styleUrl: './favoritos.component.css',
 })

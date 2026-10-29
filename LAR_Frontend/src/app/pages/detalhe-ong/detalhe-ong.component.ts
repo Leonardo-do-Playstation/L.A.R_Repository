@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
 import { OngAvatarComponent } from '../../components/ong-avatar/ong-avatar.component';
 import { linkMaps, linkWhatsapp } from '../../services/contato-ong.service';
 import { OngBannerComponent } from '../../components/ong-banner/ong-banner.component';
@@ -24,6 +25,7 @@ import { OngBannerComponent } from '../../components/ong-banner/ong-banner.compo
     MensagemEstadoComponent,
     AnimalCardComponent,
     OngBannerComponent,
+    SkeletonComponent,
   ],
   templateUrl: './detalhe-ong.component.html',
   styleUrl: './detalhe-ong.component.css',

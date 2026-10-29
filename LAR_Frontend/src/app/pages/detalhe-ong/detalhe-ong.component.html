@@ -114,7 +114,11 @@
 
             @if (carregandoAnimais) {
 
-            <app-mensagem-estado tipo="carregando" texto="Carregando animais..." />
+            <div class="detalhe-ong__animais-lista" aria-busy="true">
+
+                <app-skeleton variante="animal-card" [quantidade]="4" texto="Carregando…" />
+
+            </div>
 
             } @else if (erroAnimais) {
 

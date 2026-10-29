@@ -10,6 +10,7 @@ import {
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
 
 type CategoriaFiltro =
   | 'especie'
@@ -39,6 +40,7 @@ interface FiltrosPainelAnimais {
     FormsModule,
     BotaoVoltarComponent,
     MensagemEstadoComponent,
+    SkeletonComponent,
   ],
   templateUrl: './painel-animais.component.html',
   styleUrl: './painel-animais.component.css',
