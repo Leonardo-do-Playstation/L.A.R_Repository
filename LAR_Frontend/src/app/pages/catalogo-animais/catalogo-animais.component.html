@@ -80,7 +80,11 @@
 
         @if (carregando) {
 
-        <app-mensagem-estado tipo="carregando" texto="Carregando animais..." />
+        <div class="catalogo__lista" aria-busy="true">
+
+            <app-skeleton variante="animal-card" [quantidade]="8" texto="Carregando…" />
+
+        </div>
 
         } @else if (animais.length === 0) {
 

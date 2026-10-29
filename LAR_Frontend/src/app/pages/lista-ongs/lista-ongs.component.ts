@@ -6,12 +6,13 @@ import { EMPTY, Subject, catchError, debounceTime, switchMap, tap } from 'rxjs';
 import { OngPublica, OngService } from '../../services/ong.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
 import { OngAvatarComponent } from '../../components/ong-avatar/ong-avatar.component';
 
 @Component({
   selector: 'app-lista-ongs',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent, OngAvatarComponent, RouterLink],
+  imports: [BotaoVoltarComponent, MensagemEstadoComponent, OngAvatarComponent, RouterLink, SkeletonComponent],
   templateUrl: './lista-ongs.component.html',
   styleUrl: './lista-ongs.component.css',
 })

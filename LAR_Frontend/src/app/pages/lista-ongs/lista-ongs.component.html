@@ -32,7 +32,11 @@
 
         @if (carregando) {
 
-        <app-mensagem-estado tipo="carregando" texto="Carregando ONGs..." />
+        <div class="lista-ongs__lista" aria-busy="true">
+
+            <app-skeleton variante="ong-card" [quantidade]="5" texto="Carregando…" />
+
+        </div>
 
         } @else if (erro) {
 

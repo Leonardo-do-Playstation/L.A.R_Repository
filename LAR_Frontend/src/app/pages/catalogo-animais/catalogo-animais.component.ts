@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 import { FavoritoService } from '../../services/favorito.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
 import { PaginacaoComponent } from '../../components/paginacao/paginacao.component';
 
 type CategoriaFiltro = 'especie' | 'raca' | 'porte' | 'idade' | 'sexo' | 'cor';
@@ -33,6 +34,7 @@ interface ChipFiltro {
     BotaoVoltarComponent,
     MensagemEstadoComponent,
     PaginacaoComponent,
+    SkeletonComponent,
   ],
   templateUrl: './catalogo-animais.component.html',
   styleUrl: './catalogo-animais.component.css',
