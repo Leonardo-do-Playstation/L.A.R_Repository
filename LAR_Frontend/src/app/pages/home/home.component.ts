@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService, TipoUsuario } from '../../services/auth.service';
 import { Animal, AnimalService } from '../../services/animal.service';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { AnimalCardComponent } from '../../components/animal-card/animal-card.component';
+import {
+  AnimalCatalogo,
+  CatalogoAnimaisService,
+} from '../../services/catalogo-animais.service';
+import { FavoritoService } from '../../services/favorito.service';
+
+const QUANTIDADE_DESTAQUES = 4;
 
 interface ResumoAnimais {
   total: number;
@@ -14,7 +22,7 @@ interface ResumoAnimais {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, MensagemEstadoComponent],
+  imports: [RouterLink, MensagemEstadoComponent, AnimalCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -34,6 +42,18 @@ export class HomeComponent implements OnInit {
     adotados: 0,
   };
 
+  private readonly catalogoService = inject(CatalogoAnimaisService);
+  private readonly favoritoService = inject(FavoritoService);
+
+  recentesCarregando = false;
+  recentesErro = false;
+  recentes: AnimalCatalogo[] = [];
+
+  favoritosCarregando = false;
+  favoritosErro = false;
+  favoritosDestaque: AnimalCatalogo[] = [];
+  private idsFavoritos = new Set<number>();
+
   constructor(
     private authService: AuthService,
     private animalService: AnimalService,
@@ -49,6 +69,63 @@ export class HomeComponent implements OnInit {
     if (this.exibirResumo()) {
       this.carregarResumo();
     }
+
+    if (this.ehAdotante()) {
+      this.carregarRecentes();
+      this.carregarFavoritos(false);
+    }
+  }
+
+  estaFavoritado(animalId: number): boolean {
+    return this.idsFavoritos.has(animalId);
+  }
+
+  aoAlterarFavorito(animalId: number, favoritado: boolean): void {
+    if (favoritado) {
+      this.idsFavoritos.add(animalId);
+    } else {
+      this.idsFavoritos.delete(animalId);
+    }
+
+    this.carregarFavoritos(true);
+  }
+
+  private carregarRecentes(): void {
+    this.recentesCarregando = true;
+    this.recentesErro = false;
+
+    this.catalogoService.listarRecentes(QUANTIDADE_DESTAQUES).subscribe({
+      next: (animais) => {
+        this.recentes = animais;
+        this.recentesCarregando = false;
+      },
+      error: () => {
+        this.recentesErro = true;
+        this.recentesCarregando = false;
+      },
+    });
+  }
+
+  private carregarFavoritos(silencioso: boolean): void {
+    if (!silencioso) {
+      this.favoritosCarregando = true;
+    }
+
+    this.favoritosErro = false;
+
+    this.favoritoService.listar().subscribe({
+      next: (favoritos) => {
+        const animais = favoritos.map((favorito) => favorito.animal);
+
+        this.idsFavoritos = new Set(animais.map((animal) => animal.id));
+        this.favoritosDestaque = animais.slice(0, QUANTIDADE_DESTAQUES);
+        this.favoritosCarregando = false;
+      },
+      error: () => {
+        this.favoritosErro = true;
+        this.favoritosCarregando = false;
+      },
+    });
   }
 
   exibirResumo(): boolean {
