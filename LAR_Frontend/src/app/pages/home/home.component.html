@@ -203,5 +203,102 @@
       }
     </section>
     }
+
+    @if (ehAdotante()) {
+
+    <section class="home__destaques" aria-labelledby="home-recentes-titulo">
+
+      <div class="home__destaques-cabecalho">
+
+        <h2 id="home-recentes-titulo" class="home__destaques-titulo">
+          Animais recentes
+        </h2>
+
+        <a class="home__destaques-link" routerLink="/catalogo">
+          Ver todos
+        </a>
+
+      </div>
+
+      @if (recentesCarregando) {
+
+      <app-mensagem-estado tipo="carregando" texto="Carregando animais..." />
+
+      } @else if (recentesErro) {
+
+      <app-mensagem-estado tipo="erro" texto="Não foi possível carregar os animais recentes." />
+
+      } @else if (recentes.length === 0) {
+
+      <app-mensagem-estado tipo="vazio" titulo="Nenhum animal disponível no momento."
+        texto="Volte em breve para conhecer novos animais." />
+
+      } @else {
+
+      <div class="home__destaques-lista">
+
+        @for (animal of recentes; track animal.id) {
+
+        <app-animal-card [animal]="animal" [favoritado]="estaFavoritado(animal.id)"
+          (favoritoAlterado)="aoAlterarFavorito(animal.id, $event)">
+        </app-animal-card>
+
+        }
+
+      </div>
+
+      }
+
+    </section>
+
+    <section class="home__destaques" aria-labelledby="home-favoritos-titulo">
+
+      <div class="home__destaques-cabecalho">
+
+        <h2 id="home-favoritos-titulo" class="home__destaques-titulo">
+          Seus favoritos
+        </h2>
+
+        @if (favoritosDestaque.length > 0) {
+
+        <a class="home__destaques-link" routerLink="/favoritos">
+          Ver todos
+        </a>
+
+        }
+
+      </div>
+
+      @if (favoritosCarregando) {
+
+      <app-mensagem-estado tipo="carregando" texto="Carregando favoritos..." />
+
+      } @else if (favoritosErro) {
+
+      <app-mensagem-estado tipo="erro" texto="Não foi possível carregar seus favoritos." />
+
+      } @else if (favoritosDestaque.length === 0) {
+
+      <app-mensagem-estado tipo="vazio" titulo="Você ainda não favoritou nenhum animal."
+        texto="Toque no coração de um animal para guardá-lo aqui.">
+        <a class="home__destaques-link" routerLink="/catalogo">
+          Ver animais para adoção
+        </a>
+      </app-mensagem-estado>
+
+      } @else {
+
+      <div class="home__destaques-lista">
+
+        @for (animal of favoritosDestaque; track animal.id) {
+
+        <app-animal-card [animal]="animal" [favoritado]="estaFavoritado(animal.id)"
+          (favoritoAlterado)="aoAlterarFavorito(animal.id, $event)">
+        </app-animal-card>
+        }
+      </div>
+      }
+    </section>
+    }
   </div>
 </section>
