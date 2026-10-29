@@ -72,6 +72,14 @@ export class CatalogoAnimaisService {
       .pipe(map((resultado) => resultado.content));
   }
 
+  listarRecentes(quantidade: number): Observable<AnimalCatalogo[]> {
+    const params = this.montarParametros({}, 0, quantidade, 'id,desc');
+
+    return this.http
+      .get<PaginaAnimais>(this.apiUrl, { params })
+      .pipe(map((resultado) => resultado.content));
+  }
+
   listarPagina(
     filtros: FiltrosCatalogo,
     pagina: number,
