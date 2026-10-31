@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { senhaForte } from '../../validators/senha-forte.validator';
+import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -11,7 +13,7 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent],
+  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent, IndicadorSenhaComponent],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
 })
@@ -48,7 +50,7 @@ export class CadastroComponent {
 
       email: ['', [Validators.required, Validators.email]],
 
-      senha: ['', [Validators.required, Validators.minLength(6)]],
+      senha: ['', [Validators.required, senhaForte]],
 
       confirmarSenha: ['', Validators.required],
     });

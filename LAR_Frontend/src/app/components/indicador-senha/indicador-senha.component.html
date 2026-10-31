@@ -1,0 +1,20 @@
+<div class="indicador" [class.indicador--escuro]="tema === 'escuro'" aria-live="polite">
+
+    <div class="indicador__barra" role="progressbar" aria-label="Força da senha" aria-valuemin="0" aria-valuemax="100"
+        [attr.aria-valuenow]="porcentagem" [attr.aria-valuetext]="rotuloForca">
+        <div class="indicador__preenchimento indicador__preenchimento--{{ forca }}" [style.width.%]="porcentagem"></div>
+    </div>
+
+    <span class="indicador__rotulo indicador__rotulo--{{ forca }}">{{ rotuloForca }}</span>
+
+    <ul class="indicador__lista">
+        @for (regra of regras; track regra.id) {
+        <li class="indicador__item" [class.indicador__item--ok]="regra.atende(valor)">
+            <span class="indicador__marca" aria-hidden="true">{{ regra.atende(valor) ? '✓' : '○' }}</span>
+            {{ regra.rotulo }}
+            <span class="indicador__sr">{{ regra.atende(valor) ? '(atendido)' : '(pendente)' }}</span>
+        </li>
+        }
+    </ul>
+
+</div>

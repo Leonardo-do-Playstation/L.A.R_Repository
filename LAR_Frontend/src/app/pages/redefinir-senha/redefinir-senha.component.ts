@@ -9,6 +9,9 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
+import { senhaForte } from '../../validators/senha-forte.validator';
+
 
 function senhasIguais(form: AbstractControl): ValidationErrors | null {
   const senha = form.get('novaSenha')?.value;
@@ -20,14 +23,14 @@ function senhasIguais(form: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-redefinir-senha',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, IndicadorSenhaComponent],
   templateUrl: './redefinir-senha.component.html',
   styleUrl: './redefinir-senha.component.css',
 })
 export class RedefinirSenhaComponent implements OnInit {
   redefinirForm = this.formBuilder.group(
     {
-      novaSenha: ['', [Validators.required, Validators.minLength(6)]],
+      novaSenha: ['', [Validators.required, senhaForte]],
       confirmarSenha: ['', [Validators.required]],
     },
     { validators: senhasIguais },
@@ -80,7 +83,12 @@ export class RedefinirSenhaComponent implements OnInit {
         error: (erro) => {
           this.carregando = false;
 
+          const campos = erro.error?.campos as
+            | Record<string, string>
+            | undefined;
+
           this.mensagemErro =
+            (campos && Object.values(campos).join(' ')) ||
             erro.error?.mensagem ||
             'Não foi possível redefinir a senha. Solicite um novo link.';
         },
