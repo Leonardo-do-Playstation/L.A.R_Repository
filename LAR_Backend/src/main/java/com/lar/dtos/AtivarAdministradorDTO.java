@@ -1,7 +1,8 @@
 package com.lar.dtos;
 
+import com.lar.validators.SenhaForte;
+
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public class AtivarAdministradorDTO {
 
@@ -9,7 +10,7 @@ public class AtivarAdministradorDTO {
     public String token;
 
     @NotBlank
-    @Size(min = 8, message = "A senha deve ter ao menos 8 caracteres")
+    @SenhaForte
     public String senha;
 
     @NotBlank

@@ -132,8 +132,8 @@
           <input id="senha" [type]="mostrarSenha ? 'text' : 'password'" formControlName="senha"
             autocomplete="new-password">
           <button type="button" class="cadastro__olho" (click)="alternarSenha()"
-              [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
-              <img [src]="mostrarSenha ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+            [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
+            <img [src]="mostrarSenha ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
           </button>
         </div>
 
@@ -148,12 +148,14 @@
 
         @if (
         cadastroForm.controls.senha.touched &&
-        cadastroForm.controls.senha.errors?.['minlength']
+        cadastroForm.controls.senha.errors?.['senhaForte']
         ) {
         <span class="cadastro__error" role="alert">
-          A senha deve ter pelo menos 6 caracteres.
+          A senha não atende aos requisitos abaixo.
         </span>
         }
+
+        <app-indicador-senha [senha]="cadastroForm.controls.senha.value" tema="escuro" />
 
       </div>
 
@@ -167,8 +169,9 @@
           <input id="confirmarSenha" [type]="mostrarConfirmacao ? 'text' : 'password'" formControlName="confirmarSenha"
             autocomplete="new-password">
           <button type="button" class="cadastro__olho" (click)="alternarConfirmacao()"
-              [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarConfirmacao">
-              <img [src]="mostrarConfirmacao ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
+            [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'"
+            [attr.aria-pressed]="mostrarConfirmacao">
+            <img [src]="mostrarConfirmacao ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
           </button>
         </div>
 

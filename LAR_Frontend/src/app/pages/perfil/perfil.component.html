@@ -236,9 +236,11 @@
                     <span class="perfil__erro" role="alert">Informe a nova senha.</span>
                     }
 
-                    @if (formSenha.controls.novaSenha.touched && formSenha.controls.novaSenha.errors?.['minlength']) {
-                    <span class="perfil__erro" role="alert">A nova senha deve ter pelo menos 6 caracteres.</span>
+                    @if (formSenha.controls.novaSenha.touched && formSenha.controls.novaSenha.errors?.['senhaForte']) {
+                    <span class="perfil__erro" role="alert">A nova senha não atende aos requisitos abaixo.</span>
                     }
+
+                    <app-indicador-senha [senha]="formSenha.controls.novaSenha.value" />
                 </div>
 
                 <div class="perfil__campo">

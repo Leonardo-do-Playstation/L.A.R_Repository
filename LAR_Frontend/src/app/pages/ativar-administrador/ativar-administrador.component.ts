@@ -9,6 +9,8 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AdministradorService } from '../../services/administrador.service';
+import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
+import { senhaForte } from '../../validators/senha-forte.validator';
 
 function senhasIguais(form: AbstractControl): ValidationErrors | null {
   const senha = form.get('senha')?.value;
@@ -19,14 +21,14 @@ function senhasIguais(form: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-ativar-administrador',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, IndicadorSenhaComponent],
   templateUrl: './ativar-administrador.component.html',
   styleUrl: './ativar-administrador.component.css',
 })
 export class AtivarAdministradorComponent implements OnInit {
   ativarForm = this.formBuilder.group(
     {
-      senha: ['', [Validators.required, Validators.minLength(8)]],
+      senha: ['', [Validators.required, senhaForte]],
       confirmarSenha: ['', [Validators.required]],
     },
     { validators: senhasIguais },

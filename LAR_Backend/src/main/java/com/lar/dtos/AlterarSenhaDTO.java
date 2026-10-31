@@ -1,7 +1,8 @@
 package com.lar.dtos;
 
+import com.lar.validators.SenhaForte;
+
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public class AlterarSenhaDTO {
 
@@ -9,7 +10,7 @@ public class AlterarSenhaDTO {
     public String senhaAtual;
 
     @NotBlank(message = "Nova senha é obrigatória")
-    @Size(min = 6, message = "A nova senha deve ter pelo menos 6 caracteres")
+    @SenhaForte
     public String novaSenha;
 
     public AlterarSenhaDTO() {

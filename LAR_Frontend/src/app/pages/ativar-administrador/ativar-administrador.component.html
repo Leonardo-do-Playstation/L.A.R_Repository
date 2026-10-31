@@ -32,8 +32,10 @@
                     </button>
                 </div>
                 @if (ativarForm.controls.senha.touched && ativarForm.controls.senha.invalid) {
-                <span class="ativar__error" role="alert">A senha deve ter no mínimo 8 caracteres.</span>
+                <span class="ativar__error" role="alert">A senha não atende aos requisitos abaixo.</span>
                 }
+
+                <app-indicador-senha [senha]="ativarForm.controls.senha.value" />
             </div>
 
             <div class="ativar__field">

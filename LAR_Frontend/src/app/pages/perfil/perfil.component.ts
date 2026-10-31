@@ -14,6 +14,8 @@ import { ContaService, PerfilDetalhe } from '../../services/conta.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 import { FotoOngComponent } from '../../components/foto-ong/foto-ong.component';
+import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
+import { senhaForte } from '../../validators/senha-forte.validator';
 
 function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
   const nova = grupo.get('novaSenha')?.value;
@@ -26,12 +28,13 @@ function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
   selector: 'app-perfil',
   standalone: true,
   imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    BotaoVoltarComponent,
-    MensagemEstadoComponent,
-    FotoOngComponent,
-  ],
+  RouterLink,
+  ReactiveFormsModule,
+  BotaoVoltarComponent,
+  MensagemEstadoComponent,
+  FotoOngComponent,
+  IndicadorSenhaComponent,
+],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
 })
@@ -83,7 +86,7 @@ export class PerfilComponent implements OnInit {
   formSenha = this.formBuilder.group(
     {
       senhaAtual: ['', Validators.required],
-      novaSenha: ['', [Validators.required, Validators.minLength(6)]],
+      novaSenha: ['', [Validators.required, senhaForte]],
       confirmarNovaSenha: ['', Validators.required],
     },
     { validators: senhasIguais },

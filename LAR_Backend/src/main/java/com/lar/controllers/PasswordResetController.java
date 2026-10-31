@@ -3,6 +3,7 @@ package com.lar.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 import com.lar.dtos.RecuperarSenhaDTO;
 import com.lar.dtos.RedefinirSenhaDTO;
@@ -42,7 +43,7 @@ public class PasswordResetController {
     @SecurityRequirements
     @PostMapping("/redefinir-senha")
     public ResponseEntity<?> redefinirSenha(
-            @RequestBody RedefinirSenhaDTO dto) {
+        @Valid @RequestBody RedefinirSenhaDTO dto) {
 
         passwordResetService.redefinirSenha(
                 dto.token,

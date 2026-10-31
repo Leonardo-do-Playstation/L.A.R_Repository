@@ -31,7 +31,8 @@
                     <input id="novaSenha" [type]="mostrarSenha ? 'text' : 'password'" formControlName="novaSenha"
                         autocomplete="new-password">
                     <button type="button" class="redefinir__olho" (click)="alternarSenha()"
-                        [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
+                        [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'"
+                        [attr.aria-pressed]="mostrarSenha">
                         <img [src]="mostrarSenha ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
                     </button>
                 </div>
@@ -41,19 +42,22 @@
                 redefinirForm.controls.novaSenha.invalid
                 ) {
                 <span class="redefinir__error" role="alert">
-                    A senha deve ter no mínimo 6 caracteres.
+                    A senha não atende aos requisitos abaixo.
                 </span>
                 }
+
+                <app-indicador-senha [senha]="redefinirForm.controls.novaSenha.value" />
             </div>
 
             <div class="redefinir__field">
                 <label for="confirmarSenha">Confirmar nova senha</label>
 
                 <div class="redefinir__senha">
-                    <input id="confirmarSenha" [type]="mostrarConfirmacao ? 'text' : 'password'" formControlName="confirmarSenha"
-                        autocomplete="new-password">
+                    <input id="confirmarSenha" [type]="mostrarConfirmacao ? 'text' : 'password'"
+                        formControlName="confirmarSenha" autocomplete="new-password">
                     <button type="button" class="redefinir__olho" (click)="alternarConfirmacao()"
-                        [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarConfirmacao">
+                        [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'"
+                        [attr.aria-pressed]="mostrarConfirmacao">
                         <img [src]="mostrarConfirmacao ? '/assets/olho-aberto.svg' : '/assets/olho-fechado.svg'" alt="">
                     </button>
                 </div>
