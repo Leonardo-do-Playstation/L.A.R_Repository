@@ -210,31 +210,6 @@
   background: #fafafa;
 }
 
-.detalhe-animal__acao {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 8px 16px;
-  border: 2px solid #24851f;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #24851f;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.detalhe-animal__acao:hover {
-  background: #e8f6e7;
-}
-
-.detalhe-animal__acao:focus-visible {
-  outline: 2px solid #36a536;
-  outline-offset: 2px;
-}
-
 @media (min-width: 640px) {
   .detalhe-animal__grade-info {
     grid-template-columns: repeat(3, minmax(0, 1fr));

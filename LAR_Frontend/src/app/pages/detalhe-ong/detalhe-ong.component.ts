@@ -16,12 +16,14 @@ import { SkeletonComponent } from '../../components/skeleton/skeleton.component'
 import { OngAvatarComponent } from '../../components/ong-avatar/ong-avatar.component';
 import { linkMaps, linkWhatsapp } from '../../services/contato-ong.service';
 import { OngBannerComponent } from '../../components/ong-banner/ong-banner.component';
+import { BotaoContatoComponent } from '../../components/botao-contato/botao-contato.component';
 
 @Component({
   selector: 'app-detalhe-ong',
   standalone: true,
   imports: [
     BotaoVoltarComponent,
+    BotaoContatoComponent,
     MensagemEstadoComponent,
     AnimalCardComponent,
     OngBannerComponent,
