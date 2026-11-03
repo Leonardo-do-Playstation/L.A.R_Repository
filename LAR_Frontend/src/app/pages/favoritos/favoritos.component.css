@@ -2,6 +2,7 @@
   width: 100%;
   min-height: calc(100vh - 58px);
   padding: 12px 0 30px;
+  background: var(--lar-fundo);
 }
 
 .favoritos__container {

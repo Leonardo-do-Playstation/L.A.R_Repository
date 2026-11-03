@@ -54,15 +54,30 @@ export class HomeComponent implements OnInit {
   favoritosDestaque: AnimalCatalogo[] = [];
   private idsFavoritos = new Set<number>();
 
+  nomeUsuario = '';
+
   constructor(
     private authService: AuthService,
     private animalService: AnimalService,
   ) {
     const perfil = this.authService.obterPerfil();
     this.tipoUsuario = perfil?.tipo ?? null;
+    this.nomeUsuario = (perfil?.nome ?? '').trim();
     this.superAdmin = perfil?.superAdmin === true;
     this.ongAprovada =
       perfil?.tipo === 'ONG' && perfil.statusOng === 'APROVADA';
+  }
+
+  get saudacao(): string {
+    if (!this.nomeUsuario) {
+      return 'Bem-vindo(a) ao L.A.R.';
+    }
+
+    if (this.ehAdotante()) {
+      return `Olá, ${this.nomeUsuario.split(/\s+/)[0]}!`;
+    }
+
+    return `Olá, ${this.nomeUsuario}!`;
   }
 
   ngOnInit(): void {
