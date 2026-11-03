@@ -138,3 +138,26 @@
 .lista-ongs__limpar:hover {
   background: #eee;
 }
+
+.ong-card__info {
+  flex: 1 1 0%;
+}
+
+.ong-card__contatos {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+@media (max-width: 400px) {
+  .ong-card {
+    flex-wrap: wrap;
+  }
+
+  .ong-card__contatos {
+    flex-basis: 100%;
+    margin-left: 66px;
+  }
+}

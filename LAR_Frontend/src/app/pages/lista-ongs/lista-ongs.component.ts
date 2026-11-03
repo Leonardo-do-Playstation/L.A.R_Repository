@@ -8,11 +8,20 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
 import { OngAvatarComponent } from '../../components/ong-avatar/ong-avatar.component';
+import { BotaoContatoComponent } from '../../components/botao-contato/botao-contato.component';
+import { linkMaps, linkWhatsapp } from '../../services/contato-ong.service';
 
 @Component({
   selector: 'app-lista-ongs',
   standalone: true,
-  imports: [BotaoVoltarComponent, MensagemEstadoComponent, OngAvatarComponent, RouterLink, SkeletonComponent],
+  imports: [
+    BotaoContatoComponent,
+    BotaoVoltarComponent,
+    MensagemEstadoComponent,
+    OngAvatarComponent,
+    RouterLink,
+    SkeletonComponent,
+  ],
   templateUrl: './lista-ongs.component.html',
   styleUrl: './lista-ongs.component.css',
 })
@@ -77,5 +86,16 @@ export class ListaOngsComponent implements OnInit {
 
   inicial(nome: string): string {
     return nome.trim().charAt(0).toUpperCase();
+  }
+
+  urlWhatsapp(ong: OngPublica): string | null {
+    return linkWhatsapp(
+      ong.telefone,
+      `Olá! Encontrei a ONG ${ong.nome} no L.A.R. e gostaria de mais informações.`,
+    );
+  }
+
+  urlMaps(ong: OngPublica): string | null {
+    return linkMaps(ong.endereco);
   }
 }

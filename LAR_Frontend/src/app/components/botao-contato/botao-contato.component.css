@@ -1,0 +1,43 @@
+:host {
+  display: inline-flex;
+}
+
+.botao-contato {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  border: 2px solid #24851f;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #24851f;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.botao-contato:hover {
+  background: #e8f6e7;
+}
+
+.botao-contato:focus-visible {
+  outline: 3px solid #1f7a1a;
+  outline-offset: 2px;
+}
+
+.botao-contato--icone {
+  width: 40px;
+  padding: 0;
+}
+
+.botao-contato__icone {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}

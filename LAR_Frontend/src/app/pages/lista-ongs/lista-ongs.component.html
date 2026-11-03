@@ -76,6 +76,29 @@
                         {{ ong.endereco || 'Localização não informada' }}
                     </span>
                 </div>
+
+                @if (urlWhatsapp(ong) || urlMaps(ong)) {
+
+                <div class="ong-card__contatos">
+
+                    @if (urlWhatsapp(ong)) {
+
+                    <app-botao-contato tipo="whatsapp" [href]="urlWhatsapp(ong)"
+                        [rotulo]="'Falar no WhatsApp com a ONG ' + ong.nome + ' (abre em nova aba)'" />
+
+                    }
+
+                    @if (urlMaps(ong)) {
+
+                    <app-botao-contato tipo="maps" [href]="urlMaps(ong)"
+                        [rotulo]="'Ver no mapa o endereço da ONG ' + ong.nome + ' no Google Maps (abre em nova aba)'" />
+
+                    }
+
+                </div>
+
+                }
+
             </article>
             }
         </div>

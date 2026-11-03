@@ -1,0 +1,12 @@
+<a class="botao-contato" [class.botao-contato--icone]="!texto" [attr.href]="href" target="_blank"
+  rel="noopener noreferrer" [attr.aria-label]="rotulo">
+
+  <img class="botao-contato__icone" [src]="icone" alt="">
+
+  @if (texto) {
+
+  <span class="botao-contato__texto">{{ texto }}</span>
+
+  }
+
+</a>

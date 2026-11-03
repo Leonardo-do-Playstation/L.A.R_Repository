@@ -10,11 +10,12 @@ import { FavoritoService } from '../../services/favorito.service';
 import { AuthService } from '../../services/auth.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { BotaoContatoComponent } from '../../components/botao-contato/botao-contato.component';
 import { linkMaps, linkWhatsapp } from '../../services/contato-ong.service';
 @Component({
   selector: 'app-detalhe-animal',
   standalone: true,
-  imports: [RouterLink, BotaoVoltarComponent, MensagemEstadoComponent],
+  imports: [RouterLink, BotaoVoltarComponent, BotaoContatoComponent, MensagemEstadoComponent],
   templateUrl: './detalhe-animal.component.html',
   styleUrl: './detalhe-animal.component.css',
 })

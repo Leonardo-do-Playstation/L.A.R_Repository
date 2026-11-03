@@ -58,10 +58,8 @@
                     @if (urlMaps) {
 
                     <dd class="detalhe-ong__acoes">
-                        <a class="detalhe-ong__acao" [href]="urlMaps" target="_blank" rel="noopener noreferrer"
-                            [attr.aria-label]="'Ver o endereço da ONG ' + ong.nome + ' no Google Maps (abre em nova aba)'">
-                            Ver no mapa
-                        </a>
+                        <app-botao-contato tipo="maps" [href]="urlMaps" texto="Ver no mapa"
+                            [rotulo]="'Ver no mapa o endereço da ONG ' + ong.nome + ' no Google Maps (abre em nova aba)'" />
                     </dd>
 
                     }
@@ -78,10 +76,8 @@
                     @if (urlWhatsapp) {
 
                     <dd class="detalhe-ong__acoes">
-                        <a class="detalhe-ong__acao" [href]="urlWhatsapp" target="_blank" rel="noopener noreferrer"
-                            [attr.aria-label]="'Falar no WhatsApp com a ONG ' + ong.nome + ' (abre em nova aba)'">
-                            Falar no WhatsApp
-                        </a>
+                        <app-botao-contato tipo="whatsapp" [href]="urlWhatsapp" texto="WhatsApp"
+                            [rotulo]="'Falar no WhatsApp com a ONG ' + ong.nome + ' (abre em nova aba)'" />
                     </dd>
 
                     }
