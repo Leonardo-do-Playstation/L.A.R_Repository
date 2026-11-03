@@ -2,6 +2,7 @@
   width: 100%;
   min-height: calc(100vh - 58px);
   padding: 12px 0 30px;
+  background: var(--lar-fundo);
 }
 
 .painel-animais__container {
@@ -76,7 +77,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #777;
+  color: #666666;
   font-size: 0.75rem;
   cursor: pointer;
 }
@@ -96,7 +97,8 @@
   overflow: hidden;
   border-radius: 7px;
   background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--lar-borda-suave);
+  box-shadow: var(--lar-sombra-card);
 }
 
 .animal-card__imagem {
@@ -164,7 +166,7 @@
 }
 
 .animal-card__status-controle label {
-  color: #777;
+  color: #666666;
   font-size: 0.75rem;
   font-weight: 600;
 }

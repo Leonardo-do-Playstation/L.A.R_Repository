@@ -99,7 +99,7 @@
 .animal-card__detalhes {
   margin: 2px 0 0;
   overflow: hidden;
-  color: #777;
+  color: #666666;
   font-size: 0.75rem;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -162,4 +162,32 @@
 
 .animal-card__favorito {
   z-index: 1;
+}
+
+.animal-card__selo {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  max-width: calc(100% - 50px);
+  padding: 3px 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #555555;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.animal-card__selo.animal-card__status-dot--tratamento {
+  background: #e59f24;
+  color: #111111;
+}
+
+.animal-card__selo.animal-card__status-dot--adotado,
+.animal-card__selo.animal-card__status-dot--indefinido {
+  background: #555555;
+  color: #ffffff;
 }

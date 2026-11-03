@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 12px 0 30px;
-  background: #f5f5f5;
+  background: var(--lar-fundo);
   box-sizing: border-box;
 }
 
@@ -37,9 +37,10 @@
   flex-direction: column;
   gap: 2px;
   padding: 14px 16px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lar-borda-suave);
   border-radius: 8px;
   background: #fff;
+  box-shadow: var(--lar-sombra-card);
 }
 
 .resumo-card__valor {
@@ -100,15 +101,16 @@
   justify-content: space-between;
   gap: 12px;
   padding: 18px 16px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--lar-borda-suave);
   border-radius: 8px;
   background: #fff;
+  box-shadow: var(--lar-sombra-card);
   cursor: pointer;
   transition: box-shadow 0.15s ease;
 }
 
 .usuario-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(29, 110, 25, 0.2);
 }
 
 .usuario-card__info {

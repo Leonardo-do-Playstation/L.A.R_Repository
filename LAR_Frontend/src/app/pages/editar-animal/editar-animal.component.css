@@ -2,6 +2,7 @@
   width: 100%;
   min-height: calc(100vh - 58px);
   padding: 24px 0 40px;
+  background: var(--lar-fundo);
 }
 
 .cadastro-animal__container {
@@ -84,7 +85,7 @@
 
 .cadastro-animal__foto-obrigatoria {
   margin-top: 8px;
-  color: #777777;
+  color: #666666;
   font-size: 0.75rem;
 }
 

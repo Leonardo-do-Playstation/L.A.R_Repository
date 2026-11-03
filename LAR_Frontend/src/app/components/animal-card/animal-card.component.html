@@ -4,6 +4,12 @@
 
         <img [src]="imagemAnimal()" [alt]="animal.nome" class="animal-card__imagem" (error)="erroImagem($event)">
 
+        @if (exibirStatus && animal.status) {
+
+        <span class="animal-card__selo" [class]="classeStatus()">{{ nomeStatus() }}</span>
+
+        }
+
         <button type="button" class="animal-card__favorito" [disabled]="usuarioLogado && processandoFavorito"
             [attr.aria-label]="(usuarioLogado ? 'Favoritar ' : 'Entrar para favoritar ') + animal.nome"
             [attr.aria-pressed]="usuarioLogado ? favoritado : null"

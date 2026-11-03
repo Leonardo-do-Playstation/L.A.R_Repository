@@ -5,7 +5,7 @@
 
 .footer-global {
   width: 100%;
-  background: #252525;
+  background: #1e3a1c;
   color: #ffffff;
 }
 
@@ -90,7 +90,7 @@
   width: min(100%, 1120px);
   margin: 0 auto;
   padding: 16px 28px 20px;
-  border-top: 1px solid #4a4a4a;
+  border-top: 1px solid #3d5f3a;
   box-sizing: border-box;
   color: #cccccc;
   font-size: 0.82rem;

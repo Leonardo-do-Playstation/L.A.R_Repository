@@ -1,3 +1,10 @@
+:root {
+  --lar-fundo: #f1f7f0;
+  --lar-borda-suave: #d7e8d5;
+  --lar-verde-escuro: #1d6e19;
+  --lar-sombra-card: 0 2px 8px rgba(29, 110, 25, 0.12);
+}
+
 html,
 body {
   margin: 0;
