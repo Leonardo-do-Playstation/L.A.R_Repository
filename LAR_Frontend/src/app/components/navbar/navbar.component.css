@@ -5,6 +5,7 @@
 .navbar-global {
   width: 100%;
   background: #ffffff;
+  border-bottom: 1px solid #e3ece2;
 }
 
 .navbar-global__conteudo {
