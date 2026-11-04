@@ -96,7 +96,9 @@
 
                 <div class="perfil__campo">
                     <label for="telefone">Telefone</label>
-                    <input id="telefone" type="tel" formControlName="telefone" autocomplete="tel">
+                    <input id="telefone" type="tel" formControlName="telefone" autocomplete="tel"
+                        mask="(00) 00000-0000||(00) 0000-0000" [dropSpecialCharacters]="true"
+                        placeholder="(11) 99999-9999" />
                 </div>
 
                 <div class="perfil__campo">
