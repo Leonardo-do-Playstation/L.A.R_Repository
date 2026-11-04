@@ -10,6 +10,14 @@ public class OngSpecification {
         return (root, query, cb) -> status == null ? null : cb.equal(root.get("status"), status);
     }
 
+    public static Specification<Ong> disponivelPublicamente() {
+        return (root, query, cb) -> cb.and(
+                cb.equal(root.get("status"), StatusOng.APROVADA),
+                cb.or(
+                        cb.isNull(root.get("bloqueado")),
+                        cb.isFalse(root.get("bloqueado"))));
+    }
+
     public static Specification<Ong> comNome(String nome) {
         return (root, query, cb) -> (nome == null || nome.isBlank()) ? null
                 : cb.like(cb.lower(root.get("nome")), "%" + nome.trim().toLowerCase() + "%");

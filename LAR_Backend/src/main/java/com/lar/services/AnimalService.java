@@ -8,6 +8,7 @@ import com.lar.dtos.OngPublicaDTO;
 import com.lar.entities.Animal;
 import com.lar.entities.Ong;
 import com.lar.enums.StatusAnimal;
+import com.lar.enums.StatusOng;
 import com.lar.exceptions.AcessoNegadoException;
 import com.lar.exceptions.RecursoNaoEncontradoException;
 import com.lar.exceptions.RegraDeNegocioException;
@@ -38,7 +39,7 @@ public class AnimalService {
     private StorageService storageService;
 
     public List<AnimalDetalhesDTO> listarTodosPublico() {
-        return animalRepository.findAll()
+        return animalRepository.findAll(AnimalSpecification.ongDisponivelPublicamente())
                 .stream()
                 .map(this::paraDetalhesDTO)
                 .collect(Collectors.toList());
@@ -197,6 +198,15 @@ public class AnimalService {
     public AnimalDetalhesDTO buscarDetalhes(Long idAnimal) {
         Animal animal = animalRepository.findById(idAnimal)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Animal não encontrado."));
+
+        Ong ong = animal.ong;
+        if (ong == null
+                || ong.getStatus() != StatusOng.APROVADA
+                || Boolean.TRUE.equals(ong.getBloqueado())) {
+            throw new RecursoNaoEncontradoException(
+                    "Animal não encontrado ou indisponível para consulta pública.");
+        }
+
         return paraDetalhesDTO(animal);
     }
 
