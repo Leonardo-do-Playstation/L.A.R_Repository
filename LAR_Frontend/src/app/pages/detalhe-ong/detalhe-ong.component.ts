@@ -94,12 +94,8 @@ export class DetalheOngComponent implements OnInit {
 
         this.carregando = false;
 
-        if (erro.status === 404) {
+        if (erro.status === 404 || erro.status === 409) {
           this.naoEncontrado = true;
-        } else if (erro.status === 409) {
-          this.erro =
-            erro.error?.mensagem ??
-            'Esta ONG ainda não está disponível publicamente.';
         } else {
           this.erro = 'Não foi possível carregar os dados desta ONG.';
         }

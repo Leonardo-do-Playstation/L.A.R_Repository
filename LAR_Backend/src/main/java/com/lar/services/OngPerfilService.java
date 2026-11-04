@@ -96,12 +96,16 @@ public class OngPerfilService {
             throw new RegraDeNegocioException("Esta ONG ainda não está disponível publicamente.");
         }
 
+        if (Boolean.TRUE.equals(ong.getBloqueado())) {
+            throw new RecursoNaoEncontradoException("ONG não encontrada ou indisponível para consulta pública.");
+        }
+
         return toPublicaDTO(ong);
     }
 
     public List<OngPublicaDTO> listarPublicas(String nome, String cidade) {
         Specification<Ong> filtro = Specification
-                .where(OngSpecification.comStatus(StatusOng.APROVADA))
+                .where(OngSpecification.disponivelPublicamente())
                 .and(OngSpecification.comNome(nome))
                 .and(OngSpecification.comCidade(cidade));
 
