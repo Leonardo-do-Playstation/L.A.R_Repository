@@ -33,7 +33,7 @@ export class EditarAnimalComponent implements OnInit {
     porte: ['', Validators.required],
     cor: [''],
     sexo: ['', Validators.required],
-    descricao: ['', Validators.required],
+    descricao: [''],
   });
 
   animalId!: number;

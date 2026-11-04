@@ -31,7 +31,7 @@ export class CadastroAnimalComponent {
     porte: ['', Validators.required],
     cor: [''],
     sexo: ['', Validators.required],
-    descricao: ['', Validators.required],
+    descricao: [''],
   });
 
   fotoSelecionada: File | null = null;
