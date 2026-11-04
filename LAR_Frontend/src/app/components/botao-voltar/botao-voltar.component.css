@@ -11,9 +11,10 @@
   min-width: 40px;
   height: 40px;
   padding: 0 8px;
-  border: 0;
+  border: 1px solid var(--lar-borda-suave);
   border-radius: 20px;
-  background: transparent;
+  background: #ffffff;
+  box-shadow: var(--lar-sombra-card);
   color: #333;
   font-size: 0.9rem;
   font-weight: 600;
@@ -21,7 +22,7 @@
 }
 
 .botao-voltar:hover {
-  background-color: #eeeeee;
+  background-color: #f7fbf6;
 }
 
 .botao-voltar:focus-visible {

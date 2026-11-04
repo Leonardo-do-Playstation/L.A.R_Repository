@@ -4,7 +4,7 @@
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
-  background: var(--lar-fundo);
+  background-color: var(--lar-fundo);
   box-sizing: border-box;
 }
 
