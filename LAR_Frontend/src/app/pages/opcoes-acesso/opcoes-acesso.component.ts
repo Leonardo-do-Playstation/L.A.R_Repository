@@ -9,7 +9,7 @@ interface OpcaoAcesso {
 }
 
 const OPCOES_ADOTANTE: OpcaoAcesso[] = [
-  { rotulo: 'Entrar sem login', rota: '/catalogo' },
+  { rotulo: 'Entrar sem login', rota: '/home' },
   { rotulo: 'Fazer login', rota: '/login' },
   { rotulo: 'Criar conta', rota: '/cadastro' },
 ];

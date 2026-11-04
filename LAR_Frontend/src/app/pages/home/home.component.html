@@ -224,7 +224,7 @@
     </section>
     }
 
-    @if (ehAdotante()) {
+    @if (ehAdotante() || ehVisitante()) {
 
     <section class="home__destaques" aria-labelledby="home-recentes-titulo">
 
@@ -270,6 +270,9 @@
       }
 
     </section>
+    }
+
+    @if (ehAdotante()) {
 
     <section class="home__destaques" aria-labelledby="home-favoritos-titulo">
 
