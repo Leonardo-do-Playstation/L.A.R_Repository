@@ -16,6 +16,7 @@ import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensag
 import { FotoOngComponent } from '../../components/foto-ong/foto-ong.component';
 import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
 import { senhaForte } from '../../validators/senha-forte.validator';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
   const nova = grupo.get('novaSenha')?.value;
@@ -28,13 +29,15 @@ function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
   selector: 'app-perfil',
   standalone: true,
   imports: [
-  RouterLink,
-  ReactiveFormsModule,
-  BotaoVoltarComponent,
-  MensagemEstadoComponent,
-  FotoOngComponent,
-  IndicadorSenhaComponent,
-],
+    RouterLink,
+    ReactiveFormsModule,
+    BotaoVoltarComponent,
+    MensagemEstadoComponent,
+    FotoOngComponent,
+    IndicadorSenhaComponent,
+    NgxMaskDirective,
+  ],
+  providers: [provideNgxMask()],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
 })
