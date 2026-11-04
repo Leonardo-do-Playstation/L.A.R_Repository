@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 16px 0 40px;
-  background: var(--lar-fundo);
+  background-color: var(--lar-fundo);
   box-sizing: border-box;
 }
 

@@ -5,7 +5,7 @@
 .sobre {
   min-height: calc(100vh - 70px);
   padding: 24px 20px 64px;
-  background: var(--lar-fundo);
+  background-color: var(--lar-fundo);
   color: #222222;
   box-sizing: border-box;
 }
