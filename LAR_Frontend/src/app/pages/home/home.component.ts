@@ -85,8 +85,11 @@ export class HomeComponent implements OnInit {
       this.carregarResumo();
     }
 
-    if (this.ehAdotante()) {
+    if (this.ehAdotante() || this.ehVisitante()) {
       this.carregarRecentes();
+    }
+
+    if (this.ehAdotante()) {
       this.carregarFavoritos(false);
     }
   }
