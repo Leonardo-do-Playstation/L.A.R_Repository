@@ -7,6 +7,7 @@ import {
   Animal,
   AnimalService,
   StatusAnimal,
+  coresPadrao,
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
@@ -20,6 +21,11 @@ type CategoriaFiltro =
   | 'sexo'
   | 'cor'
   | 'status';
+
+interface ChipFiltro {
+  chave: keyof FiltrosPainelAnimais;
+  rotulo: string;
+}
 
 interface FiltrosPainelAnimais {
   especie?: string;
@@ -62,6 +68,8 @@ export class PainelAnimaisComponent implements OnInit {
 
   filtros: FiltrosPainelAnimais = {};
   private filtrosAplicados: FiltrosPainelAnimais = {};
+  racasDisponiveis: string[] = [];
+  coresDisponiveis: string[] = [];
   mostrarFiltros = false;
   categoriaExpandida: CategoriaFiltro | null = null;
 
@@ -86,16 +94,16 @@ export class PainelAnimaisComponent implements OnInit {
     const status = this.statusDisponiveis.find(
       (item) => item.valor === valor,
     )?.valor;
-    const restantes = { ...this.filtrosAplicados };
+    const atualizados = { ...this.filtrosAplicados };
 
     if (status) {
-      restantes.status = status;
+      atualizados.status = status;
     } else {
-      delete restantes.status;
+      delete atualizados.status;
     }
 
-    this.filtrosAplicados = restantes;
-    this.filtros = { ...restantes };
+    this.filtrosAplicados = atualizados;
+    this.filtros = { ...atualizados };
     this.atualizarLista();
   }
 
@@ -106,6 +114,7 @@ export class PainelAnimaisComponent implements OnInit {
     this.animalService.listarMeusAnimais().subscribe({
       next: (animais) => {
         this.animaisOriginais = [...animais];
+        this.atualizarOpcoesFiltros();
         this.atualizarLista();
         this.carregando = false;
       },
@@ -144,7 +153,43 @@ export class PainelAnimaisComponent implements OnInit {
   }
 
   aplicarFiltros(): void {
-    this.filtrosAplicados = { ...this.filtros };
+    const atuais = this.filtros;
+    const aplicados: FiltrosPainelAnimais = {};
+
+    if (atuais.especie?.trim()) {
+      aplicados.especie = atuais.especie.trim();
+    }
+
+    if (atuais.raca?.trim()) {
+      aplicados.raca = atuais.raca.trim();
+    }
+
+    if (atuais.porte?.trim()) {
+      aplicados.porte = atuais.porte.trim();
+    }
+
+    if (atuais.sexo) {
+      aplicados.sexo = atuais.sexo;
+    }
+
+    if (atuais.cor?.trim()) {
+      aplicados.cor = atuais.cor.trim();
+    }
+
+    if (atuais.idadeMinima != null) {
+      aplicados.idadeMinima = atuais.idadeMinima;
+    }
+
+    if (atuais.idadeMaxima != null) {
+      aplicados.idadeMaxima = atuais.idadeMaxima;
+    }
+
+    if (atuais.status) {
+      aplicados.status = atuais.status;
+    }
+
+    this.filtrosAplicados = aplicados;
+    this.filtros = { ...aplicados };
     this.fecharFiltros();
     this.atualizarLista();
   }
@@ -156,10 +201,117 @@ export class PainelAnimaisComponent implements OnInit {
     this.atualizarLista();
   }
 
+  removerFiltro(chave: keyof FiltrosPainelAnimais): void {
+    const restantes = { ...this.filtrosAplicados };
+    delete restantes[chave];
+
+    this.filtrosAplicados = restantes;
+    this.filtros = { ...restantes };
+    this.atualizarLista();
+  }
+
+  get chipsFiltros(): ChipFiltro[] {
+    const filtros = this.filtrosAplicados;
+    const chips: ChipFiltro[] = [];
+
+    if (filtros.especie?.trim()) {
+      chips.push({
+        chave: 'especie',
+        rotulo: `Espécie: ${filtros.especie.trim()}`,
+      });
+    }
+
+    if (filtros.raca?.trim()) {
+      chips.push({ chave: 'raca', rotulo: `Raça: ${filtros.raca.trim()}` });
+    }
+
+    if (filtros.porte?.trim()) {
+      chips.push({ chave: 'porte', rotulo: `Porte: ${filtros.porte.trim()}` });
+    }
+
+    if (filtros.sexo) {
+      chips.push({
+        chave: 'sexo',
+        rotulo: `Sexo: ${filtros.sexo === 'MACHO' ? 'Macho' : 'Fêmea'}`,
+      });
+    }
+
+    if (filtros.cor?.trim()) {
+      chips.push({ chave: 'cor', rotulo: `Cor: ${filtros.cor.trim()}` });
+    }
+
+    if (filtros.idadeMinima != null) {
+      chips.push({
+        chave: 'idadeMinima',
+        rotulo: `Idade mínima: ${this.formatarIdade(filtros.idadeMinima)}`,
+      });
+    }
+
+    if (filtros.idadeMaxima != null) {
+      chips.push({
+        chave: 'idadeMaxima',
+        rotulo: `Idade máxima: ${this.formatarIdade(filtros.idadeMaxima)}`,
+      });
+    }
+
+    if (filtros.status) {
+      chips.push({
+        chave: 'status',
+        rotulo: `Status: ${this.nomeStatus(filtros.status)}`,
+      });
+    }
+
+    return chips;
+  }
+
+  private formatarIdade(idade: number): string {
+    return idade === 1 ? '1 ano' : `${idade} anos`;
+  }
+
   get quantidadeFiltrosAtivos(): number {
-    return Object.values(this.filtrosAplicados).filter(
-      (valor) => valor !== undefined && valor !== null && valor !== '',
-    ).length;
+    return this.chipsFiltros.length;
+  }
+
+  get textoContador(): string {
+    return this.animais.length === 1
+      ? 'Foi encontrado 1 resultado'
+      : `Foram encontrados ${this.animais.length.toLocaleString('pt-BR')} resultados`;
+  }
+
+  private atualizarOpcoesFiltros(): void {
+    this.racasDisponiveis = this.valoresUnicos(
+      this.animaisOriginais.map((animal) => animal.raca),
+    );
+    this.coresDisponiveis = this.valoresUnicos(
+      this.animaisOriginais.map((animal) => animal.cor),
+      coresPadrao(),
+    );
+  }
+
+  private valoresUnicos(
+    valores: (string | null | undefined)[],
+    padroes: string[] = [],
+  ): string[] {
+    const grafiaPadrao = new Map(
+      padroes.map((padrao) => [padrao.toLowerCase(), padrao]),
+    );
+    const unicos = new Map<string, string>();
+
+    for (const valor of valores) {
+      const texto = valor?.trim();
+
+      if (!texto) {
+        continue;
+      }
+
+      const chave = texto.toLowerCase();
+
+      if (!unicos.has(chave)) {
+        unicos.set(chave, grafiaPadrao.get(chave) ?? texto);
+      }
+    }
+
+    return [...unicos.values()].sort((a, b) => a.localeCompare(b, 'pt-BR'));
   }
 
   private atualizarLista(): void {
@@ -210,7 +362,7 @@ export class PainelAnimaisComponent implements OnInit {
       return true;
     }
 
-    return this.normalizar(valor).includes(this.normalizar(filtro));
+    return this.normalizar(valor) === this.normalizar(filtro);
   }
 
   private normalizar(valor: string | null | undefined): string {
@@ -280,6 +432,7 @@ export class PainelAnimaisComponent implements OnInit {
         this.animaisOriginais = this.animaisOriginais.filter(
           (item) => item.id !== animal.id,
         );
+        this.atualizarOpcoesFiltros();
         this.animalParaExcluir = null;
         this.excluindo = false;
         this.atualizarLista();
