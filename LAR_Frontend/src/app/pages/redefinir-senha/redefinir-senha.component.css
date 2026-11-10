@@ -1,19 +1,20 @@
 .redefinir {
+  box-sizing: border-box;
   min-height: 100vh;
+  min-height: 100svh;
   width: 100%;
-
+  padding: 24px 16px;
   background-color: #ffffff;
-
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .redefinir__container {
-  width: min(100%, 360px);
-
+  box-sizing: border-box;
+  width: min(100%, 400px);
+  margin: auto;
   padding: 40px 24px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,19 +27,14 @@
 .redefinir__icone img {
   width: 110px;
   height: 110px;
-
   object-fit: contain;
 }
 
 .redefinir h1 {
   width: 100%;
-
   margin: 0 0 32px;
-
   text-align: center;
-
-  color: #4d9748;
-
+  color: #24631f;
   font-size: 1.4rem;
   font-weight: 700;
 }
@@ -54,28 +50,22 @@
 
 .redefinir__field label {
   display: block;
-
   margin-bottom: 5px;
-
-  color: #555555;
-
+  color: #444444;
   font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .redefinir__field input {
-  width: 100%;
-  height: 42px;
-
-  padding: 8px 10px;
-
-  border: 1px solid #bdbdbd;
-  border-radius: 7px;
-
-  background-color: #ffffff;
-
-  color: #000000;
-
   box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  padding: 8px 10px;
+  border: 1px solid #a8a8a8;
+  border-radius: 7px;
+  background-color: #ffffff;
+  color: #161616;
+  font: inherit;
 }
 
 .redefinir__field input::placeholder {
@@ -84,70 +74,70 @@
 }
 
 .redefinir__field input:focus {
+  outline: none;
   border-color: #24851f;
+  box-shadow: 0 0 0 2px rgba(36, 133, 31, 0.2);
+}
 
-  box-shadow: 0 0 0 2px rgba(36, 133, 31, 0.15);
+.redefinir__field input:focus-visible {
+  outline: 2px solid #1d6e19;
+  outline-offset: 2px;
+}
+
+.redefinir__field input.ng-valid.ng-touched {
+  border-color: #24851f;
+}
+
+.redefinir__field input.ng-invalid.ng-touched,
+.redefinir__field input.campo-invalido {
+  border-color: #b42318;
+  box-shadow: 0 0 0 2px rgba(180, 35, 24, 0.16);
 }
 
 .redefinir__error {
   display: block;
-
   margin-top: 5px;
-
   color: #b42318;
-
   font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 .redefinir__feedback {
+  box-sizing: border-box;
   width: 100%;
-
   margin-bottom: 16px;
   padding: 10px 12px;
-
   border-radius: 7px;
-
-  box-sizing: border-box;
-
   font-size: 0.88rem;
   line-height: 1.4;
 }
 
 .redefinir__feedback--sucesso {
   border: 1px solid #8bc587;
-
   background-color: #edf8ec;
-
   color: #24631f;
 }
 
 .redefinir__feedback--erro {
   border: 1px solid #e0a4a4;
-
   background-color: #fff1f1;
-
   color: #9b1c1c;
 }
 
 .redefinir__button {
-  width: 100%;
-  height: 42px;
-
-  border: 2px solid #24851f;
-  border-radius: 7px;
-
-  background-color: #24851f;
-  color: #ffffff;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  border: 2px solid #24851f;
+  border-radius: 7px;
+  background-color: #24851f;
+  color: #ffffff;
   font-size: 0.95rem;
   font-weight: 600;
-
   text-decoration: none;
-
   cursor: pointer;
 }
 
@@ -156,25 +146,34 @@
   border-color: #1d6e19;
 }
 
+.redefinir__button:focus-visible {
+  outline: 2px solid #1d6e19;
+  outline-offset: 3px;
+}
+
 .redefinir__button:disabled {
   opacity: 0.7;
-
   cursor: not-allowed;
 }
 
 .redefinir__voltar {
+  display: inline-block;
   margin-top: 28px;
-
-  color: #8bc587;
-
+  color: #24631f;
   font-size: 0.9rem;
-  font-weight: 500;
-
+  font-weight: 600;
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .redefinir__voltar:hover {
-  color: #4d9748;
+  color: #1d6e19;
+}
+
+.redefinir__voltar:focus-visible {
+  outline: 2px solid #1d6e19;
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
 .redefinir__field .redefinir__senha {
@@ -196,11 +195,28 @@
   width: 42px;
   padding: 0;
   border: 0;
+  border-radius: 6px;
   background: none;
   cursor: pointer;
+}
+
+.redefinir__olho:focus-visible {
+  outline: 2px solid #24851f;
+  outline-offset: -2px;
 }
 
 .redefinir__olho img {
   width: 20px;
   height: 20px;
+}
+
+@media (max-width: 380px) {
+  .redefinir {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .redefinir__container {
+    padding: 36px 16px;
+  }
 }

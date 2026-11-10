@@ -8,30 +8,46 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-width: 40px;
-  height: 40px;
-  padding: 0 8px;
-  border: 1px solid var(--lar-borda-suave);
-  border-radius: 20px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--lar-borda-suave, #a3a3a3);
+  border-radius: 22px;
   background: #ffffff;
-  box-shadow: var(--lar-sombra-card);
-  color: #333;
+  box-shadow: var(--lar-sombra-card, 0 2px 8px rgba(0, 0, 0, 0.16));
+  color: #262626;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .botao-voltar:hover {
-  background-color: #f7fbf6;
+  background-color: #f1f7f0;
+  border-color: #7da879;
+}
+
+.botao-voltar:active {
+  background-color: #e5eee3;
 }
 
 .botao-voltar:focus-visible {
-  outline: 2px solid #2b9e25;
-  outline-offset: 2px;
+  outline: 2px solid #1d6e19;
+  outline-offset: 3px;
 }
 
 .botao-voltar__icone {
+  flex: 0 0 auto;
   width: 24px;
   height: 24px;
   object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao-voltar {
+    transition: none;
+  }
 }
