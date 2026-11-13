@@ -11,6 +11,7 @@ import {
   racasPorEspecie,
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import type { FormularioComAlteracoesPendentes } from '../../services/confirmar-saida-formulario.guard';
 
 @Component({
   selector: 'app-editar-animal',
@@ -19,7 +20,7 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
   templateUrl: './editar-animal.component.html',
   styleUrl: './editar-animal.component.css',
 })
-export class EditarAnimalComponent implements OnInit {
+export class EditarAnimalComponent implements OnInit, FormularioComAlteracoesPendentes {
   private readonly formBuilder = inject(FormBuilder);
   private readonly animalService = inject(AnimalService);
   private readonly route = inject(ActivatedRoute);
@@ -50,6 +51,10 @@ export class EditarAnimalComponent implements OnInit {
   private readonly tamanhoMaximoFoto = 5 * 1024 * 1024;
 
   readonly coresSugeridas = coresPadrao();
+
+  temAlteracoesPendentes(): boolean {
+    return this.editarForm.dirty || this.fotoSelecionada !== null;
+  }
 
   get racasSugeridas(): string[] {
     return racasPorEspecie(this.editarForm.controls.especie.value);
@@ -90,9 +95,7 @@ export class EditarAnimalComponent implements OnInit {
       error: (erro: HttpErrorResponse) => {
         this.carregando = false;
 
-        if (erro.status === 401) {
-          this.erroEdicao = 'Sua sessão expirou. Faça login novamente.';
-        } else if (erro.status === 403) {
+        if (erro.status === 403) {
           this.erroEdicao =
             'Você não possui permissão para editar este animal.';
         } else {
@@ -184,6 +187,8 @@ export class EditarAnimalComponent implements OnInit {
       .subscribe({
         next: () => {
           this.salvando = false;
+          this.editarForm.markAsPristine();
+          this.fotoSelecionada = null;
           this.router.navigate(['/painel-animais']);
         },
 
@@ -194,8 +199,6 @@ export class EditarAnimalComponent implements OnInit {
             this.erroEdicao =
               erro.error?.mensagem ||
               'Não foi possível salvar as alterações. Verifique os dados informados.';
-          } else if (erro.status === 401) {
-            this.erroEdicao = 'Sua sessão expirou. Faça login novamente.';
           } else if (erro.status === 403) {
             this.erroEdicao =
               'Você não possui permissão para editar este animal.';

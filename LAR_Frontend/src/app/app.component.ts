@@ -5,11 +5,12 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HistoricoNavegacaoService } from './services/historico-navegacao.service';
+import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, ModalConfirmacaoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

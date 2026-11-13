@@ -60,7 +60,7 @@ export class AnimalCardComponent {
       error: (erro: HttpErrorResponse) => {
         this.processandoFavorito = false;
 
-        if (erro.status === 401 || erro.status === 403) {
+        if (erro.status === 403) {
           this.avisoAuthService.mostrar(
             'Você precisa estar logado como Adotante para favoritar.',
           );

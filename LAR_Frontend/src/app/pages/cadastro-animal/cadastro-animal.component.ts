@@ -10,6 +10,7 @@ import {
   racasPorEspecie,
 } from '../../services/animal.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import type { FormularioComAlteracoesPendentes } from '../../services/confirmar-saida-formulario.guard';
 
 @Component({
   selector: 'app-cadastro-animal',
@@ -18,7 +19,7 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
   templateUrl: './cadastro-animal.component.html',
   styleUrl: './cadastro-animal.component.css',
 })
-export class CadastroAnimalComponent {
+export class CadastroAnimalComponent implements FormularioComAlteracoesPendentes {
   private readonly formBuilder = inject(FormBuilder);
   private readonly animalService = inject(AnimalService);
   private readonly router = inject(Router);
@@ -44,6 +45,10 @@ export class CadastroAnimalComponent {
   private readonly tamanhoMaximoFoto = 5 * 1024 * 1024;
 
   readonly coresSugeridas = coresPadrao();
+
+  temAlteracoesPendentes(): boolean {
+    return this.cadastroForm.dirty || this.fotoSelecionada !== null;
+  }
 
   get racasSugeridas(): string[] {
     return racasPorEspecie(this.cadastroForm.controls.especie.value);
@@ -120,6 +125,8 @@ export class CadastroAnimalComponent {
     this.animalService.cadastrarAnimal(dados, this.fotoSelecionada).subscribe({
       next: () => {
         this.carregando = false;
+        this.cadastroForm.markAsPristine();
+        this.fotoSelecionada = null;
         this.router.navigate(['/painel-animais']);
       },
 
@@ -132,8 +139,6 @@ export class CadastroAnimalComponent {
           this.erroCadastro =
             mensagemBackend ||
             'Não foi possível cadastrar o animal. Verifique os dados informados.';
-        } else if (erro.status === 401) {
-          this.erroCadastro = 'Sua sessão expirou. Faça login novamente.';
         } else if (erro.status === 403) {
           this.erroCadastro =
             'Você não possui permissão para cadastrar animais.';

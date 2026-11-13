@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import type { FormularioComAlteracoesPendentes } from '../../services/confirmar-saida-formulario.guard';
 
 @Component({
   selector: 'app-cadastro',
@@ -17,7 +18,7 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
 })
-export class CadastroComponent {
+export class CadastroComponent implements FormularioComAlteracoesPendentes {
   tipo: 'adotante' | 'ong';
 
   cadastroForm;
@@ -54,6 +55,10 @@ export class CadastroComponent {
 
       confirmarSenha: ['', Validators.required],
     });
+  }
+
+  temAlteracoesPendentes(): boolean {
+    return this.cadastroForm.dirty;
   }
 
   cadastrar(): void {
@@ -114,6 +119,7 @@ export class CadastroComponent {
 
     this.http.post(`${this.apiUrl}/adotantes/cadastro`, dados).subscribe({
       next: () => {
+        this.cadastroForm.markAsPristine();
         console.log('Cadastro de adotante realizado com sucesso.');
 
         this.loginAutomatico(dados.email, dados.senha);
@@ -137,6 +143,7 @@ export class CadastroComponent {
 
     this.http.post(`${this.apiUrl}/ongs/cadastro`, dados).subscribe({
       next: () => {
+        this.cadastroForm.markAsPristine();
         console.log('Cadastro de ONG realizado com sucesso.');
 
         this.loginAutomatico(dados.email, dados.senha);

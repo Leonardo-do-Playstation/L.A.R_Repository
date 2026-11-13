@@ -121,9 +121,7 @@ export class PainelAnimaisComponent implements OnInit {
       error: (erro: HttpErrorResponse) => {
         this.carregando = false;
 
-        if (erro.status === 401) {
-          this.erro = 'Sua sessão expirou. Faça login novamente.';
-        } else if (erro.status === 403) {
+        if (erro.status === 403) {
           this.erro = 'Você não possui permissão para acessar este painel.';
         } else {
           this.erro = 'Não foi possível carregar seus animais.';
@@ -392,9 +390,7 @@ export class PainelAnimaisComponent implements OnInit {
       error: (erro: HttpErrorResponse) => {
         this.alterandoStatusId = null;
 
-        if (erro.status === 401) {
-          this.erro = 'Sua sessão expirou. Faça login novamente.';
-        } else if (erro.status === 403) {
+        if (erro.status === 403) {
           this.erro =
             'Você não possui permissão para alterar o status deste animal.';
         } else if (erro.status === 404) {
@@ -440,9 +436,7 @@ export class PainelAnimaisComponent implements OnInit {
       error: (erro: HttpErrorResponse) => {
         this.excluindo = false;
 
-        if (erro.status === 401) {
-          this.erro = 'Sua sessão expirou. Faça login novamente.';
-        } else if (erro.status === 403) {
+        if (erro.status === 403) {
           this.erro = 'Você não possui permissão para excluir este animal.';
         } else if (erro.status === 404) {
           this.erro = 'Animal não encontrado.';

@@ -164,10 +164,6 @@ export class UsuariosAdminComponent implements OnInit {
   }
 
   private mensagemErro(erro: HttpErrorResponse): string {
-    if (erro.status === 401) {
-      return 'Sua sessão expirou. Faça login novamente.';
-    }
-
     if (erro.status === 403) {
       return 'Você não possui permissão para acessar esta área.';
     }

@@ -1,0 +1,25 @@
+@if (solicitacao$ | async; as solicitacao) {
+<div class="modal-confirmacao__overlay">
+  <section class="modal-confirmacao" role="alertdialog" aria-modal="true"
+    aria-labelledby="modal-confirmacao-titulo" aria-describedby="modal-confirmacao-mensagem">
+    <h2 id="modal-confirmacao-titulo" class="modal-confirmacao__titulo">
+      {{ solicitacao.titulo }}
+    </h2>
+
+    <p id="modal-confirmacao-mensagem" class="modal-confirmacao__mensagem">
+      {{ solicitacao.mensagem }}
+    </p>
+
+    <div class="modal-confirmacao__acoes">
+      <button type="button" class="modal-confirmacao__botao modal-confirmacao__botao--neutro"
+        autofocus (click)="cancelar()">
+        {{ solicitacao.textoCancelar }}
+      </button>
+      <button type="button" class="modal-confirmacao__botao modal-confirmacao__botao--perigo"
+        (click)="confirmar()">
+        {{ solicitacao.textoConfirmar }}
+      </button>
+    </div>
+  </section>
+</div>
+}
