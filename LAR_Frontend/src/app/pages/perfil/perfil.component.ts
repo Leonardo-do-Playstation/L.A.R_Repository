@@ -15,6 +15,7 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
 import { FotoOngComponent } from '../../components/foto-ong/foto-ong.component';
 import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
+import { ConfirmacaoModalService } from '../../services/confirmacao-modal.service';
 import { senhaForte } from '../../validators/senha-forte.validator';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
@@ -43,6 +44,7 @@ function senhasIguais(grupo: AbstractControl): ValidationErrors | null {
 })
 export class PerfilComponent implements OnInit {
   private readonly contaService = inject(ContaService);
+  private readonly confirmacaoService = inject(ConfirmacaoModalService);
   private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
@@ -186,9 +188,20 @@ export class PerfilComponent implements OnInit {
     this.editando = true;
   }
 
-  cancelarEdicao(): void {
+  async cancelarEdicao(): Promise<void> {
+    if (this.formPerfil.dirty) {
+      const confirmado = await this.confirmacaoService.confirmar(
+        'Você tem alterações não salvas no perfil. Deseja descartá-las?',
+      );
+
+      if (!confirmado) {
+        return;
+      }
+    }
+
     this.editando = false;
     this.erroPerfil = '';
+    this.formPerfil.reset();
   }
 
   salvarPerfil(): void {

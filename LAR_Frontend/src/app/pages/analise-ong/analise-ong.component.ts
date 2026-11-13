@@ -63,9 +63,7 @@ export class AnaliseOngComponent implements OnInit {
       error: (erro: HttpErrorResponse) => {
         this.carregando = false;
 
-        if (erro.status === 401) {
-          this.erro = 'Sua sessão expirou. Faça login novamente.';
-        } else if (erro.status === 403) {
+        if (erro.status === 403) {
           this.erro = 'Você não possui permissão para acessar esta área.';
         } else {
           this.erro = 'Não foi possível carregar os dados da ONG.';

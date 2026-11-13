@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService, Perfil } from '../../services/auth.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { AvisoAuthService } from '../../services/aviso-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private avisoAuthService: AvisoAuthService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit {
       next: (resposta: { token: string; perfil: Perfil }) => {
         this.authService.salvarToken(resposta.token);
         this.authService.salvarPerfil(resposta.perfil);
+        this.avisoAuthService.fechar();
         this.carregando = false;
 
         const ongPendente =

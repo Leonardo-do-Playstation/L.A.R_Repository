@@ -11,6 +11,7 @@ import {
 } from '../../services/usuario-admin.service';
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
 import { MensagemEstadoComponent } from '../../components/mensagem-estado/mensagem-estado.component';
+import { ConfirmacaoModalService } from '../../services/confirmacao-modal.service';
 
 @Component({
   selector: 'app-detalhe-usuario-admin',
@@ -24,6 +25,7 @@ export class DetalheUsuarioAdminComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly usuarioAdminService = inject(UsuarioAdminService);
+  private readonly confirmacaoService = inject(ConfirmacaoModalService);
 
   usuario: UsuarioAdmin | null = null;
 
@@ -124,9 +126,20 @@ export class DetalheUsuarioAdminComponent implements OnInit {
     this.editando = true;
   }
 
-  cancelarEdicao(): void {
+  async cancelarEdicao(): Promise<void> {
+    if (this.formulario.dirty) {
+      const confirmado = await this.confirmacaoService.confirmar(
+        `Você tem alterações não salvas no ${this.rotuloDocumento}. Deseja descartá-las?`,
+      );
+
+      if (!confirmado) {
+        return;
+      }
+    }
+
     this.editando = false;
     this.erroEdicao = '';
+    this.formulario.reset({ documento: this.documentoAtual });
   }
 
   salvar(): void {
