@@ -11,6 +11,7 @@ import com.lar.repositories.AnimalRepository;
 import com.lar.repositories.FavoritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.lar.enums.StatusAnimal;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +56,7 @@ public class FavoritoService {
 
         return favoritoRepository.findByAdotanteIdOrderByDataFavoritadoDesc(adotante.getId())
                 .stream()
+                .filter(fav -> fav.animal.status == StatusAnimal.DISPONIVEL)
                 .map(fav -> {
                     FavoritoResponseDTO dto = new FavoritoResponseDTO();
                     dto.animal = animalService.paraDetalhesDTO(fav.animal);
