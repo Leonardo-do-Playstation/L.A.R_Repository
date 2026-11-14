@@ -30,10 +30,10 @@ public class OngService {
             throw new RegraDeNegocioException("Este e-mail já está cadastrado.");
         }
 
-        if (dto.cnpj != null && !dto.cnpj.isBlank()) {
-            if (ongRepository.existsByCnpj(dto.cnpj)) {
-                throw new RegraDeNegocioException("Este CNPJ já está cadastrado.");
-            }
+        String cnpj = (dto.cnpj == null || dto.cnpj.isBlank()) ? null : dto.cnpj.replaceAll("\\D", "");
+
+        if (cnpj != null && ongRepository.existsByCnpj(cnpj)) {
+            throw new RegraDeNegocioException("Este CNPJ já está cadastrado.");
         }
         String senhaCriptografada = passwordEncoder.encode(dto.senha);
 
@@ -43,7 +43,7 @@ public class OngService {
         ong.setEmail(dto.email);
         ong.setSenha(senhaCriptografada);
         ong.setEndereco(dto.endereco);
-        ong.setCnpj(dto.cnpj);
+        ong.setCnpj(cnpj);
         ong.setData_cadastro(LocalDateTime.now());
         ong.setStatus(StatusOng.PENDENTE);
 

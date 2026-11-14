@@ -38,6 +38,7 @@ export class CadastroAnimalComponent {
   fotoPreview: string | null = null;
 
   erroFoto = '';
+    private readonly tiposFotoPermitidos = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
   erroCadastro = '';
   carregando = false;
 

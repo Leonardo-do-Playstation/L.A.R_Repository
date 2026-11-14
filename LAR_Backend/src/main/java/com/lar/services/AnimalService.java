@@ -22,12 +22,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.Set;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class AnimalService {
+
+    private static final long TAMANHO_MAXIMO_FOTO = 5L * 1024 * 1024;
+
+    private static final Set<String> TIPOS_FOTO_PERMITIDOS = Set.of(
+            "image/jpeg", "image/png", "image/webp", "image/gif");
 
     @Autowired
     private AnimalRepository animalRepository;
@@ -45,7 +51,23 @@ public class AnimalService {
                 .collect(Collectors.toList());
     }
 
+        private void validarFoto(MultipartFile foto) {
+        if (foto == null || foto.isEmpty()) {
+            return;
+        }
+
+        if (foto.getContentType() == null || !TIPOS_FOTO_PERMITIDOS.contains(foto.getContentType())) {
+            throw new RegraDeNegocioException("Envie uma imagem válida (JPG, PNG, WEBP ou GIF).");
+        }
+
+        if (foto.getSize() > TAMANHO_MAXIMO_FOTO) {
+            throw new RegraDeNegocioException("A foto deve ter no máximo 5 MB.");
+        }
+    }
+
     public AnimalResponseDTO cadastrar(CadastroAnimalDTO dto, MultipartFile foto, String emailOngAutenticada) {
+
+        validarFoto(foto);
 
         Ong ong = buscarOngAutenticada(emailOngAutenticada);
 

@@ -76,17 +76,19 @@
       <div class="cadastro__field">
 
         <label for="cnpj">
-          CNPJ
+          CNPJ (opcional)
         </label>
 
         <input id="cnpj" type="text" formControlName="cnpj" inputmode="numeric" maxlength="14" autocomplete="off">
 
+        <small class="cadastro__hint">Deixe em branco se for protetor independente.</small>
+
         @if (
         cadastroForm.controls.cnpj.touched &&
-        !cadastroForm.controls.cnpj.value
+        cadastroForm.controls.cnpj.errors?.['cnpjInvalido']
         ) {
         <span class="cadastro__error" role="alert">
-          Informe o CNPJ.
+          CNPJ inválido. Confira os 14 dígitos ou deixe em branco.
         </span>
         }
 
@@ -154,7 +156,6 @@
           A senha não atende aos requisitos abaixo.
         </span>
         }
-
         <app-indicador-senha [senha]="cadastroForm.controls.senha.value" tema="escuro" />
 
       </div>

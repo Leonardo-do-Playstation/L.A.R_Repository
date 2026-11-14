@@ -42,6 +42,7 @@ export class EditarAnimalComponent implements OnInit {
   fotoPreview: string | null = null;
 
   erroFoto = '';
+    private readonly tiposFotoPermitidos = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
   erroEdicao = '';
 
   carregando = true;

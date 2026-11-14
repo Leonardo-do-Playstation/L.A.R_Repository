@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { senhaForte } from '../../validators/senha-forte.validator';
+import { cnpjOpcional } from '../../validators/cnpj.validator';
 import { IndicadorSenhaComponent } from '../../components/indicador-senha/indicador-senha.component';
 
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +14,12 @@ import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, BotaoVoltarComponent, IndicadorSenhaComponent],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    BotaoVoltarComponent,
+    IndicadorSenhaComponent,
+  ],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
 })
@@ -46,7 +52,7 @@ export class CadastroComponent {
 
       cpf: [''],
 
-      cnpj: [''],
+      cnpj: ['', cnpjOpcional],
 
       email: ['', [Validators.required, Validators.email]],
 
@@ -100,7 +106,7 @@ export class CadastroComponent {
 
     return (
       !!this.cadastroForm.controls.nomeInstituicao.value &&
-      !!this.cadastroForm.controls.cnpj.value
+      this.cadastroForm.controls.cnpj.valid
     );
   }
 
@@ -132,7 +138,7 @@ export class CadastroComponent {
       nome: this.cadastroForm.value.nomeInstituicao!,
       email: this.cadastroForm.value.email!,
       senha: this.cadastroForm.value.senha!,
-      cnpj: this.cadastroForm.value.cnpj!,
+      cnpj: (this.cadastroForm.value.cnpj ?? '').trim() || null,
     };
 
     this.http.post(`${this.apiUrl}/ongs/cadastro`, dados).subscribe({

@@ -2,6 +2,7 @@ package com.lar.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import com.lar.validators.CnpjValido;
 
 public class CadastroOngDTO {
     @NotBlank(message = "Nome é obrigatório")
@@ -18,6 +19,7 @@ public class CadastroOngDTO {
 
     public String endereco;
 
+    @CnpjValido(message = "CNPJ inválido")
     public String cnpj;
         
     public CadastroOngDTO() {
