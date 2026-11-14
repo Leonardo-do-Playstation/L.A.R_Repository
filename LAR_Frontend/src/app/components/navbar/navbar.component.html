@@ -43,32 +43,6 @@
 
 </nav>
 
-@if (mensagemFavoritos) {
-
-<div class="navbar-global__aviso" role="alert">
-
-    <span>{{ mensagemFavoritos }}</span>
-
-    <div class="navbar-global__aviso-acoes">
-
-        <a routerLink="/login" (click)="fecharAviso()">
-            Login
-        </a>
-
-        <a routerLink="/cadastro" (click)="fecharAviso()">
-            Cadastro
-        </a>
-
-        <button type="button" (click)="fecharAviso()">
-            Fechar
-        </button>
-
-    </div>
-
-</div>
-
-}
-
 @if (menuAberto) {
 
 <div class="menu-overlay" aria-hidden="true" (click)="fecharMenu()">
@@ -237,3 +211,30 @@
 </aside>
 }
 }
+
+@if (mensagemFavoritos) {
+
+<div class="navbar-global__aviso" role="alert">
+
+    <span>{{ mensagemFavoritos }}</span>
+
+    <div class="navbar-global__aviso-acoes">
+
+        <a routerLink="/login" (click)="fecharAviso()">
+            Login
+        </a>
+
+        <a routerLink="/cadastro" (click)="fecharAviso()">
+            Cadastro
+        </a>
+
+        <button type="button" (click)="fecharAviso()">
+            Fechar
+        </button>
+
+    </div>
+
+</div>
+
+}
+

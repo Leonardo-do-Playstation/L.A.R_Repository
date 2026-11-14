@@ -12,6 +12,7 @@ import { authGuard } from './services/auth.guard';
 import { perfilGuard } from './services/perfil.guard';
 import { ongPendenteGuard } from './services/ong-pendente.guard';
 import { superAdminGuard } from './services/superadmin.guard';
+import { confirmarSaidaFormularioGuard } from './services/confirmar-saida-formulario.guard';
 
 export const routes: Routes = [
   {
@@ -81,6 +82,7 @@ export const routes: Routes = [
     title: 'Cadastro de adotante | L.A.R.',
     component: CadastroComponent,
     canActivate: [guestGuard],
+    canDeactivate: [confirmarSaidaFormularioGuard],
     data: {
       tipo: 'adotante',
     },
@@ -91,6 +93,7 @@ export const routes: Routes = [
     title: 'Cadastro de ONG | L.A.R.',
     component: CadastroComponent,
     canActivate: [guestGuard],
+    canDeactivate: [confirmarSaidaFormularioGuard],
     data: {
       tipo: 'ong',
     },
@@ -149,6 +152,7 @@ export const routes: Routes = [
         (m) => m.CadastroAnimalComponent,
       ),
     canActivate: [perfilGuard(['ONG'])],
+    canDeactivate: [confirmarSaidaFormularioGuard],
   },
 
   {
@@ -159,6 +163,7 @@ export const routes: Routes = [
         (m) => m.EditarAnimalComponent,
       ),
     canActivate: [perfilGuard(['ONG'])],
+    canDeactivate: [confirmarSaidaFormularioGuard],
   },
 
   {

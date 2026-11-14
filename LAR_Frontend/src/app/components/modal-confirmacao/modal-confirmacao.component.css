@@ -1,0 +1,82 @@
+:host {
+  display: contents;
+}
+
+.modal-confirmacao__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.42);
+}
+
+.modal-confirmacao {
+  width: min(100%, 460px);
+  padding: 24px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.24);
+}
+
+.modal-confirmacao__titulo {
+  margin: 0 0 12px;
+  color: #252525;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.modal-confirmacao__mensagem {
+  margin: 0;
+  color: #444444;
+  line-height: 1.55;
+}
+
+.modal-confirmacao__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.modal-confirmacao__botao {
+  min-height: 42px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 7px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-confirmacao__botao--neutro {
+  background: #eeeeee;
+  color: #333333;
+}
+
+.modal-confirmacao__botao--perigo {
+  background: #b83232;
+  color: #ffffff;
+}
+
+.modal-confirmacao__botao:focus-visible {
+  outline: 3px solid #245fba;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .modal-confirmacao {
+    padding: 20px;
+  }
+
+  .modal-confirmacao__acoes {
+    flex-direction: column-reverse;
+  }
+
+  .modal-confirmacao__botao {
+    width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 import { inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CanActivateFn, Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
 
@@ -18,8 +19,11 @@ export const superAdminGuard: CanActivateFn = () => {
         ? true
         : router.createUrlTree(['/acesso-negado']),
     ),
-    catchError(() => {
-      authService.limparToken();
+    catchError((erro: unknown) => {
+      if (!(erro instanceof HttpErrorResponse && erro.status === 401)) {
+        authService.limparToken();
+      }
+
       return of(router.createUrlTree(['/login']));
     }),
   );

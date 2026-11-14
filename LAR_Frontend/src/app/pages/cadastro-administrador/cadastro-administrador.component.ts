@@ -69,9 +69,6 @@ export class CadastroAdministradorComponent {
     if (erro.status === 0) {
       return 'Não foi possível conectar ao servidor. Tente novamente.';
     }
-    if (erro.status === 401) {
-      return 'Sua sessão expirou. Entre novamente.';
-    }
     if (erro.status === 403) {
       return (
         erro.error?.mensagem ||

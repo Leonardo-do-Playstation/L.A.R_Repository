@@ -110,6 +110,7 @@ export class DetalheAnimalComponent implements OnInit {
 
     this.processandoFavorito = true;
     this.erroFavorito = '';
+    const estavaAutenticado = this.authService.estaAutenticado();
 
     const acao = this.favoritado
       ? this.favoritoService.desfavoritar(this.animal.id)
@@ -123,6 +124,10 @@ export class DetalheAnimalComponent implements OnInit {
 
       error: (erro: HttpErrorResponse) => {
         this.processandoFavorito = false;
+
+        if (erro.status === 401 && estavaAutenticado) {
+          return;
+        }
 
         if (erro.status === 401 || erro.status === 403) {
           this.erroFavorito =
