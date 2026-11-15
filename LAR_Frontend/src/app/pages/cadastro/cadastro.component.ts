@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { senhaForte } from '../../validators/senha-forte.validator';
@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 
 import { BotaoVoltarComponent } from '../../components/botao-voltar/botao-voltar.component';
+import { TermosComponent } from '../termos/termos.component';
+import { PrivacidadeComponent } from '../privacidade/privacidade.component';
 import type { FormularioComAlteracoesPendentes } from '../../services/confirmar-saida-formulario.guard';
 
 @Component({
@@ -20,6 +22,8 @@ import type { FormularioComAlteracoesPendentes } from '../../services/confirmar-
     RouterLink,
     BotaoVoltarComponent,
     IndicadorSenhaComponent,
+    TermosComponent,
+    PrivacidadeComponent,
   ],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
@@ -34,6 +38,15 @@ export class CadastroComponent implements FormularioComAlteracoesPendentes {
   carregando = false;
   mostrarSenha = false;
   mostrarConfirmacao = false;
+  documentoAberto: 'termos' | 'privacidade' | null = null;
+
+  @ViewChild('botaoFecharDocumento')
+  private botaoFecharDocumento?: ElementRef<HTMLButtonElement>;
+
+  @ViewChild('corpoDocumento')
+  private corpoDocumento?: ElementRef<HTMLElement>;
+
+  private elementoFocoAnterior: HTMLElement | null = null;
 
   private readonly apiUrl = 'http://localhost:8080';
 
@@ -60,7 +73,15 @@ export class CadastroComponent implements FormularioComAlteracoesPendentes {
       senha: ['', [Validators.required, senhaForte]],
 
       confirmarSenha: ['', Validators.required],
+
+      aceiteTermos: [false, Validators.requiredTrue],
     });
+  }
+
+  get aceiteTermosInvalido(): boolean {
+    const aceite = this.cadastroForm.controls.aceiteTermos;
+
+    return aceite.touched && aceite.invalid;
   }
 
   temAlteracoesPendentes(): boolean {
@@ -97,8 +118,14 @@ export class CadastroComponent implements FormularioComAlteracoesPendentes {
     const email = this.cadastroForm.controls.email;
     const senha = this.cadastroForm.controls.senha;
     const confirmarSenha = this.cadastroForm.controls.confirmarSenha;
+    const aceiteTermos = this.cadastroForm.controls.aceiteTermos;
 
-    if (email.invalid || senha.invalid || confirmarSenha.invalid) {
+    if (
+      email.invalid ||
+      senha.invalid ||
+      confirmarSenha.invalid ||
+      aceiteTermos.invalid
+    ) {
       return false;
     }
 
@@ -216,5 +243,64 @@ export class CadastroComponent implements FormularioComAlteracoesPendentes {
 
   alternarConfirmacao(): void {
     this.mostrarConfirmacao = !this.mostrarConfirmacao;
+  }
+
+  abrirDocumento(documento: 'termos' | 'privacidade'): void {
+    if (!this.documentoAberto) {
+      this.elementoFocoAnterior = document.activeElement as HTMLElement | null;
+    }
+
+    this.documentoAberto = documento;
+
+    setTimeout(() => {
+      this.corpoDocumento?.nativeElement.scrollTo({ top: 0 });
+      this.botaoFecharDocumento?.nativeElement.focus();
+    });
+  }
+
+  fecharDocumento(): void {
+    this.documentoAberto = null;
+
+    setTimeout(() => this.elementoFocoAnterior?.focus());
+  }
+
+  aoClicarFundoDocumento(evento: MouseEvent): void {
+    if (evento.target === evento.currentTarget) {
+      this.fecharDocumento();
+    }
+  }
+
+  aoTeclarNoDocumento(evento: KeyboardEvent): void {
+    if (evento.key !== 'Tab') {
+      return;
+    }
+
+    const focaveis = Array.from(
+      (evento.currentTarget as HTMLElement).querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])',
+      ),
+    );
+
+    if (!focaveis.length) {
+      return;
+    }
+
+    const primeiro = focaveis[0];
+    const ultimo = focaveis[focaveis.length - 1];
+
+    if (evento.shiftKey && document.activeElement === primeiro) {
+      evento.preventDefault();
+      ultimo.focus();
+    } else if (!evento.shiftKey && document.activeElement === ultimo) {
+      evento.preventDefault();
+      primeiro.focus();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  aoPressionarEscape(): void {
+    if (this.documentoAberto) {
+      this.fecharDocumento();
+    }
   }
 }

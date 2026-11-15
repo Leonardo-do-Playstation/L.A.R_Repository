@@ -296,3 +296,141 @@
   font-size: 0.8rem;
   line-height: 1.4;
 }
+
+.cadastro__aceite {
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+.cadastro__aceite-rotulo {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  color: #ffffff;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.cadastro__aceite-rotulo input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  accent-color: #24851f;
+  cursor: pointer;
+}
+
+.cadastro__aceite-rotulo input:focus-visible {
+  outline: 2px solid #b6f0ae;
+  outline-offset: 2px;
+}
+
+.cadastro__aceite-rotulo input.ng-invalid.ng-touched {
+  outline: 2px solid #ffb4ab;
+  outline-offset: 2px;
+}
+
+.cadastro__link-documento {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cadastro__link-documento:hover {
+  color: #b6f0ae;
+}
+
+.cadastro__link-documento:focus-visible {
+  outline: 2px solid #b6f0ae;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.cadastro__modal-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.cadastro__modal {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 860px);
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--lar-fundo);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+.cadastro__modal-corpo {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 24px 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.cadastro__modal-carregando {
+  margin: 0;
+  padding: 24px 0;
+  color: #444444;
+  text-align: center;
+}
+
+.cadastro__modal-rodape {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  padding: 14px 20px;
+  border-top: 1px solid var(--lar-borda-suave);
+  background: #ffffff;
+}
+
+.cadastro__modal-botao {
+  min-height: 42px;
+  padding: 9px 24px;
+  border: 0;
+  border-radius: 8px;
+  background: #24851f;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cadastro__modal-botao:hover {
+  background: #1d6e19;
+}
+
+.cadastro__modal-botao:focus-visible {
+  outline: 3px solid #245fba;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .cadastro__modal-fundo {
+    padding: 10px;
+  }
+
+  .cadastro__modal-corpo {
+    padding: 14px 14px 6px;
+  }
+
+  .cadastro__modal-botao {
+    width: 100%;
+  }
+}
