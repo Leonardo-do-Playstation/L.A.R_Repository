@@ -187,6 +187,33 @@
 
       </div>
 
+      <div class="cadastro__aceite">
+
+        <label class="cadastro__aceite-rotulo" for="aceiteTermos">
+
+          <input id="aceiteTermos" type="checkbox" formControlName="aceiteTermos"
+            [attr.aria-invalid]="aceiteTermosInvalido"
+            [attr.aria-describedby]="aceiteTermosInvalido ? 'aceiteTermosErro' : null">
+
+          <span>
+            Li e aceito os
+            <button type="button" class="cadastro__link-documento" aria-haspopup="dialog"
+              (click)="abrirDocumento('termos')">Termos de Uso</button>
+            e a
+            <button type="button" class="cadastro__link-documento" aria-haspopup="dialog"
+              (click)="abrirDocumento('privacidade')">Política de Privacidade</button>.
+          </span>
+
+        </label>
+
+        @if (aceiteTermosInvalido) {
+        <span id="aceiteTermosErro" class="cadastro__error" role="alert">
+          Aceite os Termos de Uso e a Política de Privacidade para criar a conta.
+        </span>
+        }
+
+      </div>
+
       @if (erroCadastro) {
 
       <span class="cadastro__error cadastro__error--api" role="alert">
@@ -218,5 +245,37 @@
     </p>
 
   </div>
+
+  @if (documentoAberto) {
+  <div class="cadastro__modal-fundo" (click)="aoClicarFundoDocumento($event)">
+    <div class="cadastro__modal" role="dialog" aria-modal="true"
+      [attr.aria-labelledby]="documentoAberto === 'termos' ? 'termos-titulo' : 'privacidade-titulo'"
+      (keydown)="aoTeclarNoDocumento($event)">
+
+      <div class="cadastro__modal-corpo" #corpoDocumento>
+        @if (documentoAberto === 'termos') {
+        @defer (on immediate) {
+        <app-termos [embutido]="true" (abrirOutro)="abrirDocumento('privacidade')" />
+        } @placeholder {
+        <p class="cadastro__modal-carregando">Carregando...</p>
+        }
+        } @else {
+        @defer (on immediate) {
+        <app-privacidade [embutido]="true" (abrirOutro)="abrirDocumento('termos')" />
+        } @placeholder {
+        <p class="cadastro__modal-carregando">Carregando...</p>
+        }
+        }
+      </div>
+
+      <div class="cadastro__modal-rodape">
+        <button type="button" class="cadastro__modal-botao" #botaoFecharDocumento (click)="fecharDocumento()">
+          Fechar
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
 
 </section>

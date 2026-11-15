@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { SobreComponent } from './sobre.component';
 
@@ -8,7 +9,8 @@ describe('SobreComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SobreComponent]
+      imports: [SobreComponent],
+      providers: [provideRouter([])],
     })
     .compileComponents();
     
@@ -19,5 +21,12 @@ describe('SobreComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should link to the terms of use and the privacy policy', () => {
+    const element = fixture.nativeElement as HTMLElement;
+
+    expect(element.querySelector('a[href="/termos"]')).toBeTruthy();
+    expect(element.querySelector('a[href="/privacidade"]')).toBeTruthy();
   });
 });

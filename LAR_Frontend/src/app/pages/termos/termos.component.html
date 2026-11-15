@@ -1,0 +1,139 @@
+<section class="termos" [class.fundo-patinhas]="!embutido" [class.termos--embutido]="embutido">
+  <div class="termos__container">
+    @if (!embutido) {
+    <app-botao-voltar fallback="/home" />
+    }
+
+    <header class="termos__cabecalho">
+      <span class="termos__etiqueta">DOCUMENTO LEGAL</span>
+      <h1 id="termos-titulo">Termos de Uso</h1>
+      <p class="termos__introducao">
+        Ao criar uma conta ou usar o L.A.R., você concorda com as regras abaixo. Leia com atenção: elas explicam o que a plataforma faz, o que esperamos de quem a utiliza e o que não podemos garantir.
+      </p>
+      <p class="termos__atualizacao">Última atualização: {{ ultimaAtualizacao }}</p>
+    </header>
+
+    <article class="termos__conteudo">
+      <section class="termos__secao" aria-labelledby="termos-plataforma">
+        <h2 id="termos-plataforma">1. O que é o L.A.R.</h2>
+        <p>
+          O L.A.R. — Lar, Adoção e Recomeço — é uma plataforma web que reúne, em um só lugar, os perfis de animais disponíveis para adoção e as informações das ONGs e protetores responsáveis por eles. A plataforma foi desenvolvida como um projeto acadêmico.
+        </p>
+        <p>
+          O L.A.R. <strong>não realiza nem intermedeia adoções</strong>. A conversa, a avaliação do adotante e todas as etapas do processo de adoção são tratadas diretamente entre o adotante e a ONG responsável pelo animal.
+        </p>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-perfis">
+        <h2 id="termos-perfis">2. Perfis de uso</h2>
+        <p>A plataforma possui três tipos de conta:</p>
+        <ul>
+          <li><strong>Adotante:</strong> pessoa que consulta animais e ONGs, favorita perfis e entra em contato com as ONGs.</li>
+          <li><strong>ONG:</strong> organização ou protetor independente que cadastra e gerencia animais para adoção.</li>
+          <li><strong>Administrador:</strong> equipe responsável por analisar cadastros de ONGs e manter a plataforma. Contas de administrador são criadas por convite.</li>
+        </ul>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-cadastro">
+        <h2 id="termos-cadastro">3. Cadastro e conta</h2>
+        <ul>
+          <li>Você deve informar dados verdadeiros, completos e atualizados.</li>
+          <li>Você é responsável por manter sua senha em sigilo e por tudo o que for feito com a sua conta. Se suspeitar de uso indevido, altere a senha imediatamente.</li>
+          <li>Cada e-mail e cada CPF só podem ser usados em uma conta de adotante. Na conta de ONG, o CNPJ é opcional para protetores independentes.</li>
+          <li>O cadastro de uma ONG fica pendente até ser analisado por um administrador, que pode aprovar ou recusar a solicitação. Enquanto estiver pendente, a ONG não acessa as funções de gerenciamento de animais.</li>
+        </ul>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-ongs">
+        <h2 id="termos-ongs">4. Responsabilidades das ONGs</h2>
+        <ul>
+          <li>Cadastrar apenas animais que estejam sob os seus cuidados e que realmente estejam disponíveis para adoção.</li>
+          <li>Manter as informações dos animais e o status de cada um (Disponível, Em tratamento ou Adotado) corretos e atualizados.</li>
+          <li>Publicar somente fotos e textos de sua autoria ou que tenha autorização para usar, sem expor terceiros.</li>
+          <li>Entender que o nome, o CNPJ (quando informado), o telefone, o endereço, as observações e a foto da ONG, bem como os dados e as fotos dos animais, ficam visíveis publicamente, mesmo para quem não tem conta.</li>
+          <li>Conduzir o processo de adoção com responsabilidade e respeito aos adotantes e aos animais.</li>
+        </ul>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-adotantes">
+        <h2 id="termos-adotantes">5. Responsabilidades dos adotantes</h2>
+        <ul>
+          <li>Usar a plataforma de boa-fé, com interesse real em adotar ou em conhecer os animais e as ONGs.</li>
+          <li>Tratar as ONGs com respeito ao entrar em contato e seguir as orientações de cada uma sobre o processo de adoção.</li>
+          <li>Lembrar que adotar é um compromisso para toda a vida do animal. A decisão e as consequências dela são de responsabilidade do adotante e da ONG.</li>
+        </ul>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-condutas">
+        <h2 id="termos-condutas">6. Condutas não permitidas</h2>
+        <p>É proibido usar o L.A.R. para:</p>
+        <ul>
+          <li>fornecer dados falsos ou se passar por outra pessoa ou organização;</li>
+          <li>divulgar animais que não existam, que não estejam disponíveis ou com a finalidade de venda, lucro ou maus-tratos;</li>
+          <li>publicar conteúdo ofensivo, discriminatório, ilegal ou que viole direitos de terceiros;</li>
+          <li>tentar acessar áreas ou contas de outros usuários, sobrecarregar a plataforma ou explorar falhas de segurança;</li>
+          <li>coletar dados de outros usuários para fins diferentes dos previstos na plataforma.</li>
+        </ul>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-bloqueio">
+        <h2 id="termos-bloqueio">7. Bloqueio e recusa de cadastro</h2>
+        <p>
+          Um administrador pode recusar o cadastro de uma ONG e bloquear temporariamente contas que descumpram estes termos. Quando uma conta é bloqueada ou reativada, o titular é avisado por e-mail. Ações administrativas desse tipo ficam registradas para fins de segurança e rastreabilidade.
+        </p>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-conteudo">
+        <h2 id="termos-conteudo">8. Conteúdo publicado</h2>
+        <p>
+          Quem publica textos e fotos continua sendo o responsável por eles. Ao publicar, você autoriza o L.A.R. a exibi-los na plataforma, com a finalidade de divulgar os animais e as ONGs. Os conteúdos podem ser removidos quando violarem estes termos.
+        </p>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-responsabilidade">
+        <h2 id="termos-responsabilidade">9. Limites de responsabilidade</h2>
+        <ul>
+          <li>As informações sobre animais e ONGs são fornecidas pelas próprias ONGs. O L.A.R. não garante que estejam completas, corretas ou atualizadas.</li>
+          <li>O L.A.R. não participa, não garante e não se responsabiliza pelo resultado de contatos, visitas ou adoções combinados entre adotantes e ONGs.</li>
+          <li>A plataforma pode ficar indisponível por manutenção, falhas técnicas ou fatores fora do nosso controle, e suas funcionalidades podem mudar ao longo do tempo.</li>
+        </ul>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-exclusao">
+        <h2 id="termos-exclusao">10. Exclusão da conta</h2>
+        <p>
+          Você pode excluir sua conta quando quiser, em <strong>Meu perfil &gt; Excluir minha conta</strong>, informando sua senha. A exclusão é permanente e não pode ser desfeita:
+        </p>
+        <ul>
+          <li><strong>Adotantes:</strong> a conta e os favoritos são removidos assim que a exclusão é confirmada.</li>
+          <li><strong>ONGs:</strong> após informar a senha, você recebe um e-mail com um link de confirmação válido por 15 minutos. Ao confirmar, a conta, os animais cadastrados e as fotos são removidos.</li>
+        </ul>
+        <p>
+          Os detalhes sobre quais dados são removidos estão na @if (embutido) {<button type="button" class="termos__link" (click)="abrirOutro.emit()">Política de Privacidade</button>} @else {<a routerLink="/privacidade">Política de Privacidade</a>}.
+        </p>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-alteracoes">
+        <h2 id="termos-alteracoes">11. Alterações nestes termos</h2>
+        <p>
+          Estes termos podem ser atualizados para refletir mudanças na plataforma ou na legislação. A data da última atualização fica sempre indicada no início desta página. Continuar usando o L.A.R. depois de uma atualização significa que você concorda com a nova versão.
+        </p>
+      </section>
+
+      <section class="termos__secao" aria-labelledby="termos-privacidade">
+        <h2 id="termos-privacidade">12. Privacidade e legislação</h2>
+        <p>
+          O tratamento dos seus dados pessoais está descrito na @if (embutido) {<button type="button" class="termos__link" (click)="abrirOutro.emit()">Política de Privacidade</button>} @else {<a routerLink="/privacidade">Política de Privacidade</a>}, que faz parte destes termos. Estes termos são regidos pelas leis brasileiras.
+        </p>
+      </section>
+    </article>
+
+    <nav class="termos__rodape" aria-label="Documentos relacionados">
+      @if (embutido) {
+      <button type="button" class="termos__botao" (click)="abrirOutro.emit()">Ler a Política de Privacidade</button>
+      } @else {
+      <a class="termos__botao" routerLink="/privacidade">Ler a Política de Privacidade</a>
+      }
+    </nav>
+  </div>
+</section>

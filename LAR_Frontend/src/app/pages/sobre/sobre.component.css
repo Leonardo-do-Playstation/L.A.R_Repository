@@ -135,6 +135,7 @@
 
 .sobre__secao h2,
 .sobre__aviso h2,
+.sobre__legal h2,
 .sobre__final h2 {
   margin: 0;
   color: #222222;
@@ -273,6 +274,34 @@
   line-height: 1.8;
 }
 
+.sobre__legal {
+  margin-top: 54px;
+  padding: 30px;
+  border: 1px solid var(--lar-borda-suave);
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.sobre__legal h2 {
+  font-size: 1.35rem;
+}
+
+.sobre__legal p {
+  max-width: 600px;
+  margin: 12px auto 22px;
+  color: #555555;
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
+.sobre__legal-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .sobre__final {
   margin-top: 70px;
   padding: 44px 24px;
@@ -333,6 +362,10 @@
     padding: 23px 19px;
   }
 
+  .sobre__legal {
+    padding: 24px 18px;
+  }
+
   .sobre__final {
     margin-top: 54px;
     padding: 36px 8px 12px;
@@ -340,7 +373,8 @@
 }
 
 @media (max-width: 420px) {
-  .sobre__acoes {
+  .sobre__acoes,
+  .sobre__legal-links {
     flex-direction: column;
   }
 

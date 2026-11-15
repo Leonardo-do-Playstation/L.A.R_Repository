@@ -135,6 +135,22 @@ export const routes: Routes = [
   },
 
   {
+    path: 'termos',
+    title: 'Termos de Uso | L.A.R.',
+    loadComponent: () =>
+      import('./pages/termos/termos.component').then((m) => m.TermosComponent),
+  },
+
+  {
+    path: 'privacidade',
+    title: 'Política de Privacidade | L.A.R.',
+    loadComponent: () =>
+      import('./pages/privacidade/privacidade.component').then(
+        (m) => m.PrivacidadeComponent,
+      ),
+  },
+
+  {
     path: 'painel-animais',
     title: 'Meus animais | L.A.R.',
     loadComponent: () =>

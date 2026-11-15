@@ -1,0 +1,211 @@
+:host {
+  display: block;
+}
+
+.termos {
+  min-height: calc(100vh - 70px);
+  padding: 24px 20px 64px;
+  background-color: var(--lar-fundo);
+  color: #222222;
+  box-sizing: border-box;
+}
+
+.termos__container {
+  width: min(100%, 820px);
+  margin: 0 auto;
+}
+
+.termos__cabecalho {
+  margin: 28px 0 36px;
+}
+
+.termos__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 7px 12px;
+  border-radius: 100px;
+  background: #eaf3e9;
+  color: #326b38;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.termos__cabecalho h1 {
+  margin: 0;
+  color: #222222;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.termos__introducao {
+  margin: 18px 0 0;
+  color: #555555;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.termos__atualizacao {
+  margin: 14px 0 0;
+  color: #5a5a5a;
+  font-size: 0.88rem;
+}
+
+.termos__conteudo {
+  display: grid;
+  gap: 18px;
+}
+
+.termos__secao {
+  padding: 26px 28px;
+  border: 1px solid var(--lar-borda-suave);
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.termos__secao h2 {
+  margin: 0 0 12px;
+  color: #222222;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.termos__secao p,
+.termos__secao li {
+  color: #444444;
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.termos__secao p {
+  margin: 0 0 12px;
+}
+
+.termos__secao p:last-child,
+.termos__secao ul:last-child,
+.termos__secao ol:last-child {
+  margin-bottom: 0;
+}
+
+.termos__secao ul,
+.termos__secao ol {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+.termos__secao li + li {
+  margin-top: 6px;
+}
+
+.termos__secao li::marker {
+  color: #438c48;
+}
+
+.termos__secao strong {
+  color: #222222;
+}
+
+.termos__secao a {
+  color: #1d6e19;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.termos__secao a:hover {
+  color: #155213;
+}
+
+.termos__secao button.termos__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #1d6e19;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.termos__secao button.termos__link:hover {
+  color: #155213;
+}
+
+.termos.termos--embutido {
+  min-height: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.termos--embutido .termos__cabecalho {
+  margin: 8px 0 24px;
+}
+
+.termos--embutido .termos__rodape {
+  margin-top: 24px;
+}
+
+.termos__rodape {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.termos__botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 22px;
+  border: 1px solid #438c48;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #326b38;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.termos__botao {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.termos__botao:hover {
+  background: #f1f7f0;
+}
+
+@media (max-width: 760px) {
+  .termos {
+    padding: 18px 16px 44px;
+  }
+
+  .termos__cabecalho {
+    margin: 22px 0 28px;
+  }
+
+  .termos__secao {
+    padding: 22px 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .termos__botao {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .termos__botao {
+    transition: none;
+  }
+}

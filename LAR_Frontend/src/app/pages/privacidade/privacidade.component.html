@@ -1,0 +1,156 @@
+<section class="privacidade" [class.fundo-patinhas]="!embutido" [class.privacidade--embutido]="embutido">
+  <div class="privacidade__container">
+    @if (!embutido) {
+    <app-botao-voltar fallback="/home" />
+    }
+
+    <header class="privacidade__cabecalho">
+      <span class="privacidade__etiqueta">DOCUMENTO LEGAL</span>
+      <h1 id="privacidade-titulo">Política de Privacidade</h1>
+      <p class="privacidade__introducao">
+        Aqui explicamos quais dados pessoais o L.A.R. coleta, para que os usamos, com quem eles podem ser compartilhados e como você pode corrigi-los ou pedir a exclusão da sua conta, conforme a Lei Geral de Proteção de Dados (LGPD, Lei nº 13.709/2018).
+      </p>
+      <p class="privacidade__atualizacao">Última atualização: {{ ultimaAtualizacao }}</p>
+    </header>
+
+    <article class="privacidade__conteudo">
+      <section class="privacidade__secao" aria-labelledby="priv-quem">
+        <h2 id="priv-quem">1. Quem é responsável pelos dados</h2>
+        <p>
+          O L.A.R. é um projeto acadêmico e a equipe que o desenvolve é a responsável pelo tratamento dos dados descritos nesta política. Para dúvidas ou solicitações sobre seus dados, entre em contato com a equipe de suporte da plataforma.
+        </p>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-dados">
+        <h2 id="priv-dados">2. Dados que coletamos</h2>
+
+        <h3>Se você é adotante</h3>
+        <ul>
+          <li>Nome, CPF, e-mail e senha, informados no cadastro.</li>
+          <li>Telefone e endereço, se você optar por preenchê-los no seu perfil.</li>
+          <li>Os animais que você marca como favoritos.</li>
+        </ul>
+
+        <h3>Se você é ONG ou protetor independente</h3>
+        <ul>
+          <li>Nome da instituição, e-mail e senha, informados no cadastro.</li>
+          <li>CNPJ, que é opcional para protetores independentes.</li>
+          <li>Telefone, endereço, observações e foto, se você optar por preenchê-los no perfil.</li>
+          <li>Os animais cadastrados, com suas informações (nome, espécie, raça, idade, sexo, porte, cor e descrição) e fotos.</li>
+        </ul>
+
+        <h3>Se você é administrador</h3>
+        <ul>
+          <li>Nome, e-mail, senha e código de administrador, informados no convite e na ativação da conta.</li>
+        </ul>
+
+        <h3>Dados gerados pelo uso da plataforma</h3>
+        <ul>
+          <li>Um token de sessão e as informações básicas do seu perfil, guardados no seu navegador para manter você conectado.</li>
+          <li>Registros das ações feitas por administradores (como aprovar ou recusar uma ONG e bloquear ou reativar uma conta), com o responsável, a data e o horário.</li>
+          <li>Tokens temporários usados em recuperação de senha, troca de e-mail e confirmação de exclusão, que expiram em poucos minutos.</li>
+        </ul>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-finalidades">
+        <h2 id="priv-finalidades">3. Para que usamos os dados</h2>
+        <ul>
+          <li><strong>Criar e proteger sua conta:</strong> identificar você, permitir o login, recuperar a senha e confirmar mudanças de e-mail ou a exclusão da conta.</li>
+          <li><strong>Divulgar animais e ONGs:</strong> exibir os perfis das ONGs e dos animais para quem deseja adotar.</li>
+          <li><strong>Facilitar o contato:</strong> mostrar o telefone e o endereço das ONGs para que o adotante converse diretamente com elas.</li>
+          <li><strong>Personalizar a experiência:</strong> guardar seus favoritos e mostrar conteúdo conforme o seu perfil de uso.</li>
+          <li><strong>Analisar cadastros de ONGs:</strong> permitir que administradores verifiquem os dados antes de aprovar uma ONG.</li>
+          <li><strong>Manter a plataforma segura:</strong> bloquear contas que descumpram os Termos de Uso e manter o registro das ações administrativas.</li>
+          <li><strong>Enviar e-mails do serviço:</strong> avisos sobre aprovação ou recusa de cadastro, recuperação de senha, troca de e-mail, exclusão de conta, bloqueio ou reativação e alterações cadastrais feitas por um administrador.</li>
+        </ul>
+        <p>
+          Usamos os dados apenas para essas finalidades e não os vendemos nem os utilizamos para publicidade.
+        </p>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-publicos">
+        <h2 id="priv-publicos">4. O que fica visível publicamente</h2>
+        <p>
+          Os dados das <strong>ONGs</strong> são públicos, inclusive para visitantes sem conta: nome, CNPJ (quando informado), telefone, endereço, observações e foto, além dos animais cadastrados e suas fotos. O e-mail e a senha da ONG não são exibidos.
+        </p>
+        <p>
+          Os dados do <strong>adotante</strong> não são exibidos publicamente e a plataforma não os envia às ONGs. O contato com a ONG é iniciado por você, usando o telefone ou o WhatsApp que ela divulga.
+        </p>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-compartilhamento">
+        <h2 id="priv-compartilhamento">5. Com quem compartilhamos</h2>
+        <ul>
+          <li><strong>Administradores do L.A.R.:</strong> podem consultar os dados cadastrais de usuários, corrigi-los quando necessário e bloquear contas, sempre com registro da ação.</li>
+          <li><strong>Serviços de infraestrutura:</strong> hospedagem, armazenamento de imagens e envio de e-mails, usados apenas para o funcionamento da plataforma.</li>
+          <li><strong>Autoridades:</strong> quando houver obrigação legal ou ordem de autoridade competente.</li>
+        </ul>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-seguranca">
+        <h2 id="priv-seguranca">6. Segurança e armazenamento no navegador</h2>
+        <p>
+          Sua senha é armazenada de forma criptografada (hash), por isso nem a equipe consegue lê-la. O acesso às áreas restritas exige login e é limitado ao perfil de cada usuário. Nenhum sistema é totalmente imune a falhas, e por isso recomendamos usar uma senha forte e exclusiva.
+        </p>
+        <p>
+          Para manter você conectado, o L.A.R. guarda um token de sessão e dados básicos do seu perfil no armazenamento local do navegador. Eles são removidos quando você sai da conta. Não usamos ferramentas de análise de audiência nem de publicidade. A fonte de texto Nunito é carregada do Google Fonts, o que pode envolver o envio do seu endereço IP ao Google.
+        </p>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-direitos">
+        <h2 id="priv-direitos">7. Seus direitos</h2>
+        <p>Pela LGPD, você pode, a qualquer momento:</p>
+        <ul>
+          <li>confirmar se tratamos seus dados e acessá-los;</li>
+          <li>corrigir dados incompletos, inexatos ou desatualizados;</li>
+          <li>solicitar a eliminação dos dados pessoais tratados com o seu consentimento;</li>
+          <li>obter informações sobre o compartilhamento dos seus dados;</li>
+          <li>revogar o consentimento dado nestes termos, o que implica encerrar sua conta.</li>
+        </ul>
+        <p>
+          Você consulta e corrige seus dados em <strong>Meu perfil</strong>, onde pode alterar nome, telefone, endereço, e-mail e senha. Para os demais pedidos, entre em contato com a equipe de suporte.
+        </p>
+      </section>
+
+      <section class="privacidade__secao privacidade__secao--destaque" aria-labelledby="priv-exclusao">
+        <h2 id="priv-exclusao">8. Como solicitar a exclusão da conta</h2>
+        <ol>
+          <li>Entre na sua conta e abra <strong>Meu perfil</strong>.</li>
+          <li>Na seção <strong>Excluir conta</strong>, clique em <strong>Excluir minha conta</strong>.</li>
+          <li>Digite sua senha e confirme.</li>
+          <li><strong>Somente para ONGs:</strong> abra o e-mail que enviaremos e use o link de confirmação em até 15 minutos.</li>
+        </ol>
+        <p><strong>O que é removido:</strong></p>
+        <ul>
+          <li><strong>Adotantes:</strong> a conta com os dados cadastrais e os favoritos.</li>
+          <li><strong>ONGs:</strong> a conta, a foto, todos os animais cadastrados e as fotos deles.</li>
+        </ul>
+        <p>
+          A exclusão é permanente e não pode ser desfeita. Os registros das ações de administradores podem ser mantidos para fins de segurança e rastreabilidade. Se você não conseguir acessar sua conta, peça a exclusão à equipe de suporte da plataforma.
+        </p>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-retencao">
+        <h2 id="priv-retencao">9. Por quanto tempo guardamos os dados</h2>
+        <p>
+          Mantemos seus dados enquanto sua conta estiver ativa. Ao excluí-la, os dados descritos na seção anterior são removidos. Os tokens temporários de recuperação de senha, troca de e-mail e exclusão expiram em poucos minutos.
+        </p>
+      </section>
+
+      <section class="privacidade__secao" aria-labelledby="priv-alteracoes">
+        <h2 id="priv-alteracoes">10. Alterações nesta política</h2>
+        <p>
+          Esta política pode ser atualizada para refletir mudanças na plataforma ou na legislação. A data da última atualização fica sempre indicada no início da página. O uso do L.A.R. está sujeito também aos nossos @if (embutido) {<button type="button" class="privacidade__link" (click)="abrirOutro.emit()">Termos de Uso</button>} @else {<a routerLink="/termos">Termos de Uso</a>}.
+        </p>
+      </section>
+    </article>
+
+    <nav class="privacidade__rodape" aria-label="Documentos relacionados">
+      @if (embutido) {
+      <button type="button" class="privacidade__botao" (click)="abrirOutro.emit()">Ler os Termos de Uso</button>
+      } @else {
+      <a class="privacidade__botao" routerLink="/termos">Ler os Termos de Uso</a>
+      }
+    </nav>
+  </div>
+</section>
